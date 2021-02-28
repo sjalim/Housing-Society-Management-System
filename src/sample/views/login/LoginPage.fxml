@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootPane" maxHeight="700.0" maxWidth="1280.0" minHeight="700.0" minWidth="1280.0" prefHeight="700.0" prefWidth="1280.0" styleClass="backgroud" stylesheets="@../../styles/LoginPage.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.LoginPageController">
+   <children>
+      <ImageView fitHeight="700.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+         <viewport>
+            <Rectangle2D />
+         </viewport>
+         <image>
+            <Image url="@../../images/backgroud.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="290.0" layoutY="121.0" styleClass="login-label" stylesheets="@../../styles/LoginPage.css" text="Login" textFill="#77b9b9">
+         <font>
+            <Font name="Trebuchet MS" size="96.0" />
+         </font>
+      </Label>
+      <Label fx:id="forgotPasswordLabel" layoutX="519.0" layoutY="468.0" styleClass="forgot-password" stylesheets="@../../styles/LoginPage.css" text="Forgot Password">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
+      <Label layoutX="186.0" layoutY="643.0" style="-fx-background-color: transparent;" stylesheets="@../../styles/LoginPage.css" text="Don't have an account? " textFill="#77b9b9">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="signUpButton" layoutX="452.0" layoutY="643.0" style="-fx-background-color: transparent;" stylesheets="@../../styles/LoginPage.css" text="Sign up" textFill="#002323">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="userIdTextField" layoutX="134.0" layoutY="271.0" prefHeight="78.0" prefWidth="586.0" promptText="User ID" styleClass="login-text-field" stylesheets="@../../styles/LoginPage.css" unFocusColor="#002323">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </JFXTextField>
+      <JFXPasswordField fx:id="passwordTextField" layoutX="134.0" layoutY="374.0" prefHeight="75.0" prefWidth="586.0" promptText="Password" styleClass="login-text-field" stylesheets="@../../styles/LoginPage.css" unFocusColor="#002323">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </JFXPasswordField>
+      <JFXButton fx:id="loginButton" layoutX="260.0" layoutY="552.0" onAction="#loginButtonPressed" prefHeight="54.0" prefWidth="290.0" styleClass="login-btn" stylesheets="@../../styles/LoginPage.css" text="Login">
+         <font>
+            <Font size="25.0" />
+         </font></JFXButton>
+   </children>
+</AnchorPane>

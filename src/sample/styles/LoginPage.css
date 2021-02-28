@@ -1,0 +1,33 @@
+.backgroud{
+
+    -fx-background-image: url(/sample/images/backgroud.jpg);
+
+
+}
+
+
+.login-label{
+    -fx-background-color: transparent;
+}
+.login-text-field{
+    -fx-border-color: #77B9B9;
+    -fx-background-color: transparent;
+    -fx-text-fill: #77B9B9;
+    -fx-prompt-text-fill: #77B9B9;
+    -fx-font-family: "Trebuchet MS";
+
+}
+.forgot-password{
+    -fx-background-color: transparent;
+    -fx-text-fill: #002323;
+
+}
+
+.login-btn{
+
+    -fx-background-color: #77B9B9;
+    -fx-text-fill: #002323;
+
+}
+
+
