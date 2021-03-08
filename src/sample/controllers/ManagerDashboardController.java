@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
+
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -15,6 +17,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -137,6 +143,26 @@ public class ManagerDashboardController implements Initializable {
         });
 
 
+        logout_manager_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Preferences userPreferences = Preferences.userRoot();
+                userPreferences.put(LoginPageController.USER_STATUS, "root");
+                userPreferences.put(LoginPageController.USER_ID, "root");
+                userPreferences.put(LoginPageController.ALLOCATION_STATUS, "root");
+                Parent root = null;
+                try {
+                    root = (Parent) FXMLLoader.load(this.getClass().getResource("/sample/views/login/LoginPage.fxml"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Stage primaryStage =  (Stage) drawerButton.getScene().getWindow();
+                primaryStage.setScene(new Scene(root, 1200.0D, 700.0D));
+                primaryStage.show();
+            }
+        });
+
+
         staffs_button.setOnAction(actionEvent -> {
             try {
                 AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/manager/manager_staff.fxml"));
@@ -145,6 +171,7 @@ public class ManagerDashboardController implements Initializable {
                 throwables.printStackTrace();
             }
         });
+
 
     }
 }
