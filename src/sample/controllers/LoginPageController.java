@@ -315,7 +315,6 @@ public class LoginPageController {
         alert.setContentText(message);
         alert.setHeaderText(null);
         alert.showAndWait();
-
     }
 
 

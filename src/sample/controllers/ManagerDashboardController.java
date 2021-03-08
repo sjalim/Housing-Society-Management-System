@@ -17,6 +17,12 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -24,6 +30,7 @@ import javafx.stage.Stage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+
 import javafx.util.Duration;
 import sample.database.DatabaseHandler;
 import sample.models.FlatOwner;
@@ -143,6 +150,13 @@ public class ManagerDashboardController implements Initializable {
         });
 
 
+        flatsTenant_button.setOnAction(actionEvent -> {
+            try {
+                AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/manager/manager_FlatTenant.fxml"));
+                ManagerFlatOwnerController managerFlatOwnerController = new ManagerFlatOwnerController();
+                contentViewPane.getChildren().clear();
+
+
         logout_manager_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -166,6 +180,7 @@ public class ManagerDashboardController implements Initializable {
         staffs_button.setOnAction(actionEvent -> {
             try {
                 AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/manager/manager_staff.fxml"));
+
                 contentViewPane.getChildren().setAll(anchorPane);
             } catch (IOException throwables) {
                 throwables.printStackTrace();
@@ -174,4 +189,5 @@ public class ManagerDashboardController implements Initializable {
 
 
     }
+
 }

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.ManagerFlatOwnerEditController">
+   <children>
+      <ScrollPane layoutX="75.0" layoutY="21.0" prefHeight="808.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <content>
+            <AnchorPane prefHeight="713.0" prefWidth="398.0" style="-fx-background-color: #93f9b944;">
+               <children>
+                  <Label layoutX="34.0" layoutY="31.0" text="Flat No:">
+                     <font>
+                        <Font name="Century Gothic" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="flatNo_EditField" layoutX="110.0" layoutY="31.0" text="C5-6">
+                     <font>
+                        <Font name="Century Gothic" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="34.0" layoutY="71.0" text="Owner Name:">
+                     <font>
+                        <Font name="Century Gothic" size="18.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="ownerName_EditField" layoutX="31.0" layoutY="94.0" prefHeight="26.0" prefWidth="335.0" />
+                  <Label layoutX="34.0" layoutY="149.0" text="NID:">
+                     <font>
+                        <Font name="Century Gothic" size="18.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="nid_EditField" layoutX="31.0" layoutY="173.0" prefHeight="26.0" prefWidth="335.0" />
+                  <Label layoutX="31.0" layoutY="227.0" text="Mobile:">
+                     <font>
+                        <Font name="Century Gothic" size="18.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="mobile_EditField" layoutX="31.0" layoutY="250.0" prefHeight="26.0" prefWidth="335.0" />
+                  <Label layoutX="28.0" layoutY="302.0" text="Present Address:">
+                     <font>
+                        <Font name="Century Gothic" size="18.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="prestAdd_EditField" layoutX="28.0" layoutY="325.0" prefHeight="26.0" prefWidth="335.0" />
+                  <Label layoutX="28.0" layoutY="381.0" text="Permanent Address:">
+                     <font>
+                        <Font name="Century Gothic" size="18.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="permaAdd_EditField" layoutX="28.0" layoutY="404.0" prefHeight="26.0" prefWidth="335.0" />
+                  <Label layoutX="28.0" layoutY="468.0" text="Allocated Parking No:">
+                     <font>
+                        <Font name="Century Gothic" size="18.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="allocatedParking_EditField" layoutX="28.0" layoutY="491.0" prefHeight="26.0" prefWidth="335.0" />
+                  <Label layoutX="25.0" layoutY="540.0" text="Allocated Status:">
+                     <font>
+                        <Font name="Century Gothic" size="18.0" />
+                     </font>
+                  </Label>
+                  <JFXComboBox fx:id="allocStatus_EditComboBox" layoutX="23.0" layoutY="563.0" prefHeight="26.0" prefWidth="154.0" />
+
+                  <JFXButton fx:id="save_EditButton" layoutX="72.0" layoutY="638.0" prefHeight="38.0" prefWidth="115.0" style="-fx-border-color: black;" text="Save">
+                     <font>
+                        <Font name="Century Gothic" size="14.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="cancel_EditButton" layoutX="204.0" layoutY="638.0" prefHeight="38.0" prefWidth="115.0" style="-fx-border-color: black;" text="Cancel">
+                     <font>
+                        <Font name="Century Gothic" size="14.0" />
+                     </font>
+                  </JFXButton>
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

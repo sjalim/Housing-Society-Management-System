@@ -1,25 +1,61 @@
 package sample.models;
 
+import java.sql.Date;
+
 public class Tenant {
+    private int tenantId;
     private String flatNumber;
     private String tenantName;
     private String mobile;
     private String nid;
     private String presentAdd;
     private String permanentAdd;
+    private String occupation;
+    private int totalFamilyMember;
     private int managerId;
+    private Date moveIn;
+    private Date moveOut;
 
     public Tenant() {
     }
 
-    public Tenant(String flatNumber, String tenantName, String mobile, String nid, String presentAdd, String permanentAdd, int managerId) {
+    public Tenant(int tenantId, String flatNumber, String tenantName, String mobile, String nid, String presentAdd,
+                  String permanentAdd, String occupation, int totalFamilyMember, int managerId, Date moveIn, Date moveOut) {
+        this.tenantId = tenantId;
         this.flatNumber = flatNumber;
         this.tenantName = tenantName;
         this.mobile = mobile;
         this.nid = nid;
         this.presentAdd = presentAdd;
         this.permanentAdd = permanentAdd;
+        this.occupation = occupation;
+        this.totalFamilyMember = totalFamilyMember;
         this.managerId = managerId;
+        this.moveIn = moveIn;
+        this.moveOut = moveOut;
+    }
+
+    public Tenant(int tenantId, String flatNumber, String tenantName, String mobile, String nid, String presentAdd,
+                  String permanentAdd, String occupation, int totalFamilyMember, Date moveIn, Date moveOut) {
+        this.tenantId = tenantId;
+        this.flatNumber = flatNumber;
+        this.tenantName = tenantName;
+        this.mobile = mobile;
+        this.nid = nid;
+        this.presentAdd = presentAdd;
+        this.permanentAdd = permanentAdd;
+        this.occupation = occupation;
+        this.totalFamilyMember = totalFamilyMember;
+        this.moveIn = moveIn;
+        this.moveOut = moveOut;
+    }
+
+    public int getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(int tenantId) {
+        this.tenantId = tenantId;
     }
 
     public String getFlatNumber() {
@@ -70,11 +106,43 @@ public class Tenant {
         this.permanentAdd = permanentAdd;
     }
 
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
+    }
+
+    public int getTotalFamilyMember() {
+        return totalFamilyMember;
+    }
+
+    public void setTotalFamilyMember(int totalFamilyMember) {
+        this.totalFamilyMember = totalFamilyMember;
+    }
+
     public int getManagerId() {
         return managerId;
     }
 
     public void setManagerId(int managerId) {
         this.managerId = managerId;
+    }
+
+    public Date getMoveIn() {
+        return moveIn;
+    }
+
+    public void setMoveIn(Date moveIn) {
+        this.moveIn = moveIn;
+    }
+
+    public Date getMoveOut() {
+        return moveOut;
+    }
+
+    public void setMoveOut(Date moveOut) {
+        this.moveOut = moveOut;
     }
 }
