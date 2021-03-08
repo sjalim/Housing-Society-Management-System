@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import sample.controllers.LoginPageController;
 
+import java.io.IOException;
 import java.util.prefs.Preferences;
 
 public class Main extends Application {
@@ -15,6 +16,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 
 
+//        test(primaryStage);
         Preferences userPreferences = Preferences.userRoot();
         String userStatus = userPreferences.get(LoginPageController.USER_STATUS, "root");
         String userId = userPreferences.get(LoginPageController.USER_ID, "root");
@@ -55,6 +57,13 @@ public class Main extends Application {
         } else {
             System.out.println("Error at Main.java");
         }
+    }
+
+    void test(Stage primaryStage) throws IOException {
+        Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("views/manager/manager_staff_add.fxml"));
+        primaryStage.setTitle("Hello World");
+        primaryStage.setScene(new Scene(root, 1200.0D, 700.0D));
+        primaryStage.show();
     }
 
     public static void main(String[] args) {

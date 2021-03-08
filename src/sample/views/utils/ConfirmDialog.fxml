@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<DialogPane prefHeight="173.0" prefWidth="351.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <graphic>
+      <AnchorPane nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="291.0">
+         <children>
+            <Label alignment="CENTER" layoutX="160.0" layoutY="45.0" prefHeight="39.0" prefWidth="212.0" text="Are you sure?">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </graphic>
+   <buttonTypes>
+      <ButtonType fx:constant="YES" />
+      <ButtonType fx:constant="NO" />
+   </buttonTypes>
+</DialogPane>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pannable="true" prefHeight="800.0" prefWidth="1000.0" styleClass="backgroud" stylesheets="@../../styles/StaffAdd.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.ManagerStaffAddController">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1000.0" styleClass="backgroud" stylesheets="@../../styles/StaffAdd.css">
+         <children>
+            <VBox alignment="TOP_RIGHT" layoutX="234.0" layoutY="14.0" prefHeight="800.0" prefWidth="508.0" spacing="20.0">
+               <children>
+                  <JFXTextField fx:id="name_text_field" prefHeight="40.0" prefWidth="400.0" promptText="Name(e.g. : John)" styleClass="text-field" stylesheets="@../../styles/StaffAdd.css" />
+                  <JFXTextField fx:id="mobile_text_field" prefHeight="40.0" prefWidth="400.0" promptText="Mobile(e.g.: 01000000000)" />
+                  <JFXTextField fx:id="nid_text_field" prefHeight="40.0" prefWidth="400.0" promptText="NID Number(e.g.: 3546321354)" />
+                  <JFXTextField fx:id="age_text_field" prefHeight="40.0" prefWidth="400.0" promptText="Age(e.g.:35)" />
+                  <JFXTextField fx:id="present_address_text_field" prefHeight="40.0" prefWidth="400.0" promptText="Present Address(e.g.: Mirpur, Dhaka)" />
+                  <JFXTextField fx:id="permanent_address_text_field" prefHeight="40.0" prefWidth="400.0" promptText="Permanent Address(e.g.: Barisal)" />
+                  <JFXTimePicker fx:id="shift_start_time_picker" prefHeight="40.0" prefWidth="532.0" promptText="Shift Start(e.g.: 6:00 AM)" />
+                  <JFXTimePicker fx:id="shift_end_time_picker" prefHeight="40.0" prefWidth="906.0" promptText="Shift End(e.g.: 5:00 PM)" />
+                  <JFXTextField fx:id="salary_text_field" prefHeight="40.0" prefWidth="400.0" promptText="Salary(e.g.: 5000)" />
+                  <VBox alignment="TOP_RIGHT" prefHeight="67.0" prefWidth="508.0">
+                     <children>
+                        <ComboBox fx:id="type_combo_box" onAction="#typeComboBoxAction" prefHeight="39.0" prefWidth="512.0" promptText="Type" />
+                        <Label onMouseClicked="#handleAddNewType" text="Add new type" textFill="#1601ff" underline="true" />
+                     </children>
+                  </VBox>
+                  <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <JFXButton fx:id="confirm_button" onAction="#confirmAdd" prefHeight="47.0" prefWidth="117.0" text="Confirm" />
+                        <JFXButton fx:id="preview_button" onAction="#previewAdd" prefHeight="47.0" prefWidth="117.0" text="Preview" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <Label fx:id="type_error_label" layoutX="776.0" layoutY="575.0" prefHeight="30.0" prefWidth="179.0" text="Type isn't selected!" textFill="RED" />
+            <ImageView fx:id="type_error_icon_imageview" fitHeight="29.0" fitWidth="65.0" layoutX="754.0" layoutY="561.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/error.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="mobile_number_error_label" layoutX="754.0" layoutY="105.0" prefHeight="17.0" prefWidth="158.0" text="Enter number!" textFill="RED" />
+            <Label fx:id="nid_number_error_label" layoutX="754.0" layoutY="170.0" prefHeight="17.0" prefWidth="158.0" text="Enter number!" textFill="RED" />
+            <Label fx:id="age_number_error_label" layoutX="754.0" layoutY="230.0" prefHeight="17.0" prefWidth="158.0" text="Enter number!" textFill="RED" />
+            <Label fx:id="salary_number_error_label" layoutX="754.0" layoutY="520.0" prefHeight="17.0" prefWidth="158.0" text="Enter number!" textFill="RED" />
+         </children></AnchorPane>
+  </content>
+</ScrollPane>

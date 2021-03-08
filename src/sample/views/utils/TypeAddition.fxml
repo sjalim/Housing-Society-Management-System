@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<DialogPane prefHeight="133.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <graphic>
+      <AnchorPane fx:id="staff_type_addition_anchor_pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="113.0" prefWidth="270.0">
+         <children>
+            <JFXTextField fx:id="new_staff_type_text_field" layoutX="34.0" layoutY="34.0" prefHeight="25.0" prefWidth="212.0" promptText="New Staff Type" />
+         </children>
+      </AnchorPane>
+   </graphic>
+   <buttonTypes>
+      <ButtonType fx:constant="APPLY" />
+      <ButtonType fx:constant="CANCEL" />
+   </buttonTypes>
+</DialogPane>
