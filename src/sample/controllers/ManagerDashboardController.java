@@ -13,7 +13,10 @@ import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import sample.database.DatabaseHandler;
 import sample.models.FlatOwner;
@@ -78,5 +81,17 @@ public class ManagerDashboardController implements Initializable {
                 throwables.printStackTrace();
             }
         });
+
+        flatsTenant_button.setOnAction(actionEvent -> {
+            try {
+                AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/manager/manager_FlatTenant.fxml"));
+                ManagerFlatOwnerController managerFlatOwnerController = new ManagerFlatOwnerController();
+                contentViewPane.getChildren().clear();
+                contentViewPane.getChildren().setAll(anchorPane);
+            } catch (IOException throwables) {
+                throwables.printStackTrace();
+            }
+        });
     }
+
 }

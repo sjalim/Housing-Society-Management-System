@@ -61,7 +61,8 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" exported="" name="jfoenix-9.0.10" level="project" />
-    <orderEntry type="library" exported="" name="javafx11" level="project" />
+    <orderEntry type="library" name="JavaFx 11" level="application" />
+    <orderEntry type="library" name="mssql-jdbc-7.4.1.jre12" level="application" />
+    <orderEntry type="library" name="jfoenix-9.0.10" level="project" />
   </component>
 </module>
