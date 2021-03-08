@@ -5,6 +5,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
@@ -30,7 +31,7 @@
         </AnchorPane>
       <AnchorPane fx:id="contentViewPane" layoutY="46.0" prefHeight="654.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="46.0" />
         <AnchorPane fx:id="opacityPane" layoutX="-14.0" opacity="0.24" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: black;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-        <AnchorPane fx:id="navDrawerPane" layoutY="46.0" prefHeight="654.0" prefWidth="200.0" style="-fx-background-color: #99bbad;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="46.0">
+        <AnchorPane fx:id="navDrawerPane" layoutY="46.0" prefHeight="654.0" prefWidth="237.0" style="-fx-background-color: #99bbad;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="46.0">
             <children>
                 <Label alignment="CENTER" layoutX="7.0" layoutY="8.0" prefHeight="35.0" prefWidth="185.0" text="Dashboard" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                     <font>
@@ -38,95 +39,103 @@
                     </font>
                 </Label>
             <Line endX="123.60002136230469" endY="-13.799995422363281" layoutX="104.0" layoutY="57.0" startX="-98.00001525878906" startY="-13.799995422363281" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="4.0" />
-                <AnchorPane layoutY="57.0" prefHeight="35.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="57.0">
+                <AnchorPane fx:id="monitor_anchor_pane" layoutX="17.0" layoutY="45.0" prefHeight="36.0" prefWidth="149.0">
                     <children>
-                        <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="24.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="11.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../../images/monitor.png" />
                             </image>
                         </ImageView>
-                        <Label layoutX="65.0" layoutY="11.0" text="Monitor">
+                        <Label layoutX="41.0" layoutY="6.0" prefHeight="25.0" prefWidth="79.0" text="Monitor">
                             <font>
                                 <Font name="Century Gothic Bold" size="20.0" />
                             </font>
                         </Label>
                     </children>
                 </AnchorPane>
-                <JFXButton fx:id="monitorParking_button" alignment="BOTTOM_CENTER" layoutX="63.0" layoutY="99.0" prefWidth="131.0" text="Parking" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                    <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../../images/sub.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
-                    <font>
-                        <Font name="Century Gothic Bold" size="15.0" />
-                    </font>
-                </JFXButton>
-                <JFXButton fx:id="monitorVisitors_button" alignment="BASELINE_CENTER" layoutY="125.0" text="Visitors" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                    <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../../images/sub.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
-                    <font>
-                        <Font name="System Bold" size="15.0" />
-                    </font>
-                </JFXButton>
-                <JFXButton fx:id="monitorStaffs_button" alignment="BASELINE_CENTER" layoutY="151.0" text="Staffs    " AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                    <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../../images/sub.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
-                    <font>
-                        <Font name="Century Gothic Bold" size="15.0" />
-                    </font>
-                </JFXButton>
-                <AnchorPane layoutX="4.0" layoutY="177.0" prefHeight="35.0" prefWidth="200.0">
+            <VBox fx:id="monitor_vbox" layoutX="50.0" layoutY="71.0" prefHeight="105.0" prefWidth="109.0">
+               <children>
+                      <JFXButton fx:id="monitorParking_button" alignment="BOTTOM_CENTER" prefHeight="35.0" prefWidth="106.0" text="Parking">
+                          <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                  <image>
+                                      <Image url="@../../images/sub.png" />
+                                  </image>
+                              </ImageView>
+                          </graphic>
+                          <font>
+                              <Font name="Century Gothic Bold" size="15.0" />
+                          </font>
+                      </JFXButton>
+                      <JFXButton fx:id="monitorVisitors_button" alignment="BASELINE_CENTER" text="Visitors">
+                          <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                  <image>
+                                      <Image url="@../../images/sub.png" />
+                                  </image>
+                              </ImageView>
+                          </graphic>
+                          <font>
+                              <Font name="System Bold" size="15.0" />
+                          </font>
+                      </JFXButton>
+                      <JFXButton fx:id="monitorStaffs_button" alignment="BASELINE_CENTER" text="Staffs    ">
+                          <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                  <image>
+                                      <Image url="@../../images/sub.png" />
+                                  </image>
+                              </ImageView>
+                          </graphic>
+                          <font>
+                              <Font name="Century Gothic Bold" size="15.0" />
+                          </font>
+                      </JFXButton>
+               </children>
+            </VBox>
+                <AnchorPane fx:id="flat_anchor_pane" layoutX="17.0" layoutY="176.0" prefHeight="35.0" prefWidth="200.0">
                     <children>
-                        <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="17.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="28.0" fitWidth="28.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../../images/flats.png" />
                             </image>
                         </ImageView>
-                        <Label layoutX="57.0" layoutY="9.0" text="Flats">
+                        <Label layoutX="28.0" layoutY="10.0" text="Flats">
                             <font>
                                 <Font name="Century Gothic Bold" size="20.0" />
                             </font>
                         </Label>
                     </children>
                 </AnchorPane>
-                <JFXButton fx:id="flatsOwner_button" alignment="BOTTOM_CENTER" layoutY="208.0" prefWidth="131.0" text="Owner" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                    <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../../images/sub.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
-                    <font>
-                        <Font name="Century Gothic Bold" size="15.0" />
-                    </font>
-                </JFXButton>
-                <JFXButton fx:id="flatsTenant_button" alignment="BOTTOM_CENTER" layoutY="236.0" prefHeight="35.0" prefWidth="131.0" text="Tenant" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                    <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../../images/sub.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
-                    <font>
-                        <Font name="Century Gothic Bold" size="15.0" />
-                    </font>
-                </JFXButton>
-                <JFXButton fx:id="staffs_button" layoutY="266.0" text="Staffs                     " AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <VBox fx:id="flat_vbox" layoutX="50.0" layoutY="212.0" prefHeight="72.0" prefWidth="100.0">
+               <children>
+                      <JFXButton fx:id="flatsOwner_button" alignment="BOTTOM_CENTER" prefWidth="131.0" text="Owner">
+                          <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                  <image>
+                                      <Image url="@../../images/sub.png" />
+                                  </image>
+                              </ImageView>
+                          </graphic>
+                          <font>
+                              <Font name="Century Gothic Bold" size="15.0" />
+                          </font>
+                      </JFXButton>
+                      <JFXButton fx:id="flatsTenant_button" alignment="BOTTOM_CENTER" prefHeight="35.0" prefWidth="131.0" text="Tenant">
+                          <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                  <image>
+                                      <Image url="@../../images/sub.png" />
+                                  </image>
+                              </ImageView>
+                          </graphic>
+                          <font>
+                              <Font name="Century Gothic Bold" size="15.0" />
+                          </font>
+                      </JFXButton>
+               </children>
+            </VBox>
+                <JFXButton fx:id="staffs_button" layoutX="2.0" layoutY="275.0" prefHeight="42.0" prefWidth="235.0" text="Staffs                     " AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="-2.0">
                     <graphic>
                         <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -138,7 +147,7 @@
                         <Font name="Century Gothic Bold" size="20.0" />
                     </font>
                 </JFXButton>
-                <JFXButton fx:id="parkingAllocate_button" layoutY="311.0" text="Parking Allocation" AnchorPane.leftAnchor="0.0">
+                <JFXButton fx:id="parkingAllocate_button" layoutY="317.0" text="Parking Allocation" AnchorPane.leftAnchor="0.0">
                     <font>
                         <Font name="Century Gothic Bold" size="20.0" />
                     </font>
@@ -150,7 +159,7 @@
                         </ImageView>
                     </graphic>
                 </JFXButton>
-                <JFXButton fx:id="complain_button" layoutY="358.0" text="Complain Box       " AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                <JFXButton fx:id="complain_button" layoutX="2.0" layoutY="359.0" text="Complain Box       " AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="-2.0">
                     <font>
                         <Font name="Century Gothic Bold" size="20.0" />
                     </font>
@@ -162,7 +171,7 @@
                         </ImageView>
                     </graphic>
                 </JFXButton>
-                <JFXButton fx:id="notification_button" layoutY="410.0" text="Notifications          " AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                <JFXButton fx:id="notification_button" layoutX="2.0" layoutY="401.0" text="Notifications          " AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="-2.0">
                     <font>
                         <Font name="Century Gothic Bold" size="20.0" />
                     </font>
@@ -174,7 +183,7 @@
                         </ImageView>
                     </graphic>
                 </JFXButton>
-                <JFXButton fx:id="payment_button" layoutY="458.0" text="Collect Payments " AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                <JFXButton fx:id="payment_button" layoutX="-2.0" layoutY="443.0" text="Collect Payments " AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="2.0">
                     <font>
                         <Font name="Century Gothic Bold" size="20.0" />
                     </font>
@@ -186,7 +195,7 @@
                         </ImageView>
                     </graphic>
                 </JFXButton>
-                <JFXButton fx:id="notice_button" layoutY="503.0" text="Notice Board        " AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                <JFXButton fx:id="notice_button" layoutY="485.0" text="Notice Board        " AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                     <font>
                         <Font name="Century Gothic Bold" size="20.0" />
                     </font>
@@ -198,7 +207,7 @@
                         </ImageView>
                     </graphic>
                 </JFXButton>
-            <JFXButton fx:id="logout_manager_button" layoutY="547.0" text="Log Out                 " AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <JFXButton fx:id="logout_manager_button" layoutX="2.0" layoutY="527.0" text="Log Out                 " AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="-2.0">
                <font>
                   <Font name="Century Gothic Bold" size="20.0" />
                </font>
