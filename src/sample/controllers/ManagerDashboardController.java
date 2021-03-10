@@ -98,14 +98,13 @@ public class ManagerDashboardController implements Initializable {
     private JFXButton logout_manager_button;
 
 
-
     private DatabaseHandler databaseHandler;
 
     public ManagerDashboardController() {
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-         databaseHandler = new DatabaseHandler();
+        databaseHandler = new DatabaseHandler();
 
 //        Navigation Animation
         opacityPane.setVisible(false);
@@ -122,7 +121,8 @@ public class ManagerDashboardController implements Initializable {
             fadeTransition1.setFromValue(0.0D);
             fadeTransition1.setToValue(0.15D);
             fadeTransition1.play();
-            TranslateTransition translateTransition1 = new TranslateTransition(Duration.seconds(0.5D), this.navDrawerPane);
+            TranslateTransition translateTransition1 = new TranslateTransition(Duration.seconds(0.5D),
+                    this.navDrawerPane);
             translateTransition1.setByX(600.0D);
             translateTransition1.play();
         });
@@ -134,7 +134,8 @@ public class ManagerDashboardController implements Initializable {
             fadeTransition1.setOnFinished((actionEvent) -> {
                 opacityPane.setVisible(false);
             });
-            TranslateTransition translateTransition1 = new TranslateTransition(Duration.seconds(0.5D), this.navDrawerPane);
+            TranslateTransition translateTransition1 = new TranslateTransition(Duration.seconds(0.5D),
+                    this.navDrawerPane);
             translateTransition1.setByX(-600.0D);
             translateTransition1.play();
         });
@@ -142,7 +143,8 @@ public class ManagerDashboardController implements Initializable {
 
         flatsOwner_button.setOnAction(actionEvent -> {
             try {
-                AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/manager/manager_FlatOwner.fxml"));
+                AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/manager" +
+                        "/manager_FlatOwner.fxml"));
                 contentViewPane.getChildren().setAll(anchorPane);
             } catch (IOException throwables) {
                 throwables.printStackTrace();
@@ -152,11 +154,15 @@ public class ManagerDashboardController implements Initializable {
 
         flatsTenant_button.setOnAction(actionEvent -> {
             try {
-                AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/manager/manager_FlatTenant.fxml"));
+                AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/manager" +
+                        "/manager_FlatTenant.fxml"));
                 ManagerFlatOwnerController managerFlatOwnerController = new ManagerFlatOwnerController();
                 contentViewPane.getChildren().clear();
-
-
+                contentViewPane.getChildren().setAll(anchorPane);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         logout_manager_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -166,28 +172,32 @@ public class ManagerDashboardController implements Initializable {
                 userPreferences.put(LoginPageController.ALLOCATION_STATUS, "root");
                 Parent root = null;
                 try {
-                    root = (Parent) FXMLLoader.load(this.getClass().getResource("/sample/views/login/LoginPage.fxml"));
+                    root = (Parent) FXMLLoader.load(this.getClass().getResource("/sample/views/login/LoginPage" +
+                            ".fxml"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Stage primaryStage =  (Stage) drawerButton.getScene().getWindow();
+                Stage primaryStage = (Stage) drawerButton.getScene().getWindow();
                 primaryStage.setScene(new Scene(root, 1200.0D, 700.0D));
                 primaryStage.show();
             }
         });
+        staffs_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/manager" +
+                            "/manager_staff.fxml"));
 
-
-        staffs_button.setOnAction(actionEvent -> {
-            try {
-                AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/manager/manager_staff.fxml"));
-
-                contentViewPane.getChildren().setAll(anchorPane);
-            } catch (IOException throwables) {
-                throwables.printStackTrace();
+                    contentViewPane.getChildren().setAll(anchorPane);
+                } catch (IOException throwables) {
+                    throwables.printStackTrace();
+                }
             }
         });
-
 
     }
 
 }
+
+

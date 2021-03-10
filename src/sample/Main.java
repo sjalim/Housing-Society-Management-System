@@ -15,11 +15,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-//        Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("views/login/LoginPage.fxml"));
-        Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("views/manager/manager_dashboard.fxml"));
 
-
-//        test(primaryStage);
         Preferences userPreferences = Preferences.userRoot();
         String userStatus = userPreferences.get(LoginPageController.USER_STATUS, "root");
         String userId = userPreferences.get(LoginPageController.USER_ID, "root");
