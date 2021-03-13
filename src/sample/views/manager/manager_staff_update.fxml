@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sample.controllers.ManagerStaffUpdateController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<ScrollPane fx:id="rootScrollPane" maxHeight="800.0" maxWidth="1000.0" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.ManagerStaffUpdateController">
+   <content>
+      <AnchorPane fx:id="root_anchor_pane" prefHeight="701.0" prefWidth="419.0">
+         <children>
+            <TextField fx:id="update_name" layoutX="55.0" layoutY="49.0" prefHeight="25.0" prefWidth="303.0" />
+            <TextField fx:id="update_mobile" layoutX="55.0" layoutY="95.0" prefHeight="25.0" prefWidth="303.0" />
+            <TextField fx:id="update_permanent_ad" layoutX="55.0" layoutY="304.0" prefHeight="25.0" prefWidth="303.0" />
+            <TextField fx:id="update_present_ad" layoutX="55.0" layoutY="254.0" prefHeight="25.0" prefWidth="303.0" />
+            <TextField fx:id="update_age" layoutX="55.0" layoutY="196.0" prefHeight="25.0" prefWidth="303.0" />
+            <TextField fx:id="update_nid" layoutX="55.0" layoutY="149.0" prefHeight="25.0" prefWidth="303.0" />
+            <JFXTimePicker fx:id="update_start_time" layoutX="55.0" layoutY="397.0" prefHeight="25.0" prefWidth="320.0" />
+            <JFXTimePicker fx:id="update_end_time" layoutX="55.0" layoutY="453.0" prefHeight="25.0" prefWidth="320.0" />
+            <ComboBox fx:id="update_type" layoutX="54.0" layoutY="534.0" prefHeight="35.0" prefWidth="306.0" />
+            <JFXButton layoutX="332.0" layoutY="629.0" onAction="#handleCancel" text="Cancel" />
+            <JFXButton layoutX="254.0" layoutY="629.0" onAction="#handleSave" text="Save" />
+            <TextField fx:id="update_salary" layoutX="55.0" layoutY="365.0" prefHeight="25.0" prefWidth="305.0" />
+         </children>
+      </AnchorPane>
+   </content>
+</ScrollPane>
