@@ -2,3 +2,7 @@
     -fx-background-color: #77B9B9;
 
 }
+
+.refresh-btn{
+    -fx-background-image: url(/sample/images/refresh.png);
+}
