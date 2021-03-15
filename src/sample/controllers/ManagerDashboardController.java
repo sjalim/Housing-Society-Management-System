@@ -196,6 +196,20 @@ public class ManagerDashboardController implements Initializable {
             }
         });
 
+        parkingAllocate_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    AnchorPane anchorPane =
+                            FXMLLoader.load(getClass().getResource("/sample/views/manager/manager_parking_allocation.fxml"));
+
+                    contentViewPane.getChildren().setAll(anchorPane);
+                } catch (IOException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        });
+
     }
 
 }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.ManagerParkingAllocationController">
+   <children>
+      <TextField fx:id="search_text_field" layoutX="328.0" layoutY="32.0" prefHeight="46.0" prefWidth="553.0" promptText="Search(e.g.: john,01623987569)" styleClass="search-text-area" stylesheets="@../../styles/Staff.css" />
+      <ImageView fx:id="search_image_view" fitHeight="31.0" fitWidth="31.0" layoutX="830.0" layoutY="40.0" onMouseClicked="#handleSearch" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/search.png" />
+         </image>
+      </ImageView>
+      <TableView fx:id="table" layoutX="135.0" layoutY="166.0" prefHeight="520.0" prefWidth="939.0">
+        <columns>
+          <TableColumn fx:id="parking_slot_number_table_col" prefWidth="188.0" text="Parking Slot Number" />
+          <TableColumn fx:id="flat_number_table_col" minWidth="0.0" prefWidth="174.0" text="Flat Number" />
+            <TableColumn fx:id="car_reg_table_col" minWidth="0.0" prefWidth="157.0" text="Car Registration Number" />
+            <TableColumn fx:id="car_model_table_col" minWidth="0.0" prefWidth="124.0" text="Car Model" />
+            <TableColumn fx:id="owner_type_table_col" minWidth="0.0" prefWidth="92.0" text="Owner Type" />
+            <TableColumn fx:id="allocated_date_table_col" maxWidth="200.0" minWidth="0.0" prefWidth="1077.0" text="Allocated Date" />
+        </columns>
+      </TableView>
+      <JFXButton layoutX="22.0" layoutY="111.0" onAction="#handleUpdate" prefHeight="55.0" prefWidth="153.0" text="Update">
+         <font>
+            <Font name="Trebuchet MS" size="25.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="188.0" layoutY="111.0" onAction="#handleMakeVacant" prefHeight="55.0" prefWidth="182.0" text="Make Vacant">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </JFXButton>
+      <JFXComboBox fx:id="qsn_combo_box" layoutX="370.0" layoutY="132.0" onAction="#handleQsn" prefHeight="25.0" prefWidth="235.0" />
+      <JFXDatePicker fx:id="from_date_date_picker" layoutX="649.0" layoutY="131.0" onAction="#handleFromDate" promptText="From" />
+      <JFXDatePicker fx:id="to_date_date_picker" layoutX="830.0" layoutY="131.0" onAction="#handleToDate" promptText="To" />
+      <ComboBox fx:id="sub_qsn_combo_box" layoutX="694.0" layoutY="133.0" onAction="#handleSubQsn" prefHeight="25.0" prefWidth="221.0" visible="false" />
+      <JFXButton fx:id="refreshButton" layoutX="915.0" layoutY="40.0" onAction="#handleRefresh" onMouseClicked="#handleRefresh" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 4em; -fx-background-radius: 4em;" text="Refresh">
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/refresh.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="Century Gothic" size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXComboBox fx:id="search_cat_combo_box" layoutX="135.0" layoutY="44.0" onAction="#handleSearchCategory" prefHeight="25.0" prefWidth="153.0" />
+   </children>
+</AnchorPane>
