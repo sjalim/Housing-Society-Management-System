@@ -124,6 +124,7 @@ public class LoginPageController implements Initializable {
 //        int validateUser = validateUserId
 //        (userId);
 
+
         try {
 
 
@@ -157,11 +158,13 @@ public class LoginPageController implements Initializable {
                                 "';";
 
 
+
                         Statement statement =
                                 connection.createStatement();
                         ResultSet resultSet =
                                 statement.executeQuery(query);
                         if (resultSet.next()) {
+
 
                             userIdDB =
                                     resultSet.getString(1);
@@ -206,6 +209,7 @@ public class LoginPageController implements Initializable {
                         }
 
 
+
                     } else if (curLoginType.equals(GUARD_STATUS)) {
 
                         String query = "select " +
@@ -219,6 +223,7 @@ public class LoginPageController implements Initializable {
                                 ".GuardId " +
                                 "where Guard" +
                                 ".Mobile=" + userId + ";";
+
 
 
                         Statement statement =
@@ -303,15 +308,29 @@ public class LoginPageController implements Initializable {
                             AlertDialog(
                                     "Invalid User " +
                                             "Name or Password");
+
                         }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+
 
                 }
             }
         } catch (Exception e) {
 
             e.printStackTrace();
+
         }
+
+    }
+
+    @FXML
+    void handleLoginType(ActionEvent event) {
+
+        curLoginType =
+                login_type_combo_box.getValue();
     }
 
     @FXML
@@ -477,7 +496,9 @@ public class LoginPageController implements Initializable {
         login_type_combo_box.getEditor().textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+
                 if (!t1.isEmpty()) {
+
                     error_label.setVisible(false);
                 }
             }
