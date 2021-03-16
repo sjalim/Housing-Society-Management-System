@@ -311,10 +311,7 @@ public class LoginPageController implements Initializable {
 
                         }
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
-
 
                 }
             }
@@ -326,12 +323,7 @@ public class LoginPageController implements Initializable {
 
     }
 
-    @FXML
-    void handleLoginType(ActionEvent event) {
 
-        curLoginType =
-                login_type_combo_box.getValue();
-    }
 
     @FXML
     void handleLoginType(ActionEvent event) {
