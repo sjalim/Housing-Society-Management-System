@@ -10,11 +10,11 @@ public class FlatOwner {
     private String permanentAdd;
     private int managerId;
     private int allocatedParkingNo;
+    private String allocationStatus;
+    private int vehicleOwned;
 
-    public FlatOwner() {
-    }
-
-    public FlatOwner(String flatNumber, String ownerName, String ownerPassword, String mobile, String nid, String presentAdd, String permanentAdd, int managerId, int allocatedParkingNo) {
+    public FlatOwner(String flatNumber, String ownerName, String ownerPassword, String mobile, String nid, String presentAdd,
+                     String permanentAdd, int managerId, int allocatedParkingNo, String allocationStatus, int vehicleOwned) {
         this.flatNumber = flatNumber;
         this.ownerName = ownerName;
         this.ownerPassword = ownerPassword;
@@ -24,9 +24,12 @@ public class FlatOwner {
         this.permanentAdd = permanentAdd;
         this.managerId = managerId;
         this.allocatedParkingNo = allocatedParkingNo;
+        this.allocationStatus = allocationStatus;
+        this.vehicleOwned = vehicleOwned;
     }
 
-    public FlatOwner(String flatNumber, String ownerName, String mobile, String presentAdd, String permanentAdd, String nid, int allocatedParkingNo) {
+    public FlatOwner(String flatNumber, String ownerName, String mobile, String presentAdd,
+                     String permanentAdd, String nid, int allocatedParkingNo, String allocationStatus, int vehicleOwned) {
         this.flatNumber = flatNumber;
         this.ownerName = ownerName;
         this.mobile = mobile;
@@ -34,6 +37,8 @@ public class FlatOwner {
         this.presentAdd = presentAdd;
         this.permanentAdd = permanentAdd;
         this.allocatedParkingNo = allocatedParkingNo;
+        this.allocationStatus = allocationStatus;
+        this.vehicleOwned = vehicleOwned;
     }
 
     public String getFlatNumber() {
@@ -106,5 +111,21 @@ public class FlatOwner {
 
     public void setAllocatedParkingNo(int allocatedParkingNo) {
         this.allocatedParkingNo = allocatedParkingNo;
+    }
+
+    public String getAllocationStatus() {
+        return allocationStatus;
+    }
+
+    public void setAllocationStatus(String allocationStatus) {
+        this.allocationStatus = allocationStatus;
+    }
+
+    public int getVehicleOwned() {
+        return vehicleOwned;
+    }
+
+    public void setVehicleOwned(int vehicleOwned) {
+        this.vehicleOwned = vehicleOwned;
     }
 }

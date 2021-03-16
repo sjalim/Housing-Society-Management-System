@@ -235,6 +235,29 @@ public class LoginPageController implements Initializable {
                                 AlertDialog(
                                         "Incorrect Password!");
                             }
+
+                String query = "select Password from GuardLogin inner join Guard on Guard.GuardId=GuardLogin.GuardId " +
+                        "where Guard.Mobile=" + userId + ";";
+
+                try {
+                    Statement statement = connection.createStatement();
+                    ResultSet resultSet = statement.executeQuery(query);
+
+                    if (resultSet.next()) {
+                        String passwordDB = resultSet.getString(1);
+
+                        if (passwordDB.equals(password)) {
+                            Parent guardParent
+                                    =
+                                    FXMLLoader.load(getClass().getResource("/sample/views/guard/guard_dashboard.fxml"));
+                            Scene guardScene =
+                                    new Scene(guardParent, 1200, 500);
+                            userPreferences.put(USER_STATUS,GUARD_STATUS);
+                            userPreferences.put(USER_ID,userId);
+                            loadNext(guardScene);
+                        } else {
+                            AlertDialog("Incorrect Password!");
+
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -425,7 +448,6 @@ public class LoginPageController implements Initializable {
         alert.setContentText(message);
         alert.setHeaderText(null);
         alert.showAndWait();
-
     }
 
 
