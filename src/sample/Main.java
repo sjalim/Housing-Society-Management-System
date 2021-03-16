@@ -34,9 +34,10 @@ public class Main extends Application {
             primaryStage.show();
 
         } else if (userStatus.equals(LoginPageController.GUARD_STATUS)) {
-            Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("views/guard/Guard.fxml"));
+            Parent root =
+                    (Parent) FXMLLoader.load(this.getClass().getResource("views/guard/guard_dashboard.fxml"));
             primaryStage.setTitle("Hello World");
-            primaryStage.setScene(new Scene(root, 1200.0D, 700.0D));
+            primaryStage.setScene(new Scene(root, 1200.0D, 500.0D));
             primaryStage.show();
         } else if (userStatus.equals(LoginPageController.RESIDENT_STATUS)) {
             if (allocationStatus.equals(LoginPageController.ALLOCATION_STATUS_OWNED)) {
