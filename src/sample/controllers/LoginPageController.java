@@ -124,33 +124,40 @@ public class LoginPageController implements Initializable {
 //        int validateUser = validateUserId
 //        (userId);
 
-        if (validatePassword(password)) {
 
-            if (curLoginType.isEmpty()) {
-
-                error_label.setVisible(true);
-
-            } else {
+        try {
 
 
-                if (curLoginType.equals(RESIDENT_STATUS)) {
-                    String query = "select " +
-                            "FlatOwner" +
-                            ".FlatNumber, " +
-                            "Password," +
-                            "AllocationStatus " +
-                            "from FlatLogin " +
-                            "inner join " +
-                            "FlatOwner on " +
-                            "FlatOwner" +
-                            ".FlatNumber = " +
-                            "FlatLogin" +
-                            ".FlatNumber where " +
-                            "FlatLogin" +
-                            ".FlatNumber = '" + userId + "';";
+            if (validatePassword(password)) {
+
+                if (curLoginType.isEmpty()) {
+
+                    error_label.setVisible(true);
+
+                } else {
 
 
-                    try {
+                    if (curLoginType.equals(RESIDENT_STATUS)) {
+                        String query = "select " +
+                                "FlatOwner" +
+                                ".FlatNumber, " +
+                                "Password," +
+                                "AllocationStatus " +
+                                "from FlatLogin" +
+                                " " +
+                                "inner join " +
+                                "FlatOwner on " +
+                                "FlatOwner" +
+                                ".FlatNumber = " +
+                                "FlatLogin" +
+                                ".FlatNumber " +
+                                "where " +
+                                "FlatLogin" +
+                                ".FlatNumber = " +
+                                "'" + userId +
+                                "';";
+
+
 
                         Statement statement =
                                 connection.createStatement();
@@ -158,13 +165,15 @@ public class LoginPageController implements Initializable {
                                 statement.executeQuery(query);
                         if (resultSet.next()) {
 
+
                             userIdDB =
                                     resultSet.getString(1);
 
                             if (userIdDB.equals(userId)) {
                                 passwordDB =
                                         resultSet.getString(2);
-                                AllocationStatus = resultSet.getString(3);
+                                AllocationStatus =
+                                        resultSet.getString(3);
 
                                 if (passwordDB.equals(password)) {
 
@@ -193,28 +202,30 @@ public class LoginPageController implements Initializable {
                                     }
 
                                 } else {
-                                    AlertDialog("Incorrect User ID!");
+                                    AlertDialog(
+                                            "Incorrect User ID!");
                                 }
                             }
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
 
-                } else if (curLoginType.equals(GUARD_STATUS)) {
 
-                    String query = "select " +
-                            "Password from " +
-                            "GuardLogin inner " +
-                            "join Guard on " +
-                            "Guard" +
-                            ".GuardId" +
-                            "=GuardLogin" +
-                            ".GuardId " +
-                            "where Guard" +
-                            ".Mobile=" + userId + ";";
 
-                    try {
+                    } else if (curLoginType.equals(GUARD_STATUS)) {
+
+                        String query = "select " +
+                                "Password from " +
+                                "GuardLogin " +
+                                "inner " +
+                                "join Guard on " +
+                                "Guard" +
+                                ".GuardId" +
+                                "=GuardLogin" +
+                                ".GuardId " +
+                                "where Guard" +
+                                ".Mobile=" + userId + ";";
+
+
+
                         Statement statement =
                                 connection.createStatement();
                         ResultSet resultSet =
@@ -236,73 +247,90 @@ public class LoginPageController implements Initializable {
                                         "Incorrect Password!");
                             }
 
-                String query = "select Password from GuardLogin inner join Guard on Guard.GuardId=GuardLogin.GuardId " +
-                        "where Guard.Mobile=" + userId + ";";
+                            query =
+                                    "select Password from GuardLogin inner join Guard on Guard.GuardId=GuardLogin.GuardId " +
+                                            "where Guard.Mobile=" + userId + ";";
 
-                try {
-                    Statement statement = connection.createStatement();
-                    ResultSet resultSet = statement.executeQuery(query);
 
-                    if (resultSet.next()) {
-                        String passwordDB = resultSet.getString(1);
+                            statement =
+                                    connection.createStatement();
+                            resultSet =
+                                    statement.executeQuery(query);
 
-                        if (passwordDB.equals(password)) {
-                            Parent guardParent
-                                    =
-                                    FXMLLoader.load(getClass().getResource("/sample/views/guard/guard_dashboard.fxml"));
-                            Scene guardScene =
-                                    new Scene(guardParent, 1200, 500);
-                            userPreferences.put(USER_STATUS,GUARD_STATUS);
-                            userPreferences.put(USER_ID,userId);
-                            loadNext(guardScene);
-                        } else {
-                            AlertDialog("Incorrect Password!");
+                            if (resultSet.next()) {
+                                passwordDB
+                                        =
+                                        resultSet.getString(1);
 
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else if (curLoginType.equals(MANAGER_STATUS)) {
+                                if (passwordDB.equals(password)) {
+                                    Parent guardParent
+                                            =
+                                            FXMLLoader.load(getClass().getResource("/sample/views/guard/guard_dashboard.fxml"));
+                                    Scene guardScene =
+                                            new Scene(guardParent, 1200, 500);
+                                    userPreferences.put(USER_STATUS, GUARD_STATUS);
+                                    userPreferences.put(USER_ID, userId);
+                                    loadNext(guardScene);
+                                } else {
+                                    AlertDialog("Incorrect Password!");
 
-                    try {
-                        String query = "select " +
-                                "ManagerPassword from Manager where Mobile=" + userId + ";";
-                        Statement statement =
-                                connection.createStatement();
-                        ResultSet resultSet =
-                                statement.executeQuery(query);
-                        if (resultSet.next()) {
-                            String passwordDB =
-                                    resultSet.getString(1);
-
-                            if (passwordDB.equals(password)) {
-                                Parent managerParent = FXMLLoader.load(getClass().getResource("/sample/views/manager" +
-                                        "/manager_dashboard.fxml"));
-                                Scene managerScene = new Scene(managerParent, 1200, 700);
-                                userPreferences.put(USER_STATUS, MANAGER_STATUS);
-                                userPreferences.put(USER_ID, userId);
-                                loadNext(managerScene);
-
-                            } else {
-                                AlertDialog(
-                                        "Incorrect Password!");
+                                }
                             }
+                        } else if (curLoginType.equals(MANAGER_STATUS)) {
+
+
+                            query = "select " +
+                                    "ManagerPassword from Manager where Mobile=" + userId + ";";
+                            statement =
+                                    connection.createStatement();
+                            resultSet =
+                                    statement.executeQuery(query);
+                            if (resultSet.next()) {
+                                passwordDB =
+                                        resultSet.getString(1);
+
+                                if (passwordDB.equals(password)) {
+                                    Parent managerParent = FXMLLoader.load(getClass().getResource("/sample/views/manager" +
+                                            "/manager_dashboard.fxml"));
+                                    Scene managerScene = new Scene(managerParent, 1200, 700);
+                                    userPreferences.put(USER_STATUS, MANAGER_STATUS);
+                                    userPreferences.put(USER_ID, userId);
+                                    loadNext(managerScene);
+
+                                } else {
+                                    AlertDialog(
+                                            "Incorrect Password!");
+                                }
+                            }
+
+
+                        } else {
+                            AlertDialog(
+                                    "Invalid User " +
+                                            "Name or Password");
+
                         }
 
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
 
-                } else {
-                    AlertDialog("Invalid User " +
-                            "Name or Password");
+
                 }
             }
-        } else {
-            AlertDialog("Invalid User Name or " +
-                    "Password");
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
         }
 
+    }
+
+    @FXML
+    void handleLoginType(ActionEvent event) {
+
+        curLoginType =
+                login_type_combo_box.getValue();
     }
 
     @FXML
@@ -468,8 +496,9 @@ public class LoginPageController implements Initializable {
         login_type_combo_box.getEditor().textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                if(!t1.isEmpty())
-                {
+
+                if (!t1.isEmpty()) {
+
                     error_label.setVisible(false);
                 }
             }
