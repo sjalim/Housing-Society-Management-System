@@ -29,5 +29,10 @@
     -fx-text-fill: #002323;
 
 }
+.combo-box{
 
+    -fx-font-size: 20px;
+    -fx-border-radius: 5px;
+
+}
 

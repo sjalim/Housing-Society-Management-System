@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -20,12 +21,12 @@
             <Image url="@../../images/backgroud.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="290.0" layoutY="121.0" styleClass="login-label" stylesheets="@../../styles/LoginPage.css" text="Login" textFill="#77b9b9">
+      <Label layoutX="291.0" layoutY="75.0" styleClass="login-label" stylesheets="@../../styles/LoginPage.css" text="Login" textFill="#77b9b9">
          <font>
             <Font name="Trebuchet MS" size="96.0" />
          </font>
       </Label>
-      <Label fx:id="forgotPasswordLabel" layoutX="519.0" layoutY="468.0" styleClass="forgot-password" stylesheets="@../../styles/LoginPage.css" text="Forgot Password">
+      <Label fx:id="forgotPasswordLabel" layoutX="520.0" layoutY="486.0" styleClass="forgot-password" stylesheets="@../../styles/LoginPage.css" text="Forgot Password">
          <font>
             <Font size="27.0" />
          </font>
@@ -40,19 +41,25 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="userIdTextField" layoutX="134.0" layoutY="271.0" prefHeight="78.0" prefWidth="586.0" promptText="User ID" styleClass="login-text-field" stylesheets="@../../styles/LoginPage.css" unFocusColor="#002323">
+      <JFXTextField fx:id="userIdTextField" layoutX="134.0" layoutY="295.0" prefHeight="78.0" prefWidth="586.0" promptText="User ID" styleClass="login-text-field" stylesheets="@../../styles/LoginPage.css" unFocusColor="#002323">
          <font>
             <Font size="25.0" />
          </font>
       </JFXTextField>
-      <JFXPasswordField fx:id="passwordTextField" layoutX="134.0" layoutY="374.0" prefHeight="75.0" prefWidth="586.0" promptText="Password" styleClass="login-text-field" stylesheets="@../../styles/LoginPage.css" unFocusColor="#002323">
+      <JFXPasswordField fx:id="passwordTextField" layoutX="134.0" layoutY="390.0" prefHeight="75.0" prefWidth="586.0" promptText="Password" styleClass="login-text-field" stylesheets="@../../styles/LoginPage.css" unFocusColor="#002323">
          <font>
             <Font size="25.0" />
          </font>
       </JFXPasswordField>
-      <JFXButton fx:id="loginButton" layoutX="260.0" layoutY="552.0" onAction="#loginButtonPressed" prefHeight="54.0" prefWidth="290.0" styleClass="login-btn" stylesheets="@../../styles/LoginPage.css" text="Login">
+      <JFXButton fx:id="loginButton" layoutX="261.0" layoutY="564.0" onAction="#loginButtonPressed" prefHeight="54.0" prefWidth="290.0" styleClass="login-btn" stylesheets="@../../styles/LoginPage.css" text="Login">
          <font>
             <Font size="25.0" />
          </font></JFXButton>
+      <ComboBox fx:id="login_type_combo_box" layoutX="218.0" layoutY="194.0" onAction="#handleLoginType" prefHeight="54.0" prefWidth="370.0" promptText="Select Type" style="-fx-background-color: #77B9B9;" styleClass="combo-box" stylesheets="@../../styles/LoginPage.css" />
+      <Label fx:id="error_label" layoutX="218.0" layoutY="248.0" prefHeight="17.0" prefWidth="266.0" text="Not selected!" textFill="RED">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
