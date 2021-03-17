@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="500.0" prefWidth="1200.0" style="-fx-background-color: #009688;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.GuardProfileController">
+   <children>
+      <Label layoutX="386.0" layoutY="52.0" prefHeight="57.0" prefWidth="52.0" stylesheets="@../../styles/guard-profile.css" text="ID:">
+         <effect>
+            <InnerShadow />
+         </effect>
+      </Label>
+      <Label layoutX="354.0" layoutY="117.0" prefHeight="57.0" prefWidth="61.0" stylesheets="@../../styles/guard-profile.css" text="Name:">
+         <effect>
+            <InnerShadow />
+         </effect>
+      </Label>
+      <Label layoutX="493.0" layoutY="52.0" prefHeight="57.0" prefWidth="123.0" stylesheets="@../../styles/guard-profile.css" text="id">
+         <effect>
+            <InnerShadow />
+         </effect>
+      </Label>
+      <Label layoutX="494.0" layoutY="117.0" prefHeight="57.0" prefWidth="123.0" stylesheets="@../../styles/guard-profile.css" text="name">
+         <effect>
+            <InnerShadow />
+         </effect>
+      </Label>
+      <JFXButton layoutX="711.0" layoutY="243.0" prefHeight="48.0" prefWidth="341.0" styleClass="btn" stylesheets="@../../styles/guardParking.css" text="Change Password" />
+   </children>
+</AnchorPane>

@@ -235,9 +235,8 @@ public class LoginPageController implements Initializable {
                                     resultSet.getString(1);
 
                             if (passwordDB.equals(password)) {
-                                Parent guardParent = FXMLLoader.load(getClass().getResource("/sample/views/guard/Guard" +
-                                        ".fxml"));
-                                Scene guardScene = new Scene(guardParent, 1200, 700);
+                                Parent guardParent = FXMLLoader.load(getClass().getResource("/sample/views/guard/guard_dashboard.fxml"));
+                                Scene guardScene = new Scene(guardParent, 1200, 500);
                                 userPreferences.put(USER_STATUS, GUARD_STATUS);
                                 userPreferences.put(USER_ID, userId);
                                 loadNext(guardScene);

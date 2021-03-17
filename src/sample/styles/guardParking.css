@@ -1,0 +1,27 @@
+.btn{
+
+    -fx-text-fill: white;
+    -fx-font-family: "Trebuchet MS";
+    -fx-font-weight: bold;
+    -fx-background-color: linear-gradient(#4F5D67, #28444B);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-background-radius: 15px;
+    -fx-font-size: 25px;
+
+
+
+}
+
+.btn:hover{
+    -fx-background-color: linear-gradient(#28444B,#4F5D67 );
+}
+
+.pickers{
+    -fx-background-color: #009688;
+    -fx-text-fill: black;
+    -fx-prompt-text-fill: black;
+}
+
+.table{
+    -fx-background-color: #4F5D67;
+}
