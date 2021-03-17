@@ -36,7 +36,7 @@
                   <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <JFXButton fx:id="confirm_button" onAction="#confirmAdd" prefHeight="47.0" prefWidth="117.0" text="Confirm" />
-                        <JFXButton fx:id="preview_button" onAction="#previewAdd" prefHeight="47.0" prefWidth="117.0" text="Preview" />
+                        <JFXButton onAction="#handleCancel" prefHeight="47.0" prefWidth="117.0" text="Cancel" />
                      </children>
                   </HBox>
                </children>
