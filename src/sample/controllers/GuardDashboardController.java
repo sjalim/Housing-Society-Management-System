@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -52,6 +53,13 @@ public class GuardDashboardController implements Initializable {
 
     @FXML
     private JFXButton guardVisitors_button;
+
+    @FXML
+    private JFXButton add_track_button;
+
+    @FXML
+    private JFXButton update_track_button;
+
 
     @FXML
     private JFXButton Staffs_button;
@@ -142,5 +150,43 @@ public class GuardDashboardController implements Initializable {
 
             }
         });
+
+
+        guardParking_button.setOnAction(new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    ScrollPane anchorPane =
+                            FXMLLoader.load(getClass().getResource("/sample/views/guard/guard_parking.fxml"));
+                    contentViewPane.getChildren().setAll(anchorPane);
+                } catch (IOException throwables) {
+                    throwables.printStackTrace();
+                }
+
+            }
+        });
+
+        add_track_button.setOnAction(actionEvent -> {
+            try {
+                AnchorPane anchorPane =
+                        FXMLLoader.load(getClass().getResource("/sample/views/guard/addition_record.fxml"));
+                contentViewPane.getChildren().setAll(anchorPane);
+            } catch (IOException throwables) {
+                throwables.printStackTrace();
+            }
+        });
+
+        update_track_button.setOnAction(actionEvent -> {
+            try {
+                AnchorPane anchorPane =
+                        FXMLLoader.load(getClass().getResource("/sample/views/guard/update_record.fxml"));
+                contentViewPane.getChildren().setAll(anchorPane);
+            } catch (IOException throwables) {
+                throwables.printStackTrace();
+            }
+        });
+
+
+
     }
 }
