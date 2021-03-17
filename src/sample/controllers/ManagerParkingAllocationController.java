@@ -342,6 +342,7 @@ public class ManagerParkingAllocationController implements Initializable {
                 throwables.printStackTrace();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
+                e.printStackTrace();
             }
 
 

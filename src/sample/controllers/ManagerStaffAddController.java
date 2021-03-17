@@ -12,9 +12,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import sample.database.DatabaseHandler;
 
 import java.io.IOException;
@@ -31,11 +33,17 @@ import java.util.ResourceBundle;
 
 public class ManagerStaffAddController implements Initializable {
 
-    String name, mobile, nid, age, present_address, permanent_address, type = "", start_time, end_time, salary,
+    String name, mobile, nid, age,
+            present_address, permanent_address,
+            type = "", salary,
             newType = "";
 
-    DatabaseHandler dbConnect = new DatabaseHandler();
-    Connection connection = dbConnect.getDbConnection();
+    Time start_time, end_time;
+
+    DatabaseHandler dbConnect =
+            new DatabaseHandler();
+    Connection connection =
+            dbConnect.getDbConnection();
     Statement statement = null;
     ArrayList<String> typeNames;
     String query;
@@ -107,7 +115,10 @@ public class ManagerStaffAddController implements Initializable {
     @FXML
     void handleAddNewType(MouseEvent event) {
 //        try {
-//            Parent parent = FXMLLoader.load(this.getClass().getResource("/sample/views/utils/TypeAddition.fxml"));
+//            Parent parent = FXMLLoader.load
+//            (this.getClass().getResource
+//            ("/sample/views/utils
+//            /TypeAddition.fxml"));
 //            Stage stage = new Stage();
 //            stage.setTitle("Add new type");
 //            Scene scene = new Scene(parent);
@@ -126,18 +137,23 @@ public class ManagerStaffAddController implements Initializable {
         }
 
 
-        Dialog<ButtonType> dialog = new Dialog<>();
+        Dialog<ButtonType> dialog =
+                new Dialog<>();
         dialog.setDialogPane(dialogPane);
         dialog.setTitle("Add new type");
-        Optional<ButtonType> clickedButton = dialog.showAndWait();
+        Optional<ButtonType> clickedButton =
+                dialog.showAndWait();
 
         if (clickedButton.get() == ButtonType.APPLY) {
 
-            newType = new_staff_type_text_field.getText();
+            newType =
+                    new_staff_type_text_field.getText();
             if (!newType.isEmpty()) {
 
-                String query = "insert into StaffTypeList " +
-                        "values('" + newType + "')";
+                String query = "insert into " +
+                        "StaffTypeList " +
+                        "values('" + newType +
+                        "')";
 
                 try {
 
@@ -148,13 +164,15 @@ public class ManagerStaffAddController implements Initializable {
                     throwables.printStackTrace();
                 }
                 typeNames.add(newType);
-                ObservableList<String> list = FXCollections.observableList(typeNames);
+                ObservableList<String> list =
+                        FXCollections.observableList(typeNames);
                 type_combo_box.setItems(list);
 
 
             } else {
                 RequiredFieldValidator validator = new RequiredFieldValidator();
-                validator.setMessage("Fill the Field!");
+                validator.setMessage("Fill the " +
+                        "Field!");
                 new_staff_type_text_field.getValidators().add(validator);
                 new_staff_type_text_field.validate();
 
@@ -174,14 +192,21 @@ public class ManagerStaffAddController implements Initializable {
 
         name = name_text_field.getText();
         mobile = mobile_text_field.getText();
-        present_address = present_address_text_field.getText();
-        permanent_address = permanent_address_text_field.getText();
+        present_address =
+                present_address_text_field.getText();
+        permanent_address =
+                permanent_address_text_field.getText();
         nid = nid_text_field.getText();
         age = age_text_field.getText();
         salary = salary_text_field.getText();
         try {
-            start_time = shift_start_time_picker.getValue().format(DateTimeFormatter.ofPattern("hh:mm a"));
-            end_time = shift_end_time_picker.getValue().format(DateTimeFormatter.ofPattern("hh:mm a"));
+            start_time =
+                    Time.valueOf(
+                            shift_start_time_picker.getValue());
+            end_time =
+                    Time.valueOf(shift_end_time_picker.getValue());
+
+
         } catch (Exception e) {
             shift_start_time_picker.validate();
             shift_end_time_picker.validate();
@@ -221,6 +246,14 @@ public class ManagerStaffAddController implements Initializable {
         if (salary.isEmpty()) {
             salary_text_field.validate();
         }
+
+
+
+        Node node = (Node)event.getSource();
+        Stage stage =
+                (Stage) node.getScene().getWindow();
+        stage.close();
+
     }
 
 
@@ -228,69 +261,100 @@ public class ManagerStaffAddController implements Initializable {
 
         try {
 
-            FXMLLoader fxmlLoader = new FXMLLoader();
+            FXMLLoader fxmlLoader =
+                    new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/sample/views/utils/ConfirmDialog.fxml"));
-            DialogPane dialogPane = fxmlLoader.load();
+            DialogPane dialogPane =
+                    fxmlLoader.load();
 
 
-            Dialog<ButtonType> dialog = new Dialog<>();
+            Dialog<ButtonType> dialog =
+                    new Dialog<>();
             dialog.setDialogPane(dialogPane);
             dialog.setTitle("Confirm");
 
-            Optional<ButtonType> clickedButton = dialog.showAndWait();
+            Optional<ButtonType> clickedButton
+                    = dialog.showAndWait();
             System.out.println("i am here");
 
             if (clickedButton.get() == ButtonType.YES) {
                 String insertQuery = null;
                 PreparedStatement preparedStatement = null;
                 if (type.equals("Guard")) {
-                    insertQuery = "INSERT INTO Guard (Name,Nid,Age,Salary,PresentAddress,PermanentAddress,StartTime," +
-                            "EndTime,ManagerId,Mobile)" +
-                            "VALUEs(?,?,?,?,?,?,?,?,?,?) ";
+                    insertQuery = "INSERT INTO " +
+                            "Guard (Name,Nid," +
+                            "Age,Salary," +
+                            "PresentAddress," +
+                            "PermanentAddress," +
+                            "StartTime," +
+                            "EndTime,ManagerId," +
+                            "Mobile)" +
+                            "VALUEs(?,?,?,?,?," +
+                            "?,?,?,?,?) ";
 
-                    preparedStatement = connection.prepareStatement(insertQuery);
+                    preparedStatement =
+                            connection.prepareStatement(insertQuery);
                     preparedStatement.setString(1, name);
                     preparedStatement.setString(2, nid);
-                    preparedStatement.setInt(3, Integer.parseInt(age));
+                    preparedStatement.setInt(3,
+                            Integer.parseInt(age));
                     preparedStatement.setString(4, salary);
                     preparedStatement.setString(5, present_address);
                     preparedStatement.setString(6, permanent_address);
-                    preparedStatement.setString(7, start_time);
-                    preparedStatement.setString(8, end_time);
-                    preparedStatement.setInt(9, 1);
+                    preparedStatement.setTime(7,
+                            start_time);
+                    preparedStatement.setTime(8,
+                            end_time);
+                    preparedStatement.setInt(9,
+                            1);
                     preparedStatement.setString(10, mobile);
                     preparedStatement.executeUpdate();
                     preparedStatement.close();
 
                     Thread.sleep(2000);
-                   String insetQueryIntoLogin = "insert into GuardLogin (Password)"+
-                           "values(?)";
-                 PreparedStatement  preparedStatementLogin = connection.prepareStatement(insetQueryIntoLogin);
-                 preparedStatementLogin.setString(1,mobile);
-                 preparedStatementLogin.executeUpdate();
+                    String insetQueryIntoLogin
+                            = "insert into " +
+                            "GuardLogin " +
+                            "(Password)" +
+                            "values(?)";
+                    PreparedStatement preparedStatementLogin = connection.prepareStatement(insetQueryIntoLogin);
+                    preparedStatementLogin.setString(1, mobile);
+                    preparedStatementLogin.executeUpdate();
 
                 } else {
-                    insertQuery = "INSERT INTO Staff (Name,Nid,Age,Salary,PresentAddress,PermanentAddress,StartTime," +
-                            "EndTime,StaffType,ManagerId,Mobile)" +
-                            "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+                    insertQuery = "INSERT INTO " +
+                            "Staff (Name,Nid," +
+                            "Age,Salary," +
+                            "PresentAddress," +
+                            "PermanentAddress," +
+                            "StartTime," +
+                            "EndTime,StaffType," +
+                            "ManagerId,Mobile)" +
+                            "VALUES (?,?,?,?,?," +
+                            "?,?,?,?,?,?)";
 
-                    preparedStatement = connection.prepareStatement(insertQuery);
+                    preparedStatement =
+                            connection.prepareStatement(insertQuery);
                     preparedStatement.setString(1, name);
                     preparedStatement.setString(2, nid);
-                    preparedStatement.setInt(3, Integer.parseInt(age));
+                    preparedStatement.setInt(3,
+                            Integer.parseInt(age));
                     preparedStatement.setString(4, salary);
                     preparedStatement.setString(5, present_address);
                     preparedStatement.setString(6, permanent_address);
-                    preparedStatement.setString(7, start_time);
-                    preparedStatement.setString(8, end_time);
+                    preparedStatement.setTime(7,
+                            start_time);
+                    preparedStatement.setTime(8,
+                            end_time);
                     preparedStatement.setString(9, type);
-                    preparedStatement.setInt(10, 1);
+                    preparedStatement.setInt(10
+                            , 1);
                     preparedStatement.setString(11, mobile);
                     preparedStatement.executeUpdate();
                 }
 
-                System.out.println("inserted in staff table");
-
+                System.out.println("inserted in" +
+                        " staff table");
 
 
             }
@@ -300,21 +364,29 @@ public class ManagerStaffAddController implements Initializable {
     }
 
     @FXML
-    void previewAdd(ActionEvent event) {
-    }
+    void handleCancel(ActionEvent event) {
 
+        Node node = (Node)event.getSource();
+        Stage stage =
+                (Stage) node.getScene().getWindow();
+        stage.close();
+    }
     @FXML
     void typeComboBoxAction(ActionEvent event) {
         System.out.println("alim");
 //        typeNames = new ArrayList<>();
-//        query = "select TypeName from StaffTypeList";
+//        query = "select TypeName from
+//        StaffTypeList";
 //
 //
 //        try {
-//            statement = connection.createStatement();
-//            ResultSet resultSet = statement.executeQuery(query);
+//            statement = connection
+//            .createStatement();
+//            ResultSet resultSet = statement
+//            .executeQuery(query);
 //            while (resultSet.next()) {
-//                typeNames.add(resultSet.getString(1));
+//                typeNames.add(resultSet
+//                .getString(1));
 //            }
 //        } catch (SQLException throwables) {
 //            throwables.printStackTrace();
@@ -322,15 +394,18 @@ public class ManagerStaffAddController implements Initializable {
 //
 //        System.out.println(typeNames);
 
-        ObservableList<String> list = FXCollections.observableList(typeNames);
+        ObservableList<String> list =
+                FXCollections.observableList(typeNames);
         type_combo_box.setItems(list);
         type = type_combo_box.getSelectionModel().getSelectedItem();
 
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        RequiredFieldValidator validator = new RequiredFieldValidator();
+    public void initialize(URL url,
+                           ResourceBundle resourceBundle) {
+        RequiredFieldValidator validator =
+                new RequiredFieldValidator();
         validator.setMessage("Empty Field!");
         name_text_field.getValidators().add(validator);
         mobile_text_field.getValidators().add(validator);
@@ -345,7 +420,8 @@ public class ManagerStaffAddController implements Initializable {
         type_error_icon_imageview.setVisible(false);
 
         typeNames = new ArrayList<>();
-        query = "select TypeName from StaffTypeList";
+        query = "select TypeName from " +
+                "StaffTypeList";
 
         mobile_number_error_label.setVisible(false);
         age_number_error_label.setVisible(false);
@@ -401,25 +477,41 @@ public class ManagerStaffAddController implements Initializable {
         });
 
 
-//        shift_end_time_picker.editorProperty().addListener(new ChangeListener<TextField>() {
+//        shift_end_time_picker.editorProperty
+//        ().addListener(new
+//        ChangeListener<TextField>() {
 //            @Override
-//            public void changed(ObservableValue<? extends TextField> observableValue, TextField textField,
+//            public void changed
+//            (ObservableValue<? extends
+//            TextField> observableValue,
+//            TextField textField,
 //                                TextField t1) {
 //                if (!t1.getText().isEmpty()) {
-//                    shift_end_time_picker.getValidators().add(Invalidate);
-//                    shift_end_time_picker.validate();
+//                    shift_end_time_picker
+//                    .getValidators().add
+//                    (Invalidate);
+//                    shift_end_time_picker
+//                    .validate();
 //
 //                }
 //            }
 //        });
 //
-//        shift_start_time_picker.editorProperty().addListener(new ChangeListener<TextField>() {
+//        shift_start_time_picker
+//        .editorProperty().addListener(new
+//        ChangeListener<TextField>() {
 //            @Override
-//            public void changed(ObservableValue<? extends TextField> observableValue, TextField textField,
+//            public void changed
+//            (ObservableValue<? extends
+//            TextField> observableValue,
+//            TextField textField,
 //                                TextField t1) {
 //                if (!t1.getText().isEmpty()) {
-//                    shift_start_time_picker.getValidators().add(Invalidate);
-//                    shift_start_time_picker.validate();
+//                    shift_start_time_picker
+//                    .getValidators().add
+//                    (Invalidate);
+//                    shift_start_time_picker
+//                    .validate();
 //
 //                }
 //            }
@@ -427,8 +519,10 @@ public class ManagerStaffAddController implements Initializable {
 
 
         try {
-            statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
+            statement =
+                    connection.createStatement();
+            ResultSet resultSet =
+                    statement.executeQuery(query);
 
             while (resultSet.next()) {
                 typeNames.add(resultSet.getString(1));
@@ -439,7 +533,8 @@ public class ManagerStaffAddController implements Initializable {
         }
         System.out.println(typeNames);
 
-        ObservableList<String> list = FXCollections.observableList(typeNames);
+        ObservableList<String> list =
+                FXCollections.observableList(typeNames);
         type_combo_box.setItems(list);
 
         mobile_text_field.textProperty().addListener((observableValue, oldValue, newValue) -> {
