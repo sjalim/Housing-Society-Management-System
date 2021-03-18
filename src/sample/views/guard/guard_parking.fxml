@@ -8,6 +8,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -18,14 +20,14 @@
          <children>
             <Pane layoutX="-2.0" prefHeight="800.0" prefWidth="251.0" style="-fx-background-color: #002323;">
                <children>
-                  <JFXButton fx:id="filter_button" layoutX="25.0" layoutY="374.0" prefHeight="53.0" prefWidth="207.0" styleClass="btn" stylesheets="@../../styles/guardParking.css" text="Filter">
+                  <JFXButton fx:id="filter_button" layoutX="25.0" layoutY="374.0" onAction="#handleFilter" prefHeight="53.0" prefWidth="207.0" styleClass="btn" stylesheets="@../../styles/guardParking.css" text="Filter">
                      <font>
                         <Font name="Trebuchet MS" size="25.0" />
                      </font>
                   </JFXButton>
-                  <JFXTimePicker fx:id="in_time_timepicker" defaultColor="BLACK" layoutX="7.0" layoutY="167.0" prefHeight="28.0" prefWidth="115.0" promptText="In Time" styleClass="pickers" stylesheets="@../../styles/guardParking.css" />
-                  <JFXTimePicker fx:id="out_time_timepicker" defaultColor="BLACK" layoutX="130.0" layoutY="167.0" prefHeight="28.0" prefWidth="115.0" promptText="Out Time" styleClass="pickers" stylesheets="@../../styles/guardParking.css" />
-                  <JFXDatePicker fx:id="tracker_date_datepicker" defaultColor="BLACK" layoutX="29.0" layoutY="245.0" prefHeight="28.0" prefWidth="200.0" promptText="Tracker date" styleClass="pickers" stylesheets="@../../styles/guardParking.css" />
+                  <JFXTimePicker fx:id="in_time_timepicker" defaultColor="BLACK" layoutX="7.0" layoutY="167.0" onAction="#handleInTime" prefHeight="28.0" prefWidth="115.0" promptText="In Time" styleClass="pickers" stylesheets="@../../styles/guardParking.css" />
+                  <JFXTimePicker fx:id="out_time_timepicker" defaultColor="BLACK" layoutX="130.0" layoutY="167.0" onAction="#handleOutTIme" prefHeight="28.0" prefWidth="115.0" promptText="Out Time" styleClass="pickers" stylesheets="@../../styles/guardParking.css" />
+                  <JFXDatePicker fx:id="tracker_date_datepicker" defaultColor="BLACK" layoutX="29.0" layoutY="245.0" onAction="#handleTrackerDate" prefHeight="28.0" prefWidth="200.0" promptText="Tracker date" styleClass="pickers" stylesheets="@../../styles/guardParking.css" />
                </children>
             </Pane>
             <TableView fx:id="table" layoutX="303.0" layoutY="104.0" prefHeight="463.0" prefWidth="850.0" styleClass="table" stylesheets="@../../styles/guardParking.css">
@@ -46,6 +48,16 @@
                   <Font size="20.0" />
                </font>
             </JFXTextField>
+            <JFXButton layoutX="1068.0" layoutY="55.0" onAction="#handleRefresh" styleClass="refresh-btn" stylesheets="@../../styles/guardParking.css" text="Refresh">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/refresh.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton layoutX="1040.0" layoutY="614.0" onAction="#handleDelete" prefHeight="48.0" prefWidth="126.0" styleClass="btn" stylesheets="@../../styles/guardParking.css" text="Delete" />
          </children></AnchorPane>
    </content>
 </ScrollPane>

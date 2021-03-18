@@ -11,14 +11,14 @@ public class ParkingVehicle {
     Date date;
     Time inTime, outTime;
     String timeIn,timeOut;
-    int id;
+    int id, trackId;
 
-    public ParkingVehicle(int id,
+    public ParkingVehicle(int id,int trackId,
                           String flatNumber,
                            String carModel, String carNumber, Date date, Time inTime, Time outTime) {
         this.id = id;
         this.flatNumber = flatNumber;
-
+        this.trackId = trackId;
         this.carModel = carModel;
         this.carNumber = carNumber;
         this.date = date;
@@ -30,6 +30,14 @@ public class ParkingVehicle {
               outTime.toLocalTime().format(DateTimeFormatter.ofPattern("hh:mm a"));
 
 
+    }
+
+    public int getTrackId() {
+        return trackId;
+    }
+
+    public void setTrackId(int trackId) {
+        this.trackId = trackId;
     }
 
     public String getTimeIn() {
