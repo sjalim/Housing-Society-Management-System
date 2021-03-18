@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<DialogPane prefHeight="197.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <buttonTypes>
+      <ButtonType fx:constant="OK" />
+   </buttonTypes>
+   <header>
+      <AnchorPane prefHeight="114.0" prefWidth="410.0">
+         <children>
+            <Label layoutX="50.0" layoutY="64.0" prefHeight="47.0" prefWidth="329.0" text="No row is selected" textFill="RED">
+               <font>
+                  <Font name="Trebuchet MS" size="40.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="46.0" fitWidth="41.0" layoutX="185.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/close.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </header>
+</DialogPane>

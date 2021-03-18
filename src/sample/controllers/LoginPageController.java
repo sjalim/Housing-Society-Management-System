@@ -60,7 +60,7 @@ public class LoginPageController implements Initializable {
 
     ArrayList<String> typeNames;
 
-    String curLoginType;
+    String curLoginType = "";
 
 
     String userId, password, passwordDB,
@@ -130,6 +130,8 @@ public class LoginPageController implements Initializable {
 
             if (validatePassword(password)) {
 
+                System.out.println("alim here");
+
                 if (curLoginType.isEmpty()) {
 
                     error_label.setVisible(true);
@@ -156,7 +158,6 @@ public class LoginPageController implements Initializable {
                                 ".FlatNumber = " +
                                 "'" + userId +
                                 "';";
-
 
 
                         Statement statement =
@@ -209,7 +210,6 @@ public class LoginPageController implements Initializable {
                         }
 
 
-
                     } else if (curLoginType.equals(GUARD_STATUS)) {
 
                         String query = "select " +
@@ -225,7 +225,6 @@ public class LoginPageController implements Initializable {
                                 ".Mobile=" + userId + ";";
 
 
-
                         Statement statement =
                                 connection.createStatement();
                         ResultSet resultSet =
@@ -236,9 +235,8 @@ public class LoginPageController implements Initializable {
                                     resultSet.getString(1);
 
                             if (passwordDB.equals(password)) {
-                                Parent guardParent = FXMLLoader.load(getClass().getResource("/sample/views/guard/Guard" +
-                                        ".fxml"));
-                                Scene guardScene = new Scene(guardParent, 1200, 700);
+                                Parent guardParent = FXMLLoader.load(getClass().getResource("/sample/views/guard/guard_dashboard.fxml"));
+                                Scene guardScene = new Scene(guardParent, 1200, 500);
                                 userPreferences.put(USER_STATUS, GUARD_STATUS);
                                 userPreferences.put(USER_ID, userId);
                                 loadNext(guardScene);
@@ -276,54 +274,50 @@ public class LoginPageController implements Initializable {
 
                                 }
                             }
-                        } else if (curLoginType.equals(MANAGER_STATUS)) {
-
-
-                            query = "select " +
-                                    "ManagerPassword from Manager where Mobile=" + userId + ";";
-                            statement =
-                                    connection.createStatement();
-                            resultSet =
-                                    statement.executeQuery(query);
-                            if (resultSet.next()) {
-                                passwordDB =
-                                        resultSet.getString(1);
-
-                                if (passwordDB.equals(password)) {
-                                    Parent managerParent = FXMLLoader.load(getClass().getResource("/sample/views/manager" +
-                                            "/manager_dashboard.fxml"));
-                                    Scene managerScene = new Scene(managerParent, 1200, 700);
-                                    userPreferences.put(USER_STATUS, MANAGER_STATUS);
-                                    userPreferences.put(USER_ID, userId);
-                                    loadNext(managerScene);
-
-                                } else {
-                                    AlertDialog(
-                                            "Incorrect Password!");
-                                }
-                            }
-
-
-                        } else {
-                            AlertDialog(
-                                    "Invalid User " +
-                                            "Name or Password");
-
                         }
+                    } else if (curLoginType.equals(MANAGER_STATUS)) {
+
+
+                      String  query = "select " +
+                                "ManagerPassword from Manager where Mobile=" + userId + ";";
+                      Statement  statement =
+                                connection.createStatement();
+                      ResultSet  resultSet =
+                                statement.executeQuery(query);
+                        if (resultSet.next()) {
+                            passwordDB =
+                                    resultSet.getString(1);
+
+                            if (passwordDB.equals(password)) {
+                                Parent managerParent = FXMLLoader.load(getClass().getResource("/sample/views/manager" +
+                                        "/manager_dashboard.fxml"));
+                                Scene managerScene = new Scene(managerParent, 1200, 700);
+                                userPreferences.put(USER_STATUS, MANAGER_STATUS);
+                                userPreferences.put(USER_ID, userId);
+                                loadNext(managerScene);
+
+                            } else {
+                                AlertDialog(
+                                        "Incorrect Password!");
+                            }
+                        }
+
+
+                    } else {
+                        AlertDialog(
+                                "Invalid User " +
+                                        "Name " +
+                                        "or Password");
 
                     }
 
                 }
+
             }
-        } catch (Exception e) {
-
-            e.printStackTrace();
-
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-
     }
-
-
 
     @FXML
     void handleLoginType(ActionEvent event) {
@@ -484,6 +478,7 @@ public class LoginPageController implements Initializable {
                 FXCollections.observableArrayList(typeNames);
 
         login_type_combo_box.setItems(list);
+        error_label.setVisible(false);
 
         login_type_combo_box.getEditor().textProperty().addListener(new ChangeListener<String>() {
             @Override

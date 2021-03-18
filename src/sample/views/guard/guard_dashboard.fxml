@@ -39,21 +39,7 @@
                     </font>
                 </Label>
                 <Line endX="123.60002136230469" endY="-13.799995422363281" layoutX="104.0" layoutY="57.0" startX="-98.00001525878906" startY="-13.799995422363281" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="4.0" />
-                <AnchorPane fx:id="monitor_anchor_pane" layoutX="17.0" layoutY="45.0" prefHeight="36.0" prefWidth="149.0">
-                    <children>
-                        <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="11.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../../images/monitor.png" />
-                            </image>
-                        </ImageView>
-                        <Label layoutX="41.0" layoutY="6.0" prefHeight="25.0" prefWidth="79.0" text="Monitor">
-                            <font>
-                                <Font name="Century Gothic Bold" size="20.0" />
-                            </font>
-                        </Label>
-                    </children>
-                </AnchorPane>
-                <JFXButton fx:id="profile_button" layoutX="4.0" layoutY="315.0" text="Profile" AnchorPane.leftAnchor="4.0">
+                <JFXButton fx:id="profile_button" layoutX="14.0" layoutY="274.0" text="Profile" AnchorPane.leftAnchor="14.0">
                     <font>
                         <Font name="Century Gothic Bold" size="20.0" />
                     </font>
@@ -65,7 +51,7 @@
                         </ImageView>
                     </graphic>
                 </JFXButton>
-                <JFXButton fx:id="logout_button" layoutY="358.0" text="Log Out                 " AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                <JFXButton fx:id="logout_button" layoutX="-2.0" layoutY="309.0" prefHeight="42.0" prefWidth="237.0" text="Log Out" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="2.0">
                     <font>
                         <Font name="Century Gothic Bold" size="20.0" />
                     </font>
@@ -77,9 +63,9 @@
                         </ImageView>
                     </graphic>
                 </JFXButton>
-                <VBox fx:id="monitor_vbox" layoutX="29.0" layoutY="81.0" prefHeight="105.0" prefWidth="109.0">
+                <VBox fx:id="monitor_vbox" layoutX="10.0" layoutY="47.0" prefHeight="225.0" prefWidth="217.0">
                     <children>
-                        <JFXButton fx:id="guardParking_button" alignment="BOTTOM_CENTER" prefHeight="38.0" prefWidth="137.0" text="Parking">
+                        <JFXButton fx:id="guardParking_button" alignment="BOTTOM_CENTER" prefHeight="45.0" prefWidth="202.0" text="Parking Track">
                             <graphic>
                                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -88,10 +74,10 @@
                                 </ImageView>
                             </graphic>
                             <font>
-                                <Font name="Century Gothic Bold" size="16.0" />
+                                <Font name="Century Gothic Bold" size="20.0" />
                             </font>
                         </JFXButton>
-                        <JFXButton fx:id="guardVisitors_button" alignment="BASELINE_CENTER" text="Visitors">
+                        <JFXButton fx:id="guardVisitors_button" alignment="BASELINE_CENTER" prefHeight="45.0" prefWidth="205.0" text="Visitors Track">
                             <graphic>
                                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -100,10 +86,10 @@
                                 </ImageView>
                             </graphic>
                             <font>
-                                <Font name="System Bold" size="16.0" />
+                                <Font name="System Bold" size="20.0" />
                             </font>
                         </JFXButton>
-                        <JFXButton fx:id="Staffs_button" alignment="BASELINE_CENTER" text="Staffs    ">
+                        <JFXButton fx:id="Staffs_button" alignment="BASELINE_CENTER" prefHeight="39.0" prefWidth="175.0" text="Staffs Track">
                             <graphic>
                                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -112,9 +98,33 @@
                                 </ImageView>
                             </graphic>
                             <font>
-                                <Font name="Century Gothic Bold" size="16.0" />
+                                <Font name="Century Gothic Bold" size="20.0" />
                             </font>
                         </JFXButton>
+                  <JFXButton fx:id="add_track_button" alignment="BOTTOM_CENTER" prefHeight="45.0" prefWidth="184.0" text="Add Record">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" smooth="false">
+                           <image>
+                              <Image url="@../../images/add.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Century Gothic Bold" size="20.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="update_track_button" alignment="BOTTOM_CENTER" prefHeight="45.0" prefWidth="209.0" text="Update Record">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" smooth="false">
+                           <image>
+                              <Image url="@../../images/update.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Century Gothic Bold" size="20.0" />
+                     </font>
+                  </JFXButton>
                     </children>
                 </VBox>
             </children>

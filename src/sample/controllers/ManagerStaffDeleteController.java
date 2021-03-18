@@ -5,8 +5,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.stage.Stage;
 import sample.database.DatabaseHandler;
 
 import java.net.URL;
@@ -30,6 +32,12 @@ public class ManagerStaffDeleteController  {
 
     @FXML
     void handleCancel(ActionEvent event) {
+
+        Node node = (Node)event.getSource();
+        Stage stage =
+                (Stage) node.getScene().getWindow();
+        stage.close();
+
 
     }
 
@@ -97,6 +105,12 @@ public class ManagerStaffDeleteController  {
 
 
         }
+
+        Node node = (Node)event.getSource();
+        Stage stage =
+                (Stage) node.getScene().getWindow();
+        stage.close();
+
     }
 
     public void setStaffList(ObservableList<Staff> staff) {
