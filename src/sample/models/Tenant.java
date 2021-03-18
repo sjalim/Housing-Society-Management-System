@@ -35,8 +35,8 @@ public class Tenant {
         this.moveOut = moveOut;
     }
 
-    public Tenant(int tenantId, String flatNumber, String tenantName, String mobile, String nid, String presentAdd,
-                  String permanentAdd, String occupation, int totalFamilyMember, Date moveIn, Date moveOut) {
+    public Tenant(int tenantId, String flatNumber, String tenantName, String mobile, String presentAdd,
+                  String permanentAdd, String nid, String occupation, int totalFamilyMember, Date moveIn, Date moveOut) {
         this.tenantId = tenantId;
         this.flatNumber = flatNumber;
         this.tenantName = tenantName;

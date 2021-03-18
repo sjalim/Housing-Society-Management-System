@@ -1,4 +1,4 @@
-package sample.controllers;
+package sample.controllers.manager.flat;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -123,9 +123,10 @@ public class ManagerFlatOwnerAddController implements Initializable {
             //Insert into FlatLogin Table
             String insertFlatLogin = "INSERT INTO FlatLogin (FlatNumber,Password) " +
                     "VALUES(?,?)";
+            String password = flatNo+"#";
             PreparedStatement psFlatLogin = databaseHandler.getDbConnection().prepareStatement(insertFlatLogin);
             psFlatLogin.setString(1,flatNo);
-            psFlatLogin.setString(2,flatNo); //Initially setting FlatOwner's password as FlatNo
+            psFlatLogin.setString(2,password); //Initially setting FlatOwner's password as FlatNo+#
             psFlatLogin.executeUpdate();
             psFlatLogin.close();
             databaseHandler.getDbConnection().close();

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="467.0" prefWidth="391.0" style="-fx-background-color: #435560;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.manager.collectpayments.ManagerAddPaymentController">
+   <children>
+      <VBox alignment="TOP_CENTER" layoutX="50.0" layoutY="107.0" prefHeight="290.0" prefWidth="292.0" spacing="20.0" style="-fx-border-color: white;">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="288.0" spacing="20.0">
+               <children>
+                  <JFXComboBox fx:id="newPaymentTypeCombo" blendMode="ADD" prefHeight="42.0" prefWidth="208.0" promptText="Select Type">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </JFXComboBox>
+                  <ImageView fx:id="addNewTypeButton" fitHeight="39.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/add.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <JFXButton fx:id="flatListButton" blendMode="SCREEN" prefHeight="46.0" prefWidth="242.0" style="-fx-border-color: white;" text="Select Flats" textFill="WHITE">
+               <font>
+                  <Font name="Century Gothic" size="14.0" />
+               </font>
+            </JFXButton>
+            <JFXTextField fx:id="amountField" blendMode="ADD" prefHeight="40.0" prefWidth="276.0" promptText="Select Amount" style="-fx-border-color: white;">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets left="22.0" right="22.0" />
+               </VBox.margin>
+            </JFXTextField>
+            <JFXButton fx:id="publishButton" style="-fx-border-color: white;" text="Publish" textFill="WHITE">
+               <font>
+                  <Font name="Century Gothic" size="14.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </VBox>
+      <Label layoutX="105.0" layoutY="41.0" text="Add A New Payment" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic Bold" size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
