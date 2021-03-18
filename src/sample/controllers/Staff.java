@@ -1,12 +1,20 @@
 package sample.controllers;
 
+import java.sql.Time;
+import java.time.format.DateTimeFormatter;
+
 public class Staff {
 
-    String name,type,shift_start,shift_end,
+    String name,type,
     mobile,present_ad,permanent_ad,nid;
     int id,salary,age;
 
-    public Staff(String name, String type, String shift_start, String shift_end, String mobile, String present_ad,
+    Time shift_start, shift_end;
+
+    String start_time,end_time;
+
+
+    public Staff(String name, String type, Time shift_start, Time shift_end, String mobile, String present_ad,
                  String permanent_ad, int age,
                  String nid, int salary,int id) {
         this.name = name;
@@ -20,6 +28,26 @@ public class Staff {
         this.salary = salary;
         this.age = age;
         this.nid = nid;
+        this.start_time =
+                shift_start.toLocalTime().format(DateTimeFormatter.ofPattern("hh:mm a"));
+        this.end_time =
+                shift_end.toLocalTime().format(DateTimeFormatter.ofPattern("hh:mm a"));
+    }
+
+    public String getStart_time() {
+        return start_time;
+    }
+
+    public void setStart_time(String start_time) {
+        this.start_time = start_time;
+    }
+
+    public String getEnd_time() {
+        return end_time;
+    }
+
+    public void setEnd_time(String end_time) {
+        this.end_time = end_time;
     }
 
     public String getNid() {
@@ -46,19 +74,19 @@ public class Staff {
         this.type = type;
     }
 
-    public String getShift_start() {
+    public Time getShift_start() {
         return shift_start;
     }
 
-    public void setShift_start(String shift_start) {
+    public void setShift_start(Time shift_start) {
         this.shift_start = shift_start;
     }
 
-    public String getShift_end() {
+    public Time getShift_end() {
         return shift_end;
     }
 
-    public void setShift_end(String shift_end) {
+    public void setShift_end(Time shift_end) {
         this.shift_end = shift_end;
     }
 

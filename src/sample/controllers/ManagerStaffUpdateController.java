@@ -181,6 +181,13 @@ public class ManagerStaffUpdateController implements Initializable {
         }
 
 
+        Node node = (Node)event.getSource();
+        Stage stage =
+                (Stage) node.getScene().getWindow();
+        stage.close();
+
+
+
     }
 
     @Override
@@ -206,16 +213,15 @@ public class ManagerStaffUpdateController implements Initializable {
                 .getType());
         update_salary.setText(String.valueOf(staff.salary));
 
-        LocalTime start_time= LocalTime.parse(
-                staff.getShift_start(),
-                DateTimeFormatter.ofPattern(
-                        "hh:mm a"));
+        LocalTime start_time =
+                staff.getShift_start().toLocalTime();
+
+        LocalTime end_time =
+                staff.getShift_end().toLocalTime();
+
+
         update_start_time.setValue(start_time);
 
-        LocalTime end_time= LocalTime.parse(
-                staff.getShift_end(),
-                DateTimeFormatter.ofPattern(
-                        "hh:mm a"));
         update_end_time.setValue(end_time);
 
 
