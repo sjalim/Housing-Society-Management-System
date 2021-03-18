@@ -4,9 +4,6 @@ import com.jfoenix.controls.JFXButton;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
 
@@ -20,20 +17,14 @@ import javafx.fxml.Initializable;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import javafx.util.Duration;
+import sample.controllers.manager.flat.ManagerFlatOwnerController;
 import sample.database.DatabaseHandler;
-import sample.models.FlatOwner;
 
 public class ManagerDashboardController implements Initializable {
 
@@ -144,25 +135,24 @@ public class ManagerDashboardController implements Initializable {
         flatsOwner_button.setOnAction(actionEvent -> {
             try {
                 AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/manager" +
-                        "/manager_FlatOwner.fxml"));
+                        "/flat/manager_FlatOwner.fxml"));
                 contentViewPane.getChildren().setAll(anchorPane);
             } catch (IOException throwables) {
                 throwables.printStackTrace();
             }
         });
 
-
         flatsTenant_button.setOnAction(actionEvent -> {
             try {
                 AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/manager" +
-                        "/manager_FlatTenant.fxml"));
-                ManagerFlatOwnerController managerFlatOwnerController = new ManagerFlatOwnerController();
+                        "/flat/manager_FlatTenant.fxml"));
                 contentViewPane.getChildren().clear();
                 contentViewPane.getChildren().setAll(anchorPane);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
+
         logout_manager_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -193,6 +183,36 @@ public class ManagerDashboardController implements Initializable {
                 } catch (IOException throwables) {
                     throwables.printStackTrace();
                 }
+            }
+        });
+
+        complain_button.setOnAction(actionEvent -> {
+            try {
+                AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/manager/complaintbox/manager_complaint_box.fxml"));
+                contentViewPane.getChildren().clear();
+                contentViewPane.getChildren().setAll(anchorPane);
+            } catch (IOException throwables) {
+                throwables.printStackTrace();
+            }
+        });
+
+        payment_button.setOnAction(actionEvent -> {
+            try {
+                AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/manager/collectpayments/manager_collect_payments.fxml"));
+                contentViewPane.getChildren().clear();
+                contentViewPane.getChildren().setAll(anchorPane);
+            } catch (IOException throwables) {
+                throwables.printStackTrace();
+            }
+        });
+
+        notice_button.setOnAction(actionEvent -> {
+            try {
+                AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/manager/noticeboard/manager_notice_board.fxml"));
+                contentViewPane.getChildren().clear();
+                contentViewPane.getChildren().setAll(anchorPane);
+            } catch (IOException throwables) {
+                throwables.printStackTrace();
             }
         });
 

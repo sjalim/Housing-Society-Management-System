@@ -1,4 +1,4 @@
-package sample.controllers;
+package sample.controllers.manager.flat;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
