@@ -1,4 +1,4 @@
-package sample.controllers;
+package sample.controllers.manager.flat;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -87,16 +87,22 @@ public class ManagerFlatTenantController implements Initializable {
 
     @FXML private JFXComboBox<String> movingTypeComboBox;
 
+    @FXML private JFXComboBox<String> searchComboBox;
+
+    @FXML private JFXButton searchButton;
+
+    private final String[] search_options = {"Flat No","Name","Mobile","NID"};
     private final String[] movingType = {"MoveIn","MoveOut"};
     private String query;
     private boolean isRowSelected = false;
     private DatabaseHandler databaseHandler = new DatabaseHandler();
     private ObservableList<Tenant> tenantObservableList;
     private ObservableList<Tenant> typeObservableList;
+    private ObservableList<Tenant> searchList;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        initSearchOptions();
         initMovingType();
         fromDate.setConverter(new StringConverter<LocalDate>()
         {
@@ -149,54 +155,14 @@ public class ManagerFlatTenantController implements Initializable {
                             System.out.println("this is called every 1 seconds on Tenant thread");
                             tenantObservableList = FXCollections.observableArrayList();
                             typeObservableList = FXCollections.observableArrayList();
+                            searchList = FXCollections.observableArrayList();
                             initTable();
                             try {
                                 loadFromDatabase();
                             } catch (SQLException | ClassNotFoundException throwables) {
                                 throwables.printStackTrace();
                             }
-                            FilteredList<Tenant> filteredData = new FilteredList<>(tenantObservableList, b -> true);
-
-                            // 2. Set the filter Predicate whenever the filter changes.
-                            filteredTenant.textProperty().addListener((observable, oldValue, newValue) -> {
-                                filteredData.setPredicate(tenant -> {
-                                    // If filter text is empty, display all persons.
-                                    if (newValue == null || newValue.isEmpty()) {
-                                        return true;
-                                    }
-                                    // Compare first name and last name of every person with filter text.
-                                    String lowerCaseFilter = newValue.toLowerCase();
-                                    DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-//                                    String text = df.format(date);
-
-                                    if (tenant.getFlatNumber().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
-                                        return true;
-                                    } else if (String.valueOf(tenant.getTotalFamilyMember()).indexOf(lowerCaseFilter) != -1){
-                                        return true;
-                                    } else if (tenant.getMobile().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-                                        return true;
-                                    } else if (tenant.getPresentAdd().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-                                        return true;
-                                    } else if (tenant.getPermanentAdd().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-                                        return true;
-                                    } else if (tenant.getNid().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-                                        return true;
-                                    } else if (tenant.getTenantName().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-                                        return true;
-                                    } else if (tenant.getOccupation().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-                                        return true;
-                                    }
-                                    else
-                                        return false; // Does not match.
-                                });
-                            });
-                            // 3. Wrap the FilteredList in a SortedList.
-                            SortedList<Tenant> sortedData = new SortedList<>(filteredData);
-                            // 4. Bind the SortedList comparator to the TableView comparator.
-                            // 	  Otherwise, sorting the TableView would have no effect.
-                            sortedData.comparatorProperty().bind(tenant_tableView.comparatorProperty());
-                            // 5. Add sorted (and filtered) data to the table.
-                            tenant_tableView.setItems(sortedData);
+                            tenant_tableView.setItems(tenantObservableList);
                         }));
         refreshTableTimeline.setCycleCount(Timeline.INDEFINITE);
         refreshTableTimeline.play();
@@ -253,15 +219,132 @@ public class ManagerFlatTenantController implements Initializable {
             refreshTableTimeline.play();
         });
 
+        editButton.setOnAction(actionEvent -> {
+            if(isRowSelected){
+                showTenantEditView(refreshTableTimeline);
+            }else {
+                AlertDialog("Select a row");
+            }
+        });
+
         addButton.setOnAction(actionEvent -> {
             showTenantAddView();
         });
+
+        searchButton.setOnAction(actionEvent -> {
+            refreshTableTimeline.stop();
+            try {
+                if(searchComboBox.getValue().equals("Flat No")) {
+                    searchByFlat();
+                    tenant_tableView.setItems(null);
+                    tenant_tableView.setItems(searchList);
+                } else if (searchComboBox.getValue().equals("Name")) {
+                    searchByName();
+                    tenant_tableView.setItems(null);
+                    tenant_tableView.setItems(searchList);
+                } else if (searchComboBox.getValue().equals("Mobile")) {
+                    searchByMobile();
+                    tenant_tableView.setItems(null);
+                    tenant_tableView.setItems(searchList);
+                } else if (searchComboBox.getValue().equals("NID")) {
+                    searchByNid();
+                    tenant_tableView.setItems(null);
+                    tenant_tableView.setItems(searchList);
+                } else {
+                    AlertDialog("Select search by option");
+                }
+            } catch (SQLException | ClassNotFoundException throwables) {
+                throwables.printStackTrace();
+            }
+
+        });
+    }
+
+    private void searchByFlat() throws SQLException, ClassNotFoundException {
+        searchList.clear();
+        databaseHandler = new DatabaseHandler();
+        Statement st = databaseHandler.getDbConnection().createStatement();
+
+        query = "SELECT * FROM Tenant as t " +
+                "INNER JOIN Tenant_Info as tInfo ON t.tenantId = tInfo.tenantId " +
+                "WHERE t.FlatNumber='"+filteredTenant.getText()+"'";
+
+        ResultSet rs = st.executeQuery(query);
+        while(rs.next()) {
+            searchList.add(new Tenant(rs.getInt("TenantId"),rs.getString("FlatNumber"),
+                    rs.getString("TenantName"), rs.getString("Mobile"),
+                    rs.getString("PresentAddress"),rs.getString("PermanentAddress"),
+                    rs.getString("Nid"),rs.getString("Occupation"),rs.getInt("TotalFamilyMembers"),
+                    rs.getDate("MoveIn"),rs.getDate("MoveOut")));
+        }
+        databaseHandler.getDbConnection().close();
+    }
+
+    private void searchByName() throws SQLException, ClassNotFoundException {
+        searchList.clear();
+        databaseHandler = new DatabaseHandler();
+        Statement st = databaseHandler.getDbConnection().createStatement();
+
+        query = "SELECT * FROM Tenant as t " +
+                "INNER JOIN Tenant_Info as tInfo ON t.tenantId = tInfo.tenantId " +
+                "WHERE t.TenantName='"+filteredTenant.getText()+"'";
+
+        ResultSet rs = st.executeQuery(query);
+        while(rs.next()) {
+            searchList.add(new Tenant(rs.getInt("TenantId"),rs.getString("FlatNumber"),
+                    rs.getString("TenantName"), rs.getString("Mobile"),
+                    rs.getString("PresentAddress"),rs.getString("PermanentAddress"),
+                    rs.getString("Nid"),rs.getString("Occupation"),rs.getInt("TotalFamilyMembers"),
+                    rs.getDate("MoveIn"),rs.getDate("MoveOut")));
+        }
+        databaseHandler.getDbConnection().close();
+    }
+
+    private void searchByMobile() throws SQLException, ClassNotFoundException {
+        searchList.clear();
+        databaseHandler = new DatabaseHandler();
+        Statement st = databaseHandler.getDbConnection().createStatement();
+
+        query = "SELECT * FROM Tenant as t " +
+                "INNER JOIN Tenant_Info as tInfo ON t.tenantId = tInfo.tenantId " +
+                "WHERE tInfo.Mobile='"+filteredTenant.getText()+"'";
+
+        ResultSet rs = st.executeQuery(query);
+        while(rs.next()) {
+            searchList.add(new Tenant(rs.getInt("TenantId"),rs.getString("FlatNumber"),
+                    rs.getString("TenantName"), rs.getString("Mobile"),
+                    rs.getString("PresentAddress"),rs.getString("PermanentAddress"),
+                    rs.getString("Nid"),rs.getString("Occupation"),rs.getInt("TotalFamilyMembers"),
+                    rs.getDate("MoveIn"),rs.getDate("MoveOut")));
+        }
+        databaseHandler.getDbConnection().close();
+    }
+
+    private void searchByNid() throws SQLException, ClassNotFoundException {
+        searchList.clear();
+        databaseHandler = new DatabaseHandler();
+        Statement st = databaseHandler.getDbConnection().createStatement();
+
+        query = "SELECT * FROM Tenant as t " +
+                "INNER JOIN Tenant_Info as tInfo ON t.tenantId = tInfo.tenantId " +
+                "WHERE tInfo.Nid='"+filteredTenant.getText()+"'";
+
+        ResultSet rs = st.executeQuery(query);
+        while(rs.next()) {
+            searchList.add(new Tenant(rs.getInt("TenantId"),rs.getString("FlatNumber"),
+                    rs.getString("TenantName"), rs.getString("Mobile"),
+                    rs.getString("PresentAddress"),rs.getString("PermanentAddress"),
+                    rs.getString("Nid"),rs.getString("Occupation"),rs.getInt("TotalFamilyMembers"),
+                    rs.getDate("MoveIn"),rs.getDate("MoveOut")));
+        }
+        databaseHandler.getDbConnection().close();
     }
 
     private void filterByDate(String fDate, String tDate, String mType) throws SQLException, ClassNotFoundException {
+        typeObservableList.clear();
         Statement st = databaseHandler.getDbConnection().createStatement();
         query = "SELECT * FROM Tenant as t INNER JOIN Tenant_Info as tInfo ON t.tenantId = tInfo.tenantId " +
-                    "WHERE tInfo."+mType+" BETWEEN '"+fDate+"'AND '"+tDate+"';";
+                "WHERE tInfo."+mType+" BETWEEN '"+fDate+"'AND '"+tDate+"';";
 
         ResultSet rs = st.executeQuery(query);
         while(rs.next()) {
@@ -272,6 +355,14 @@ public class ManagerFlatTenantController implements Initializable {
                     rs.getString("Nid"),rs.getString("Occupation"),rs.getInt("TotalFamilyMembers"),
                     rs.getDate("MoveIn"),rs.getDate("MoveOut")));
         }
+    }
+
+    private void initSearchOptions() {
+        List<String> list = new ArrayList<String>();
+        Collections.addAll(list, search_options);
+        //convert list to observable list
+        ObservableList observableList = FXCollections.observableArrayList(list);
+        searchComboBox.setItems(observableList);
     }
 
     private void initTable() {
@@ -289,6 +380,7 @@ public class ManagerFlatTenantController implements Initializable {
     }
 
     private void loadFromDatabase() throws SQLException, ClassNotFoundException {
+        tenantObservableList.clear();
         Statement statement = databaseHandler.getDbConnection().createStatement();
 
         query = "SELECT * FROM Tenant as t INNER JOIN Tenant_Info as tInfo ON t.tenantId = tInfo.tenantId";
@@ -311,66 +403,71 @@ public class ManagerFlatTenantController implements Initializable {
         movingTypeComboBox.setItems(observableList);
     }
 
-//    private void showFlatEditView(Timeline refreshTableTimeline) {
-//        try {
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(this.getClass().getResource("/sample/views/manager/manager_FlatOwner_Edit.fxml"));
-//            loader.load();
-//            ManagerFlatOwnerEditController managerFlatOwnerEditController = loader.getController();
-//            editSelectedRow(managerFlatOwnerEditController); //Edit table row
-//            Scene scene = new Scene(loader.getRoot());
-//            Stage stage = new Stage();
-//            stage.setScene(scene);
-//            stage.setTitle("Edit Flat Owner Details");
-//            stage.initModality(Modality.APPLICATION_MODAL);
-//            stage.show();
-//            stage.setOnCloseRequest(e -> {
-//                System.out.println("Edited Window Disconnected");
-//                refreshTableTimeline.play();
-//                isRowSelected = false;
-//            });
-//            managerFlatOwnerEditController.cancel_EditButton.setOnAction(actionEvent -> {
-//                System.out.println("Edited Window Disconnected");
-//                refreshTableTimeline.play();
-//                stage.close();
-//                isRowSelected = false;
-//            });
-//            managerFlatOwnerEditController.save_EditButton.setOnAction(actionEvent -> {
-//                try {
-//                    managerFlatOwnerEditController.updateFlatOwner();
-//                } catch (SQLException throwables) {
-//                    throwables.printStackTrace();
-//                } catch (ClassNotFoundException e) {
-//                    e.printStackTrace();
-//                }
-//                refreshTableTimeline.play();
-//                stage.close();
-//                isRowSelected = false;
-//                System.out.println("Data Saved");
-//            });
-//
-//        }catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    private void editSelectedRow(ManagerFlatOwnerEditController managerFlatOwnerEditController) {
-//        Tenant selectedRow = tenant_tableView.getSelectionModel().getSelectedItem();
-//
-//        managerFlatOwnerEditController.flatNo_EditField.setText(selectedRow.getFlatNumber());
-//        managerFlatOwnerEditController.ownerName_EditField.setText(selectedRow.getOwnerName());
-//        managerFlatOwnerEditController.nid_EditField.setText(selectedRow.getNid());
-//        managerFlatOwnerEditController.mobile_EditField.setText(selectedRow.getMobile());
-//        managerFlatOwnerEditController.prestAdd_EditField.setText(selectedRow.getPresentAdd());
-//        managerFlatOwnerEditController.permaAdd_EditField.setText(selectedRow.getPermanentAdd());
-//        managerFlatOwnerEditController.allocatedParking_EditField.setText(Integer.toString(selectedRow.getAllocatedParkingNo()));
-//        managerFlatOwnerEditController.allocStatus_EditComboBox.setValue(selectedRow.getAllocationStatus());
-//    }
+    private void showTenantEditView(Timeline refreshTableTimeline) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(this.getClass().getResource("/sample/views/manager/flat/manager_Tenant_Edit.fxml"));
+            loader.load();
+            ManagerTenantEditController managerTenantEditController = loader.getController();
+            editSelectedRow(managerTenantEditController); //Edit table row
+            Scene scene = new Scene(loader.getRoot());
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Edit Tenant Details");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+            stage.setOnCloseRequest(e -> {
+                System.out.println("Edited Window Disconnected");
+                refreshTableTimeline.play();
+                isRowSelected = false;
+            });
+            managerTenantEditController.cancel_EditButton.setOnAction(actionEvent -> {
+                System.out.println("Edited Window Disconnected");
+                refreshTableTimeline.play();
+                stage.close();
+                isRowSelected = false;
+            });
+            managerTenantEditController.save_EditButton.setOnAction(actionEvent -> {
+                try {
+                    managerTenantEditController.updateTenant();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                refreshTableTimeline.play();
+                stage.close();
+                isRowSelected = false;
+                System.out.println("Data Saved");
+            });
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void editSelectedRow(ManagerTenantEditController managerTenantEditController) {
+        Tenant selectedRow = tenant_tableView.getSelectionModel().getSelectedItem();
+
+        managerTenantEditController.tenantId_EditField.setText(Integer.toString(selectedRow.getTenantId()));
+        managerTenantEditController.flatNo_EditField.setText(selectedRow.getFlatNumber());
+        managerTenantEditController.tenantName_EditField.setText(selectedRow.getTenantName());
+        managerTenantEditController.nid_EditField.setText(selectedRow.getNid());
+        managerTenantEditController.mobile_EditField.setText(selectedRow.getMobile());
+        managerTenantEditController.prestAdd_EditField.setText(selectedRow.getPresentAdd());
+        managerTenantEditController.permaAdd_EditField.setText(selectedRow.getPermanentAdd());
+        managerTenantEditController.familyMember_EditField.setText(Integer.toString(selectedRow.getTotalFamilyMember()));
+        managerTenantEditController.occupation_EditField.setText(selectedRow.getOccupation());
+        managerTenantEditController.movedIn_DatePicker.setValue(selectedRow.getMoveIn().toLocalDate());
+        if(selectedRow.getMoveOut() != null) {
+            managerTenantEditController.movedOut_DatePicker.setValue(selectedRow.getMoveOut().toLocalDate());
+        }
+    }
 
     private void showTenantAddView() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(this.getClass().getResource("/sample/views/manager/manager_Tenant_Add.fxml"));
+            loader.setLocation(this.getClass().getResource("/sample/views/manager/flat/manager_Tenant_Add.fxml"));
             loader.load();
             Scene scene = new Scene(loader.getRoot());
             Stage stage = new Stage();

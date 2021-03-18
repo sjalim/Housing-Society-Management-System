@@ -144,7 +144,7 @@ public class ManagerDashboardController implements Initializable {
         flatsOwner_button.setOnAction(actionEvent -> {
             try {
                 AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/manager" +
-                        "/manager_FlatOwner.fxml"));
+                        "/flat/manager_FlatOwner.fxml"));
                 contentViewPane.getChildren().setAll(anchorPane);
             } catch (IOException throwables) {
                 throwables.printStackTrace();
@@ -155,13 +155,14 @@ public class ManagerDashboardController implements Initializable {
         flatsTenant_button.setOnAction(actionEvent -> {
             try {
                 AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/manager" +
-                        "/manager_FlatTenant.fxml"));
+                        "/flat/manager_FlatTenant.fxml"));
                 contentViewPane.getChildren().clear();
                 contentViewPane.getChildren().setAll(anchorPane);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
+
         logout_manager_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -192,6 +193,36 @@ public class ManagerDashboardController implements Initializable {
                 } catch (IOException throwables) {
                     throwables.printStackTrace();
                 }
+            }
+        });
+
+        complain_button.setOnAction(actionEvent -> {
+            try {
+                AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/manager/complaintbox/manager_complaint_box.fxml"));
+                contentViewPane.getChildren().clear();
+                contentViewPane.getChildren().setAll(anchorPane);
+            } catch (IOException throwables) {
+                throwables.printStackTrace();
+            }
+        });
+
+        payment_button.setOnAction(actionEvent -> {
+            try {
+                AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/manager/collectpayments/manager_collect_payments.fxml"));
+                contentViewPane.getChildren().clear();
+                contentViewPane.getChildren().setAll(anchorPane);
+            } catch (IOException throwables) {
+                throwables.printStackTrace();
+            }
+        });
+
+        notice_button.setOnAction(actionEvent -> {
+            try {
+                AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/manager/noticeboard/manager_notice_board.fxml"));
+                contentViewPane.getChildren().clear();
+                contentViewPane.getChildren().setAll(anchorPane);
+            } catch (IOException throwables) {
+                throwables.printStackTrace();
             }
         });
 
