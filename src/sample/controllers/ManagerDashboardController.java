@@ -156,7 +156,6 @@ public class ManagerDashboardController implements Initializable {
             try {
                 AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/manager" +
                         "/manager_FlatTenant.fxml"));
-                ManagerFlatOwnerController managerFlatOwnerController = new ManagerFlatOwnerController();
                 contentViewPane.getChildren().clear();
                 contentViewPane.getChildren().setAll(anchorPane);
             } catch (Exception e) {
