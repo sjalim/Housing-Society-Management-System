@@ -1,4 +1,4 @@
-package sample.controllers.manager.noticeboard;
+package sample.controllers.resident;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
@@ -29,7 +29,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-public class ManagerNoticeBoardController implements Initializable{
+public class ResidentNoticeBoardController implements Initializable{
 
     @FXML
     private JFXDatePicker fromDatePicker;
@@ -42,9 +42,6 @@ public class ManagerNoticeBoardController implements Initializable{
 
     @FXML
     private JFXTextField filteredNotice;
-
-    @FXML
-    private JFXButton postNoticeButton;
 
     @FXML
     private JFXButton refreshButton;
@@ -109,7 +106,6 @@ public class ManagerNoticeBoardController implements Initializable{
         Timeline refreshTableTimeline = new Timeline(
                 new KeyFrame(Duration.seconds(2),
                         event -> {
-                            System.out.println("this is called every 1 seconds on NOTICE BOARD thread");
                             noticeObservableList = FXCollections.observableArrayList();
 
 
@@ -137,8 +133,8 @@ public class ManagerNoticeBoardController implements Initializable{
                                 });
                             });
                             noticeListView.setItems(filteredData);
-                            noticeListView.setCellFactory(NoticeRowController
-                                    -> new NoticeRowController());
+                            noticeListView.setCellFactory(ResidentNoticeRowController
+                                    -> new ResidentNoticeRowController());
 
 
                         }));
@@ -166,22 +162,6 @@ public class ManagerNoticeBoardController implements Initializable{
 
         filteredNotice.setOnMouseClicked(event -> {
             refreshTableTimeline.stop();
-        });
-
-        postNoticeButton.setOnMouseClicked((mouseEvent) -> {
-            refreshTableTimeline.play();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(this.getClass().getResource("/sample/views/manager/noticeboard/add_notice.fxml"));
-            try {
-                loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Scene scene = new Scene(loader.getRoot());
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setTitle("Post Notice");
-            stage.show();
         });
 
         refreshButton.setOnAction(actionEvent -> {

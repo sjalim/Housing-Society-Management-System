@@ -1,8 +1,7 @@
-package sample.controllers.manager.collectpayments;
+package sample.controllers.resident;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextField;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
@@ -12,23 +11,30 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import sample.UserId;
+import sample.controllers.manager.collectpayments.ManagerViewPaymentDetailsController;
 import sample.database.DatabaseHandler;
 import sample.models.Payments;
 
 import javax.imageio.ImageIO;
+import javax.swing.text.html.ImageView;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
-import java.sql.*;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -38,16 +44,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ManagerCollectPaymentsController implements Initializable {
-
-    private final static String PAYMENT_DUE = "Due";
-    private final static String PAYMENT_RECEIVED = "Received";
-    private final static String DEPOSIT = "Deposit";
-    private final static String NOT_PAID = "Not Paid Yet";
+public class ResidentPaymentsController implements Initializable {
 
     @FXML private JFXComboBox<String> searchComboBox;
-
-    @FXML private JFXTextField filteredPaymentField;
 
     @FXML private JFXButton searchButton;
 
@@ -60,8 +59,6 @@ public class ManagerCollectPaymentsController implements Initializable {
     @FXML private JFXButton findHistoryButton;
 
     @FXML private JFXButton refreshButton;
-
-    @FXML private JFXButton addPaymentButton, addPaymentMethod;
 
     @FXML private TableView<Payments> paymentTableView;
 
@@ -81,8 +78,12 @@ public class ManagerCollectPaymentsController implements Initializable {
 
     @FXML private TableColumn<Payments, Date> table_paidDate;
 
-    private String query;
-    private boolean isRowSelected = false;
+    private final static String PAYMENT_DUE = "Due";
+    private final static String PAYMENT_RECEIVED = "Received";
+    private final static String DEPOSIT = "Deposit";
+    private final static String NOT_PAID = "Not Paid Yet";
+    UserId mUserId = UserId.getInstance();
+    private String query=null;
     private DatabaseHandler databaseHandler;
     private ObservableList<Payments> paymentsObservableList;
     private ObservableList<Payments> typeList;
@@ -90,7 +91,7 @@ public class ManagerCollectPaymentsController implements Initializable {
     private ObservableList<Payments> yearList;
     private ObservableList<Payments> paymentByHistoryList;
     private ObservableList<Payments> searchList;
-    private final String[] search_options = {"Type","Flat Number","Payment Status"};
+    private final String[] search_options = {"Due","Received"};
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -98,7 +99,6 @@ public class ManagerCollectPaymentsController implements Initializable {
         Timeline refreshTableTimeline = new Timeline(
                 new KeyFrame(Duration.seconds(1),
                         event -> {
-                            System.out.println("this is called every 1 seconds from Payments");
                             paymentsObservableList = FXCollections.observableArrayList();
                             typeList = FXCollections.observableArrayList();
                             monthList = FXCollections.observableArrayList();
@@ -109,10 +109,8 @@ public class ManagerCollectPaymentsController implements Initializable {
                             try {
                                 loadFromDatabase();
                                 initTable();
-                            } catch (SQLException throwables) {
+                            } catch (SQLException | ClassNotFoundException throwables) {
                                 throwables.printStackTrace();
-                            } catch (ClassNotFoundException e) {
-                                e.printStackTrace();
                             }
                             paymentTableView.setItems(paymentsObservableList);
                         }));
@@ -120,23 +118,16 @@ public class ManagerCollectPaymentsController implements Initializable {
         refreshTableTimeline.setCycleCount(Timeline.INDEFINITE);
         refreshTableTimeline.play();
 
-        filteredPaymentField.setOnMouseClicked((MouseEvent event) -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)){
-                System.out.println("Search bar clicked");
-            }
-        });
-
         paymentTableView.setOnMouseClicked((MouseEvent event) -> {
             Payments row = paymentTableView.getSelectionModel().getSelectedItem();
             if(event.getClickCount() == 2) {
                 if(row==null)
                     return;
-                refreshTableTimeline.stop();
-                    try {
-                        showPaymentDetails(refreshTableTimeline);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                try {
+                    showPaymentDetails(refreshTableTimeline);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -166,64 +157,18 @@ public class ManagerCollectPaymentsController implements Initializable {
             }
         });
 
-        refreshButton.setOnAction(actionEvent -> {
-            refreshTableTimeline.play();
-        });
-
-        addPaymentMethod.setOnAction(actionEvent -> {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(this.getClass().getResource("/sample/views/manager/collectpayments/manager_add_payment_method.fxml"));
-            try {
-                loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            PaymentAddNewMethodController paymentAddNewMethodController = loader.getController();
-            Scene scene = new Scene(loader.getRoot());
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setTitle("Add a Payment");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
-        });
-
-        addPaymentButton.setOnAction(actionEvent -> {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(this.getClass().getResource("/sample/views/manager/collectpayments/manager_add_payment.fxml"));
-            try {
-                loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            ManagerAddPaymentController managerAddPaymentController = loader.getController();
-            Scene scene = new Scene(loader.getRoot());
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setTitle("Add a Payment");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
-        });
-
         searchButton.setOnAction(actionEvent -> {
             refreshTableTimeline.stop();
-            try {
-                if(searchComboBox.getValue().equals("Type")) {
-                    searchByType();
-                    paymentTableView.setItems(null);
-                    paymentTableView.setItems(searchList);
-                } else if (searchComboBox.getValue().equals("Flat Number")) {
-                    searchByFlat();
-                    paymentTableView.setItems(null);
-                    paymentTableView.setItems(searchList);
-                } else if (searchComboBox.getValue().equals("Payment Status")) {
+            if(searchComboBox.getValue()==null){
+                AlertDialog("Select Payment Status");
+            } else {
+                try {
                     searchByStatus();
                     paymentTableView.setItems(null);
                     paymentTableView.setItems(searchList);
-                } else {
-                    AlertDialog("Select search by option");
+                } catch (SQLException | ClassNotFoundException throwables) {
+                    throwables.printStackTrace();
                 }
-            } catch (SQLException | ClassNotFoundException throwables) {
-                throwables.printStackTrace();
             }
 
         });
@@ -275,6 +220,72 @@ public class ManagerCollectPaymentsController implements Initializable {
                 paymentTableView.setItems(paymentByHistoryList);
             }
         });
+
+        refreshButton.setOnAction(actionEvent -> {
+            refreshTableTimeline.play();
+        });
+
+    }
+    private void showPaymentDetails(Timeline refreshTableTimeline) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(this.getClass().getResource("/sample/views/resident/resident_view_payments.fxml"));
+        loader.load();
+        ResidentViewPaymentsController residentViewPaymentsController = loader.getController();
+        editSelectedRow(residentViewPaymentsController); //Edit table row
+        Scene scene = new Scene(loader.getRoot());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Payment Details");
+//        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+        stage.setOnCloseRequest(e -> {
+            System.out.println("Payment Window Disconnected");
+            refreshTableTimeline.play();
+        });
+    }
+
+    private void editSelectedRow(ResidentViewPaymentsController residentViewPaymentsController) throws IOException {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Payments selectedRow = paymentTableView.getSelectionModel().getSelectedItem();
+
+//        managerViewPaymentDetailsController.despositSlipImageView.setVisible(false);
+
+        residentViewPaymentsController.paymentId_details.setText(String.valueOf(selectedRow.getPaymentId()));
+        residentViewPaymentsController.flatNumber_details.setText(selectedRow.getFlatNumber());
+        residentViewPaymentsController.paymentType_details.setText(selectedRow.getPaymentType());
+        residentViewPaymentsController.amount_details.setText(String.valueOf(selectedRow.getAmount()));
+        residentViewPaymentsController.addedOn_details.setText(dateFormat.format(selectedRow.getDateAdded()));
+        residentViewPaymentsController.paymentStatus_details.setText(selectedRow.getPaymentStatus());
+
+        if(selectedRow.getPaidDate() != null) {
+            residentViewPaymentsController.confirmPaymentButton.setDisable(true);
+            residentViewPaymentsController.paymentMethod_ComboBox.setVisible(false);
+            residentViewPaymentsController.paymentMethod_details.setText(selectedRow.getPaymentMethod());
+            residentViewPaymentsController.paidDate_details.setText(dateFormat.format(selectedRow.getPaidDate()));
+        } else {
+            residentViewPaymentsController.paymentMethod_details.setVisible(false);
+            residentViewPaymentsController.paymentMethod_ComboBox.setVisible(true);
+        }
+
+        if(selectedRow.getPaymentMethod() != null && selectedRow.getPaymentMethod().equals(DEPOSIT)) {
+            residentViewPaymentsController.paymentMethod_details.setText(selectedRow.getPaymentMethod());
+            residentViewPaymentsController.despositSlipImageView.setVisible(true);
+            residentViewPaymentsController.selectImage.setDisable(true);
+            residentViewPaymentsController.enterTransactionId.setDisable(true);
+
+            BufferedImage img = ImageIO.read(new ByteArrayInputStream(selectedRow.getDepositSlip()));
+            Image image = SwingFXUtils.toFXImage(img, null);
+            residentViewPaymentsController.despositSlipImageView.setImage(image);
+
+        } else if(selectedRow.getPaymentMethod() != null && !selectedRow.getPaymentMethod().equals(DEPOSIT)) {
+            residentViewPaymentsController.enterTransactionId.setText(selectedRow.getTransactionId());
+            residentViewPaymentsController.enterTransactionId.setEditable(false);
+            residentViewPaymentsController.selectImage.setDisable(true);
+        } else {
+            residentViewPaymentsController.enterTransactionId.setEditable(true);
+            residentViewPaymentsController.selectImage.setDisable(false);
+        }
+
     }
 
     private void searchByStatus() throws SQLException, ClassNotFoundException {
@@ -292,61 +303,8 @@ public class ManagerCollectPaymentsController implements Initializable {
                     "ON ct.PaymentId = onTran.PaymentId " +
                 "LEFT JOIN OfflineTransaction as offTran " +
                     "ON ct.PaymentId = offTran.PaymentId " +
-                "WHERE ct.PaymentStatus='"+filteredPaymentField.getText()+"'";
-
-        ResultSet rs = st.executeQuery(query);
-        while(rs.next()) {
-            searchList.add(new Payments(rs.getInt("PaymentId"),rs.getString("Ptype"),
-                    rs.getString("FlatNumber"), rs.getDouble("Amount"),rs.getDate("DateAdded"),
-                    rs.getString("PaymentStatus"),rs.getString("Pmethod"),
-                    rs.getDate("PaidDate"),rs.getString("TransactionId"),rs.getBytes("DepositSlip")));
-        }
-        databaseHandler.getDbConnection().close();
-    }
-
-    private void searchByFlat() throws SQLException, ClassNotFoundException {
-        searchList.clear();
-        databaseHandler = new DatabaseHandler();
-        Statement st = databaseHandler.getDbConnection().createStatement();
-        query = "SELECT ct.PaymentId, pt.Ptype, ct.FlatNumber, ct.Amount, ct.DateAdded, ct.PaymentStatus, " +
-                    "pm.Pmethod, ct.PaidDate, onTran.TransactionId, offTran.DepositSlip " +
-                "FROM CollectPayments as ct " +
-                "INNER JOIN PaymentType as pt " +
-                    "ON ct.PtypeId = pt.PtypeId " +
-                "LEFT JOIN PaymentMethod as pm " +
-                    "ON ct.PmId = pm.PmId " +
-                "LEFT JOIN OnlineTransaction as onTran " +
-                    "ON ct.PaymentId = onTran.PaymentId " +
-                "LEFT JOIN OfflineTransaction as offTran " +
-                    "ON ct.PaymentId = offTran.PaymentId " +
-                "WHERE ct.FlatNumber='"+filteredPaymentField.getText()+"'";
-
-        ResultSet rs = st.executeQuery(query);
-        while(rs.next()) {
-            searchList.add(new Payments(rs.getInt("PaymentId"),rs.getString("Ptype"),
-                    rs.getString("FlatNumber"), rs.getDouble("Amount"),rs.getDate("DateAdded"),
-                    rs.getString("PaymentStatus"),rs.getString("Pmethod"),
-                    rs.getDate("PaidDate"),rs.getString("TransactionId"),rs.getBytes("DepositSlip")));
-        }
-        databaseHandler.getDbConnection().close();
-    }
-
-    private void searchByType() throws SQLException, ClassNotFoundException {
-        searchList.clear();
-        databaseHandler = new DatabaseHandler();
-        Statement st = databaseHandler.getDbConnection().createStatement();
-        query = "SELECT ct.PaymentId, pt.Ptype, ct.FlatNumber, ct.Amount, ct.DateAdded, ct.PaymentStatus, " +
-                    "pm.Pmethod, ct.PaidDate, onTran.TransactionId, offTran.DepositSlip " +
-                "FROM CollectPayments as ct " +
-                "INNER JOIN PaymentType as pt " +
-                    "ON ct.PtypeId = pt.PtypeId " +
-                "LEFT JOIN PaymentMethod as pm " +
-                    "ON ct.PmId = pm.PmId " +
-                "LEFT JOIN OnlineTransaction as onTran " +
-                    "ON ct.PaymentId = onTran.PaymentId " +
-                "LEFT JOIN OfflineTransaction as offTran " +
-                    "ON ct.PaymentId = offTran.PaymentId " +
-                "WHERE pt.Ptype='"+filteredPaymentField.getText()+"'";
+                "WHERE ct.PaymentStatus='"+searchComboBox.getValue()+"' " +
+                    "AND ct.FlatNumber='"+mUserId.mId+"'";
 
         ResultSet rs = st.executeQuery(query);
         while(rs.next()) {
@@ -366,18 +324,19 @@ public class ManagerCollectPaymentsController implements Initializable {
         databaseHandler = new DatabaseHandler();
         Statement st = databaseHandler.getDbConnection().createStatement();
         query = "SELECT ct.PaymentId, pt.Ptype, ct.FlatNumber, ct.Amount, ct.DateAdded, ct.PaymentStatus, " +
-                    "pm.Pmethod, ct.PaidDate, onTran.TransactionId, offTran.DepositSlip " +
+                "pm.Pmethod, ct.PaidDate, onTran.TransactionId, offTran.DepositSlip " +
                 "FROM CollectPayments as ct " +
                 "INNER JOIN PaymentType as pt " +
-                    "ON ct.PtypeId = pt.PtypeId " +
+                "ON ct.PtypeId = pt.PtypeId " +
                 "LEFT JOIN PaymentMethod as pm " +
-                    "ON ct.PmId = pm.PmId " +
+                "ON ct.PmId = pm.PmId " +
                 "LEFT JOIN OnlineTransaction as onTran " +
-                    "ON ct.PaymentId = onTran.PaymentId " +
+                "ON ct.PaymentId = onTran.PaymentId " +
                 "LEFT JOIN OfflineTransaction as offTran " +
-                    "ON ct.PaymentId = offTran.PaymentId " +
+                "ON ct.PaymentId = offTran.PaymentId " +
                 "WHERE MONTH(ct.DateAdded) ='"+month+"' " +
-                    "AND YEAR(ct.DateAdded) ='"+year+"' AND pt.Ptype='"+type+"'";
+                "AND YEAR(ct.DateAdded) ='"+year+"' AND pt.Ptype='"+type+"' " +
+                "AND ct.FlatNumber='"+mUserId.mId+"'";
 
         ResultSet rs = st.executeQuery(query);
         while(rs.next()) {
@@ -397,7 +356,8 @@ public class ManagerCollectPaymentsController implements Initializable {
 
         query = "SELECT DISTINCT DATEPART(MM, cp.DateAdded) as 'Month' " +
                 "FROM CollectPayments as cp " +
-                "WHERE DATEPART(yyyy, cp.DateAdded) = DATEPART(yyyy, '"+year+"')";
+                "WHERE DATEPART(yyyy, cp.DateAdded) = DATEPART(yyyy, '"+year+"') " +
+                "AND cp.FlatNumber='"+mUserId.mId+"'";
 
         ResultSet rs = statement.executeQuery(query);
         while (rs.next()) {
@@ -416,8 +376,8 @@ public class ManagerCollectPaymentsController implements Initializable {
         query = "SELECT DISTINCT DATEPART(yyyy, cp.DateAdded) as 'Year' " +
                 "FROM CollectPayments as cp " +
                 "INNER JOIN PaymentType as pt " +
-                    "ON cp.PtypeId = pt.PtypeId " +
-                "WHERE pt.Ptype ='"+type+"'";
+                "ON cp.PtypeId = pt.PtypeId " +
+                "WHERE pt.Ptype ='"+type+"' AND cp.FlatNumber='"+mUserId.mId+"'";
 
         ResultSet rs = statement.executeQuery(query);
         while (rs.next()) {
@@ -436,7 +396,7 @@ public class ManagerCollectPaymentsController implements Initializable {
         query = "SELECT DISTINCT pt.PtypeId, pt.Ptype " +
                 "FROM CollectPayments as cp " +
                 "INNER JOIN PaymentType as pt " +
-                    "ON cp.PtypeId = pt.PtypeId";
+                "ON cp.PtypeId = pt.PtypeId WHERE cp.FlatNumber='"+mUserId.mId+"'";
 
         ResultSet rs = statement.executeQuery(query);
         while (rs.next()) {
@@ -465,89 +425,6 @@ public class ManagerCollectPaymentsController implements Initializable {
         searchComboBox.setItems(observableList);
     }
 
-    private void showPaymentDetails(Timeline refreshTableTimeline) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(this.getClass().getResource("/sample/views/manager/collectpayments/manager_view_payment_details.fxml"));
-        loader.load();
-        ManagerViewPaymentDetailsController managerViewPaymentDetailsController = loader.getController();
-        editSelectedRow(managerViewPaymentDetailsController); //Edit table row
-        Scene scene = new Scene(loader.getRoot());
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.setTitle("Payment Details");
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
-        stage.setOnCloseRequest(e -> {
-            System.out.println("Edited Window Disconnected");
-            refreshTableTimeline.play();
-            isRowSelected = false;
-        });
-
-        managerViewPaymentDetailsController.verifyButton.setOnAction(actionEvent -> {
-            try {
-                managerViewPaymentDetailsController.markAsVerified();
-            } catch (SQLException | ClassNotFoundException throwables) {
-                throwables.printStackTrace();
-            }
-            refreshTableTimeline.play();
-            stage.close();
-            isRowSelected = false;
-            System.out.println("Data Saved");
-        });
-
-        managerViewPaymentDetailsController.notVerifyButton.setOnAction(actionEvent -> {
-            try {
-                managerViewPaymentDetailsController.markAsNotVerified();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            refreshTableTimeline.play();
-            stage.close();
-            isRowSelected = false;
-            System.out.println("Data Saved");
-        });
-    }
-
-    private void editSelectedRow(ManagerViewPaymentDetailsController managerViewPaymentDetailsController) throws IOException {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Payments selectedRow = paymentTableView.getSelectionModel().getSelectedItem();
-
-        managerViewPaymentDetailsController.despositSlipImageView.setVisible(false);
-
-        managerViewPaymentDetailsController.paymentId_details.setText(String.valueOf(selectedRow.getPaymentId()));
-        managerViewPaymentDetailsController.flatNumber_details.setText(selectedRow.getFlatNumber());
-        managerViewPaymentDetailsController.paymentType_details.setText(selectedRow.getPaymentType());
-        managerViewPaymentDetailsController.amount_details.setText(String.valueOf(selectedRow.getAmount()));
-        managerViewPaymentDetailsController.addedOn_details.setText(dateFormat.format(selectedRow.getDateAdded()));
-        managerViewPaymentDetailsController.paymentStatus_details.setText(selectedRow.getPaymentStatus());
-        managerViewPaymentDetailsController.paymentMethod_details.setText(selectedRow.getPaymentMethod());
-
-        if(selectedRow.getPaidDate() != null) {
-            managerViewPaymentDetailsController.paidDate_details.setText(dateFormat.format(selectedRow.getPaidDate()));
-        } else {
-            managerViewPaymentDetailsController.paidDate_details.setText(NOT_PAID);
-        }
-
-        if(selectedRow.getPaymentMethod() != null && selectedRow.getPaymentMethod().equals(DEPOSIT)) {
-            managerViewPaymentDetailsController.paymentMethod_details.setText(selectedRow.getPaymentMethod());
-            managerViewPaymentDetailsController.despositSlipImageView.setVisible(true);
-
-            BufferedImage img = ImageIO.read(new ByteArrayInputStream(selectedRow.getDepositSlip()));
-            Image image = SwingFXUtils.toFXImage(img, null);
-
-            managerViewPaymentDetailsController.despositSlipImageView.setImage(image);
-        } else if(selectedRow.getPaymentMethod() != null && !selectedRow.getPaymentMethod().equals(DEPOSIT)) {
-            managerViewPaymentDetailsController.paymentMethod_details.setText(selectedRow.getPaymentMethod());
-            managerViewPaymentDetailsController.transId_details.setText(selectedRow.getTransactionId());
-        } else {
-            managerViewPaymentDetailsController.paymentMethod_details.setText(NOT_PAID);
-            managerViewPaymentDetailsController.transId_details.setText(NOT_PAID);
-        }
-
-    }
-
     private void loadFromDatabase() throws SQLException, ClassNotFoundException {
         paymentsObservableList.clear();
         databaseHandler = new DatabaseHandler();
@@ -565,7 +442,8 @@ public class ManagerCollectPaymentsController implements Initializable {
                 "LEFT JOIN OfflineTransaction as offTran " +
                     "ON ct.PaymentId = offTran.PaymentId " +
                 "WHERE DATEPART(mm, ct.DateAdded) = DATEPART(mm, GETDATE()) " +
-                    "AND DATEPART(yyyy, ct.DateAdded) = DATEPART(yyyy, GETDATE())";
+                    "AND DATEPART(yyyy, ct.DateAdded) = DATEPART(yyyy, GETDATE()) " +
+                    "AND ct.FlatNumber='"+mUserId.mId+"'";
 
         ResultSet rs = statement.executeQuery(query);
         while(rs.next()) {

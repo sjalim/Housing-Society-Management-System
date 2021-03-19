@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import sample.UserId;
 import sample.database.DatabaseHandler;
 import sample.models.FlatOwner;
 
@@ -96,13 +97,16 @@ public class ManagerFlatOwnerAddController implements Initializable {
                 AlertDialog("FlatNo already exists");
             }
         }else {
+            //Singleton Instance
+            UserId mUserId = UserId.getInstance();
+
             //Insert into FlatOwner Table
             String insertFlatOwner = "INSERT INTO FlatOwner (FlatNumber,OwnerName,ManagerId,AllocatedParkingSlot,AllocationStatus) " +
                     "VALUES(?,?,?,?,?)";
             PreparedStatement psFlatOwner = databaseHandler.getDbConnection().prepareStatement(insertFlatOwner);
             psFlatOwner.setString(1,flatNo);
             psFlatOwner.setString(2,ownerName);
-            psFlatOwner.setString(3,"2"); ////CHANGE MANAGER ID
+            psFlatOwner.setString(3,mUserId.mId); ////CHANGE MANAGER ID
             psFlatOwner.setString(4,allocateParkingNo);
             psFlatOwner.setString(5,allocationStatus);
             psFlatOwner.executeUpdate();
@@ -123,10 +127,10 @@ public class ManagerFlatOwnerAddController implements Initializable {
             //Insert into FlatLogin Table
             String insertFlatLogin = "INSERT INTO FlatLogin (FlatNumber,Password) " +
                     "VALUES(?,?)";
-            String password = flatNo+"#";
+            String password = flatNo+"#a";
             PreparedStatement psFlatLogin = databaseHandler.getDbConnection().prepareStatement(insertFlatLogin);
             psFlatLogin.setString(1,flatNo);
-            psFlatLogin.setString(2,password); //Initially setting FlatOwner's password as FlatNo+#
+            psFlatLogin.setString(2,password); //Initially setting FlatOwner's password as FlatNo+#a
             psFlatLogin.executeUpdate();
             psFlatLogin.close();
             databaseHandler.getDbConnection().close();

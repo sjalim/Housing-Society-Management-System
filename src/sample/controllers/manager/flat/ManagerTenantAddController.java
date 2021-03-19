@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import sample.UserId;
 import sample.database.DatabaseHandler;
 
 import java.net.URL;
@@ -63,6 +64,9 @@ public class ManagerTenantAddController implements Initializable {
     }
 
     private void insertNewTenant() throws SQLException, ClassNotFoundException, InterruptedException {
+        //Singleton Instance
+        UserId mUserId = UserId.getInstance();
+
         flatNo = flatNo_AddField.getText();
         tenantName = tenantName_AddField.getText();
         nid = nid_AddField.getText();
@@ -83,7 +87,7 @@ public class ManagerTenantAddController implements Initializable {
         PreparedStatement psTenant = databaseHandler.getDbConnection().prepareStatement(insertTenant);
         psTenant.setString(1,flatNo);
         psTenant.setString(2,tenantName);
-        psTenant.setString(3,"1"); ////CHANGE MANAGER ID
+        psTenant.setString(3,mUserId.mId); ////CHANGE MANAGER ID
         psTenant.executeUpdate();
         psTenant.close();
 

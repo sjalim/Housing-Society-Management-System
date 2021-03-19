@@ -45,11 +45,11 @@
                   <Font name="Century Gothic Bold" size="15.0" />
                </font>
             </Label>
-            <VBox alignment="TOP_CENTER" layoutX="7.0" layoutY="264.0" prefHeight="222.0" prefWidth="198.0" spacing="20.0" style="-fx-border-color: white;" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="9.0">
+            <VBox alignment="TOP_CENTER" layoutX="7.0" layoutY="264.0" prefHeight="190.0" prefWidth="198.0" spacing="20.0" style="-fx-border-color: white;" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="9.0">
                <children>
-                  <JFXComboBox fx:id="typeComboBox" blendMode="ADD" prefHeight="41.0" prefWidth="188.0" promptText="Select Type" />
-                  <JFXComboBox fx:id="yearComboBox" blendMode="ADD" prefHeight="39.0" prefWidth="186.0" promptText="Select Year" />
-                  <JFXComboBox fx:id="monthComboBox" blendMode="ADD" prefHeight="38.0" prefWidth="187.0" promptText="Select Month" />
+                  <JFXComboBox fx:id="typeComboBox" blendMode="ADD" prefHeight="29.0" prefWidth="188.0" promptText="Select Type" />
+                  <JFXComboBox fx:id="yearComboBox" blendMode="ADD" prefHeight="29.0" prefWidth="186.0" promptText="Select Year" />
+                  <JFXComboBox fx:id="monthComboBox" blendMode="ADD" prefHeight="29.0" prefWidth="187.0" promptText="Select Month" />
                   <JFXButton fx:id="findHistoryButton" prefHeight="31.0" prefWidth="73.0" style="-fx-border-color: white;" text="Find" textFill="WHITE">
                      <font>
                         <Font name="Century Gothic" size="13.0" />
@@ -60,7 +60,7 @@
                   </JFXButton>
                </children>
             </VBox>
-            <JFXButton fx:id="refreshButton" layoutX="7.0" layoutY="565.0" prefHeight="44.0" prefWidth="198.0" style="-fx-border-color: white;" text="Refresh Table   " textFill="WHITE">
+            <JFXButton fx:id="refreshButton" layoutX="7.0" layoutY="579.0" prefHeight="44.0" prefWidth="198.0" style="-fx-border-color: white;" text="Refresh Table   " textFill="WHITE">
                <font>
                   <Font name="Century Gothic" size="13.0" />
                </font>
@@ -72,7 +72,19 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="addPaymentButton" layoutX="7.0" layoutY="509.0" prefHeight="44.0" prefWidth="198.0" style="-fx-border-color: white;" text="Add a Payment" textFill="WHITE">
+            <JFXButton fx:id="addPaymentButton" layoutX="7.0" layoutY="523.0" prefHeight="44.0" prefWidth="198.0" style="-fx-border-color: white;" text="Add a Payment" textFill="WHITE">
+               <font>
+                  <Font name="Century Gothic" size="13.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/payment.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="addPaymentMethod" layoutX="7.0" layoutY="467.0" prefHeight="44.0" prefWidth="198.0" style="-fx-border-color: white;" text="Add a Payment Method" textFill="WHITE">
                <font>
                   <Font name="Century Gothic" size="13.0" />
                </font>
