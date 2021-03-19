@@ -20,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import sample.UserId;
 import sample.database.DatabaseHandler;
 import sample.models.FlatOwner;
 import sample.models.Payments;
@@ -72,6 +73,8 @@ public class ManagerFlatOwnerController implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        UserId mUserId = UserId.getInstance();
+        System.out.println(mUserId.mId+"  manager logged IN");
         initSearchOptions();
          Timeline refreshTableTimeline = new Timeline(
                 new KeyFrame(Duration.seconds(1),
@@ -85,46 +88,6 @@ public class ManagerFlatOwnerController implements Initializable{
                             } catch (SQLException | ClassNotFoundException throwables) {
                                 throwables.printStackTrace();
                             }
-//                            FilteredList<FlatOwner> filteredData = new FilteredList<>(flatOwnerObservableList, b -> true);
-//
-//                            // 2. Set the filter Predicate whenever the filter changes.
-//                            filteredFlatOwner.textProperty().addListener((observable, oldValue, newValue) -> {
-//                                filteredData.setPredicate(flatOwner -> {
-//                                    // If filter text is empty, display all persons.
-//                                    if (newValue == null || newValue.isEmpty()) {
-//                                        return true;
-//                                    }
-//                                    // Compare first name and last name of every person with filter text.
-//                                    String lowerCaseFilter = newValue.toLowerCase();
-//
-//                                    if (flatOwner.getFlatNumber().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
-//                                        return true;
-//                                    } else if (String.valueOf(flatOwner.getAllocatedParkingNo()).indexOf(lowerCaseFilter) != -1){
-//                                        return true;
-//                                    } else if (flatOwner.getMobile().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-//                                        return true;
-//                                    } else if (flatOwner.getPresentAdd().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-//                                        return true;
-//                                    } else if (flatOwner.getPermanentAdd().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-//                                        return true;
-//                                    } else if (flatOwner.getNid().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-//                                        return true;
-//                                    } else if (flatOwner.getOwnerName().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-//                                        return true;
-//                                    } else if (flatOwner.getAllocationStatus().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-//                                        return true;
-//                                    }
-//                                    else
-//                                        return false; // Does not match.
-//                                });
-//                            });
-//                            // 3. Wrap the FilteredList in a SortedList.
-//                            SortedList<FlatOwner> sortedData = new SortedList<>(filteredData);
-//                            // 4. Bind the SortedList comparator to the TableView comparator.
-//                            // 	  Otherwise, sorting the TableView would have no effect.
-//                            sortedData.comparatorProperty().bind(flatOwner_tableView.comparatorProperty());
-//                            // 5. Add sorted (and filtered) data to the table.
-//                            flatOwner_tableView.setItems(sortedData);
                             flatOwner_tableView.setItems(flatOwnerObservableList);
                         }));
 

@@ -20,6 +20,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import sample.UserId;
+import sample.controllers.resident.FlatOwnerDashboardController;
 import sample.database.DatabaseHandler;
 
 import java.io.IOException;
@@ -177,20 +179,29 @@ public class LoginPageController implements Initializable {
                                         resultSet.getString(3);
 
                                 if (passwordDB.equals(password)) {
+                                    //Setting Session's UserId using Singleton Instance
+                                    UserId mUserId = UserId.getInstance();
+                                    mUserId.mId = userId;
 
                                     if (AllocationStatus.equals("OWNED")) {
+                                        FXMLLoader loader = new FXMLLoader();
+                                        loader.setLocation(this.getClass().getResource("/sample/views/resident/flatOwner_dashboard.fxml"));
+                                        Parent ownedParent = (Parent) loader.load();
+                                        FlatOwnerDashboardController flatOwnerDashboardController = loader.getController();
+                                        flatOwnerDashboardController.dashboard_flatStatus.setText("OWNED");
 
-                                        Parent ownedParent = FXMLLoader.load(getClass().getResource("/sample/views/flat" +
-                                                "/FlatOwner.fxml"));
                                         Scene ownedScene = new Scene(ownedParent, 1200, 700);
                                         userPreferences.put(USER_STATUS, RESIDENT_STATUS);
                                         userPreferences.put(USER_ID, userId);
                                         userPreferences.put(ALLOCATION_STATUS, ALLOCATION_STATUS_OWNED);
                                         loadNext(ownedScene);
                                     } else if (AllocationStatus.equals("RENTED")) {
+                                        FXMLLoader loader = new FXMLLoader();
+                                        loader.setLocation(this.getClass().getResource("/sample/views/resident/flatOwner_dashboard.fxml"));
+                                        Parent tenantParent = (Parent) loader.load();
+                                        FlatOwnerDashboardController flatOwnerDashboardController = loader.getController();
+                                        flatOwnerDashboardController.dashboard_flatStatus.setText("RENTED");
 
-                                        Parent tenantParent = FXMLLoader.load(getClass().getResource("/sample/views/flat" +
-                                                "/Tenant.fxml"));
                                         Scene tenantScene = new Scene(tenantParent, 1200, 700);
                                         userPreferences.put(USER_STATUS, RESIDENT_STATUS);
                                         userPreferences.put(USER_ID, userId);
@@ -278,17 +289,22 @@ public class LoginPageController implements Initializable {
                     } else if (curLoginType.equals(MANAGER_STATUS)) {
 
 
-                      String  query = "select " +
-                                "ManagerPassword from Manager where Mobile=" + userId + ";";
-                      Statement  statement =
+                        String  query = "select " +
+                                "ManagerPassword,ManagerId from Manager where Mobile=" + userId + ";";
+                        Statement  statement =
                                 connection.createStatement();
-                      ResultSet  resultSet =
+                        ResultSet  resultSet =
                                 statement.executeQuery(query);
                         if (resultSet.next()) {
                             passwordDB =
                                     resultSet.getString(1);
+                            String managerId = resultSet.getString(2);
 
                             if (passwordDB.equals(password)) {
+                                //Setting Session's UserId using Singleton Instance
+                                UserId mUserId = UserId.getInstance();
+                                mUserId.mId = managerId;
+
                                 Parent managerParent = FXMLLoader.load(getClass().getResource("/sample/views/manager" +
                                         "/manager_dashboard.fxml"));
                                 Scene managerScene = new Scene(managerParent, 1200, 700);
