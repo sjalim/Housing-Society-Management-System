@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import com.jfoenix.validation.RequiredFieldValidator;
+import javafx.animation.PauseTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -12,17 +13,28 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.InputMethodEvent;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 import sample.database.DatabaseHandler;
 
+import java.awt.*;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalTime;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class GuardAdditionController implements Initializable {
@@ -66,7 +78,7 @@ public class GuardAdditionController implements Initializable {
 
         fieldKeyStaffParking =
                 car_no_text_field.getText();
-        System.out.println("value ="+ fieldKeyStaffParking);
+        System.out.println("value =" + fieldKeyStaffParking);
 
         if (!categoryKey.equals("")) {
 
@@ -79,9 +91,9 @@ public class GuardAdditionController implements Initializable {
                             "StaffAttTrack " +
                             "( InTime," +
                             " OutTime, StaffId)" +
-                            "select '"+
-                            Time.valueOf(inTime)+"','"+
-                            Time.valueOf(outTime) + "',"+
+                            "select '" +
+                            Time.valueOf(inTime) + "','" +
+                            Time.valueOf(outTime) + "'," +
                             Integer.parseInt(fieldKeyStaffParking) +
                             " where exists" +
                             "(select StaffId " +
@@ -95,7 +107,7 @@ public class GuardAdditionController implements Initializable {
                         preparedStatement =
                                 databaseHandler.getDbConnection().prepareStatement(query);
                         preparedStatement.executeUpdate();
-
+                        showOkDialog();
 
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
@@ -114,7 +126,7 @@ public class GuardAdditionController implements Initializable {
                             "OutTime, " +
                             "CarNumber) " +
                             "select t1" +
-                            ".FlatNumber, " +
+                            ".FlatNumber " +
                             ",'" + Time.valueOf(inTime) +
                             "','" + Time.valueOf(outTime) +
                             "','" + fieldKeyStaffParking +
@@ -129,6 +141,7 @@ public class GuardAdditionController implements Initializable {
                         preparedStatement =
                                 databaseHandler.getDbConnection().prepareStatement(query);
                         preparedStatement.executeUpdate();
+                        showOkDialog();
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
                     } catch (ClassNotFoundException e) {
@@ -140,7 +153,7 @@ public class GuardAdditionController implements Initializable {
                 }
 
 
-            } else if(inTime == null && outTime != null && fieldKeyStaffParking != null){
+            } else if (inTime == null && outTime != null && fieldKeyStaffParking != null) {
 
                 if (categoryKey.equals(STAFF)) {
                     String query = "insert into" +
@@ -164,6 +177,7 @@ public class GuardAdditionController implements Initializable {
                         preparedStatement =
                                 databaseHandler.getDbConnection().prepareStatement(query);
                         preparedStatement.executeUpdate();
+                        showOkDialog();
 
 
                     } catch (SQLException throwables) {
@@ -183,7 +197,7 @@ public class GuardAdditionController implements Initializable {
                             "OutTime, " +
                             "CarNumber) " +
                             "select t1" +
-                            ".FlatNumber, " +
+                            ".FlatNumber " +
                             "," + null +
                             ", '" + Time.valueOf(outTime) +
                             "', '" + fieldKeyStaffParking +
@@ -198,6 +212,7 @@ public class GuardAdditionController implements Initializable {
                         preparedStatement =
                                 databaseHandler.getDbConnection().prepareStatement(query);
                         preparedStatement.executeUpdate();
+                        showOkDialog();
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
                     } catch (ClassNotFoundException e) {
@@ -208,7 +223,7 @@ public class GuardAdditionController implements Initializable {
                     System.out.println("error");
                 }
 
-            } else if(inTime != null && outTime == null && fieldKeyStaffParking != null){
+            } else if (inTime != null && outTime == null && fieldKeyStaffParking != null) {
 
                 System.out.println(new Date(System.currentTimeMillis()) + " " + Time.valueOf(inTime));
                 if (categoryKey.equals(STAFF)) {
@@ -219,9 +234,9 @@ public class GuardAdditionController implements Initializable {
                             " OutTime, StaffId)" +
                             " " +
                             "select '" +
-                            Time.valueOf(inTime)+"',"+
-                            null+ "," +
-                            Integer.parseInt(fieldKeyStaffParking)+
+                            Time.valueOf(inTime) + "'," +
+                            null + "," +
+                            Integer.parseInt(fieldKeyStaffParking) +
                             " where exists" +
                             "(select StaffId " +
                             "from Staff where " +
@@ -235,6 +250,7 @@ public class GuardAdditionController implements Initializable {
                                 databaseHandler.getDbConnection().prepareStatement(query);
 
                         preparedStatement.executeUpdate();
+                        showOkDialog();
 
 
                     } catch (SQLException throwables) {
@@ -253,22 +269,25 @@ public class GuardAdditionController implements Initializable {
                             "InTime, " +
                             "OutTime, " +
                             "CarNumber) " +
-                            "select t1" +
-                            ".FlatNumber, " +
+                            "select t1." +
+                            "FlatNumber " +
                             ",'" + Time.valueOf(inTime) +
                             "', " + null +
                             ", '" + fieldKeyStaffParking +
                             "' from Vehicle as " +
-                            "t1 " +
-                            "where t1.CarNumber" +
+                            "t1" +
+                            " where " +
+                            "CarNumber" +
                             " = '" + fieldKeyStaffParking +
-                            "';";
+                            "' " +
+                            " ;";
 
                     PreparedStatement preparedStatement = null;
                     try {
                         preparedStatement =
                                 databaseHandler.getDbConnection().prepareStatement(query);
                         preparedStatement.executeUpdate();
+                        showOkDialog();
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
                     } catch (ClassNotFoundException e) {
@@ -279,8 +298,7 @@ public class GuardAdditionController implements Initializable {
                     System.out.println("error");
                 }
 
-            }
-                else {
+            } else {
                 if (inTime == null) {
 
                     in_time_timepicker.getValidators().add(validator);
@@ -303,16 +321,14 @@ public class GuardAdditionController implements Initializable {
         } else {
             addition_category_combo_box.getValidators().add(validator);
             addition_category_combo_box.validate();
-            if (inTime == null) {
+
+            if (outTime == null && inTime == null) {
+                out_time_timepicker.getValidators().add(validator);
+                out_time_timepicker.validate();
 
                 in_time_timepicker.getValidators().add(validator);
                 in_time_timepicker.validate();
 
-            }
-
-            if (outTime == null) {
-                out_time_timepicker.getValidators().add(validator);
-                out_time_timepicker.validate();
             }
 
             if (fieldKeyStaffParking.equals("")) {
@@ -390,6 +406,7 @@ public class GuardAdditionController implements Initializable {
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 if (!t1.isEmpty()) {
                     in_time_timepicker.resetValidation();
+                    out_time_timepicker.resetValidation();
 
                 }
             }
@@ -400,9 +417,31 @@ public class GuardAdditionController implements Initializable {
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 if (!t1.isEmpty()) {
                     out_time_timepicker.resetValidation();
+                    in_time_timepicker.resetValidation();
                 }
             }
         });
+
+
+    }
+
+    void showOkDialog() {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/sample/views/utils/RecordStored.fxml"));
+        DialogPane dialogPane = null;
+        try {
+            dialogPane = fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        Dialog<ButtonType> dialog =
+                new Dialog<>();
+        dialog.setDialogPane(dialogPane);
+        dialog.setTitle("Add new type");
+        Optional<ButtonType> clickedButton =
+                dialog.showAndWait();
 
 
     }

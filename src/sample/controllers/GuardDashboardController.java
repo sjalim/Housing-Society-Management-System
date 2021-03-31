@@ -176,17 +176,18 @@ public class GuardDashboardController implements Initializable {
             }
         });
 
-        update_track_button.setOnAction(actionEvent -> {
-            try {
-                AnchorPane anchorPane =
-                        FXMLLoader.load(getClass().getResource("/sample/views/guard/update_record.fxml"));
-                contentViewPane.getChildren().setAll(anchorPane);
-            } catch (IOException throwables) {
-                throwables.printStackTrace();
+        update_track_button.setOnAction(new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    ScrollPane pane =
+                            FXMLLoader.load(this.getClass().getResource("/sample/views/guard/guard_update.fxml"));
+                    contentViewPane.getChildren().setAll(pane);
+                } catch (IOException throwables) {
+                    throwables.printStackTrace();
+                }
             }
         });
-
-
 
     }
 }

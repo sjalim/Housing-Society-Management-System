@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane hbarPolicy="NEVER" prefHeight="500.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.GuardUpdateController">
+   <content>
+      <AnchorPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #009688;">
+         <children>
+            <TabPane fx:id="tab_pane" layoutX="60.0" layoutY="142.0" prefHeight="448.0" prefWidth="1075.0" style="-fx-background-color: #95afc0;" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab fx:id="parking_tab" text="Parking">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="395.0" prefWidth="1084.0">
+                           <children>
+                              <TableView fx:id="parking_table" layoutX="8.0" layoutY="11.0" prefHeight="400.0" prefWidth="1060.0" style="-fx-background-color: #4F5D67;" stylesheets="@../../styles/tableView.css">
+                                <columns>
+                                    <TableColumn fx:id="date_col_parking" prefWidth="141.0" text="Date" />
+                                    <TableColumn fx:id="car_num_col_parking" prefWidth="128.0" text="Car Number" />
+                                    <TableColumn fx:id="car_model_col_parking" prefWidth="151.0" text="Car Model" />
+                                    <TableColumn fx:id="in_time_col_parking" prefWidth="198.0" text="In Time" />
+                                    <TableColumn fx:id="out_time_col_parking" prefWidth="224.0" text="Out Time" />
+                                    <TableColumn fx:id="allocation_flat_col_parking" prefWidth="203.0" text="Allocated Flat" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab fx:id="staff_tab" text="Staff">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="staff_table" layoutX="8.0" layoutY="11.0" prefHeight="400.0" prefWidth="1060.0" style="-fx-background-color: #4F5D67;" stylesheets="@../../styles/tableView.css">
+                                <columns>
+                                    <TableColumn fx:id="date_col_staff" prefWidth="137.0" text="Date" />
+                                    <TableColumn fx:id="staff_id_col" prefWidth="170.0" text="Staff ID" />
+                                    <TableColumn fx:id="staff_name_col" prefWidth="151.0" text="Staff Name" />
+                                    <TableColumn fx:id="in_time_col_staff" prefWidth="131.0" text="In Time" />
+                                    <TableColumn fx:id="out_time_col_staff" prefWidth="163.0" text="Out Time" />
+                                    <TableColumn fx:id="staff_type_col" prefWidth="156.0" text="Staff Type" />
+                                    <TableColumn fx:id="staff_mobile_col" prefWidth="156.0" text="Mobile" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+            <JFXButton layoutX="1021.0" layoutY="641.0" onAction="#handleUpdate" styleClass="btn" stylesheets="@../../styles/guardParking.css" text="Update" />
+            <JFXTextField fx:id="search" focusColor="BLACK" labelFloat="true" layoutX="426.0" layoutY="58.0" prefHeight="46.0" prefWidth="392.0" promptText="Search">
+               <font>
+                  <Font size="20.0" />
+               </font></JFXTextField>
+         </children>
+      </AnchorPane>
+   </content>
+</ScrollPane>
