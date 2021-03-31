@@ -277,7 +277,7 @@ public class GuardParkingController implements Initializable {
                     "on v.FlatNumber = p.FlatNumber" +
                     " and v.CarNumber = p.CarNumber" +
                     " " +
-                    "where p.Intime >= '"+ inTime +
+                    "where p.InTime >= '"+ inTime +
                     "' and p.OutTime <= '" + outTime +
                     "' and p.Date = '" + date +
                     "';";

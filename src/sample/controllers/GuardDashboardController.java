@@ -189,5 +189,19 @@ public class GuardDashboardController implements Initializable {
             }
         });
 
+        Staffs_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+
+                try {
+                    ScrollPane pane =
+                            FXMLLoader.load(this.getClass().getResource("/sample/views/guard/guard_staff_track.fxml"));
+                    contentViewPane.getChildren().setAll(pane);
+                } catch (IOException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        });
     }
+
 }
