@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="complaintBoxPane" prefHeight="654.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.manager.complaintbox.ManagerComplaintBoxController">
+   <children>
+      <AnchorPane prefHeight="654.0" prefWidth="255.0" style="-fx-background-color: #435560;">
+         <children>
+            <VBox layoutX="34.0" layoutY="47.0" prefHeight="607.0" prefWidth="255.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="47.0">
+               <children>
+                  <Label prefHeight="32.0" prefWidth="83.0" text="Category:" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic Bold" size="16.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <JFXComboBox fx:id="categoryComboBox" blendMode="ADD" prefHeight="41.0" prefWidth="255.0" promptText="Select Category" style="-fx-border-color: white;">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </JFXComboBox>
+                  <JFXButton fx:id="addNewCatButton" blendMode="ADD" prefHeight="42.0" prefWidth="255.0" style="-fx-border-color: white;" text="Add A New Category" />
+                  <Label prefHeight="32.0" prefWidth="83.0" text="Search:" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic Bold" size="16.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
+                  <JFXTextField fx:id="filteredComplaints" blendMode="OVERLAY" prefHeight="47.0" prefWidth="255.0" promptText="Search by Flat No, Complaint Title ..." style="-fx-border-color: white;">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </JFXTextField>
+                  <JFXButton fx:id="refreshButton" prefHeight="58.0" prefWidth="255.0" text="Update    ">
+                     <graphic>
+                        <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/refresh.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Century Gothic Bold" size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="50.0" />
+                     </VBox.margin>
+                  </JFXButton>
+               </children>
+            </VBox>
+            <Label layoutX="57.0" layoutY="14.0" text="Complaint Box" textFill="WHITE">
+               <font>
+                  <Font name="Century Gothic Bold" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <JFXListView fx:id="complaintBoxListView" layoutX="256.0" layoutY="82.0" prefHeight="654.0" prefWidth="944.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="256.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+   </children>
+</AnchorPane>

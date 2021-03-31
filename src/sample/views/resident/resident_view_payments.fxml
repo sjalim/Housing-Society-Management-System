@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="694.0" prefWidth="575.0" style="-fx-background-color: #d2d6df;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.resident.ResidentViewPaymentsController">
+    <children>
+        <VBox layoutX="8.0" layoutY="61.0" prefHeight="536.0" prefWidth="575.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="575.0" spacing="20.0">
+                    <children>
+                        <Label text="PaymentId :">
+                            <font>
+                                <Font name="Century Gothic Bold" size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="paymentId_details" text="10">
+                            <font>
+                                <Font name="Century Gothic Bold" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                    <padding>
+                        <Insets left="20.0" />
+                    </padding>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="575.0" spacing="20.0">
+                    <children>
+                        <Label text="Flat No:">
+                            <font>
+                                <Font name="Century Gothic Bold" size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="flatNumber_details" text="F6">
+                            <font>
+                                <Font name="Century Gothic Bold" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets left="20.0" />
+                    </padding>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="575.0" spacing="20.0">
+                    <children>
+                        <Label text="Payment Type:">
+                            <font>
+                                <Font name="Century Gothic Bold" size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="paymentType_details" text="Service">
+                            <font>
+                                <Font name="Century Gothic Bold" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets left="20.0" />
+                    </padding>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="575.0" spacing="20.0">
+                    <children>
+                        <Label text="Amount to Pay:">
+                            <font>
+                                <Font name="Century Gothic Bold" size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="amount_details" text="50000">
+                            <font>
+                                <Font name="Century Gothic Bold" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets left="20.0" />
+                    </padding>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="575.0" spacing="20.0">
+                    <children>
+                        <Label text="Added On">
+                            <font>
+                                <Font name="Century Gothic Bold" size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="addedOn_details" text="y/y/y">
+                            <font>
+                                <Font name="Century Gothic Bold" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets left="20.0" />
+                    </padding>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="575.0" spacing="20.0">
+                    <children>
+                        <Label text="Payment Status:">
+                            <font>
+                                <Font name="Century Gothic Bold" size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="paymentStatus_details" text="Due" textFill="#149a95">
+                            <font>
+                                <Font name="Century Gothic Bold" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets left="20.0" />
+                    </padding>
+                </HBox>
+            <AnchorPane prefHeight="45.0" prefWidth="575.0">
+               <children>
+                  <Label layoutX="21.0" layoutY="11.0" text="Payment Method:">
+                     <font>
+                        <Font name="Century Gothic Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <JFXComboBox fx:id="paymentMethod_ComboBox" layoutX="188.0" layoutY="9.0" prefHeight="26.0" prefWidth="160.0" promptText="Payment Method" />
+                  <Label fx:id="paymentMethod_details" layoutX="188.0" layoutY="11.0" textFill="#149a95">
+                     <font>
+                        <Font name="Century Gothic Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+                <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="575.0" spacing="20.0">
+                    <children>
+                        <Label text="Paid Date:">
+                            <font>
+                                <Font name="Century Gothic Bold" size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="paidDate_details" textFill="#149a95">
+                            <font>
+                                <Font name="Century Gothic Bold" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets left="20.0" />
+                    </padding>
+                </HBox>
+            </children>
+        </VBox>
+        <VBox layoutY="331.0" prefHeight="343.0" prefWidth="575.0">
+            <children>
+                <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="575.0" spacing="20.0">
+                    <children>
+                        <Label text="Transaction ID/Deposit Slip:">
+                            <font>
+                                <Font name="Century Gothic Bold" size="18.0" />
+                            </font>
+                        </Label>
+                  <JFXTextField fx:id="enterTransactionId" prefHeight="26.0" prefWidth="218.0" promptText="Transaction ID" />
+                  <JFXButton fx:id="selectImage" onAction="#selectImage" style="-fx-border-color: black;" text="Select" />
+                    </children>
+                    <padding>
+                        <Insets left="20.0" />
+                    </padding>
+                </HBox>
+                <ImageView fx:id="despositSlipImageView" fitHeight="249.0" fitWidth="553.0" pickOnBounds="true" preserveRatio="true">
+                    <VBox.margin>
+                        <Insets left="10.0" />
+                    </VBox.margin>
+                </ImageView>
+                <HBox alignment="CENTER" spacing="30.0" />
+            <JFXButton fx:id="confirmPaymentButton" contentDisplay="CENTER" prefHeight="37.0" prefWidth="156.0" style="-fx-border-color: black;" text="Confirm Payment">
+               <VBox.margin>
+                  <Insets left="200.0" />
+               </VBox.margin>
+            </JFXButton>
+            </children>
+        </VBox>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+    </children>
+</AnchorPane>

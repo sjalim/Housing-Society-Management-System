@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="681.0" prefWidth="520.0" style="-fx-background-color: #d2d6df;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.manager.noticeboard.ViewNoticeController">
+    <children>
+        <Label layoutX="47.0" layoutY="54.0" text="Date:">
+            <font>
+                <Font name="Century Gothic Bold" size="18.0" />
+            </font>
+        </Label>
+        <Label fx:id="viewNoticeDate" layoutX="100.0" layoutY="55.0" text="2021-2-2">
+            <font>
+                <Font name="Century Gothic Bold" size="18.0" />
+            </font>
+        </Label>
+        <Label layoutX="47.0" layoutY="90.0" text="Title:">
+            <font>
+                <Font name="Century Gothic Bold" size="18.0" />
+            </font>
+        </Label>
+        <Label layoutX="47.0" layoutY="126.0" text="Description:">
+            <font>
+                <Font name="Century Gothic Bold" size="18.0" />
+            </font>
+        </Label>
+        <JFXTextArea fx:id="viewNoticeDes" layoutX="47.0" layoutY="157.0" prefHeight="450.0" prefWidth="426.0" style="-fx-border-color: black;" text="Blah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balhBlah blah balh&#10;">
+            <font>
+                <Font size="14.0" />
+            </font>
+            <padding>
+                <Insets left="5.0" />
+            </padding>
+        </JFXTextArea>
+      <JFXButton fx:id="updateNoticeButton" layoutX="219.0" layoutY="629.0" prefHeight="27.0" prefWidth="82.0" style="-fx-border-color: black;" text="Update" />
+      <JFXTextField fx:id="viewNoticeTitle" layoutX="94.0" layoutY="89.0" prefHeight="26.0" prefWidth="381.0" />
+    </children>
+</AnchorPane>
