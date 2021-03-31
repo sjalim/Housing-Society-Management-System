@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane hbarPolicy="NEVER" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.GuardVisitorListController">
+    <content>
+        <AnchorPane fx:id="rootPane" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #009688;">
+            <children>
+                <TableView fx:id="table" layoutX="32.0" layoutY="163.0" prefHeight="516.0">
+                    <columns>
+                        <TableColumn fx:id="name_col" prefWidth="256.7999687194824" text="Name" />
+                        <TableColumn fx:id="flat_number_col" minWidth="0.0" prefWidth="126.4000244140625" text="Flat Number" />
+                        <TableColumn fx:id="in_time_col" prefWidth="109.5999755859375" text="In Time" />
+                        <TableColumn fx:id="out_time_col" minWidth="0.0" prefWidth="108.0" text="Out Time" />
+                        <TableColumn fx:id="guard_id_col" prefWidth="150.4000244140625" text="Guard Id" />
+                        <TableColumn fx:id="gate_no_col" prefWidth="136.800048828125" text="Gate No." />
+                    </columns>
+                </TableView>
+                <TextField fx:id="search" layoutX="540.0" layoutY="117.0" prefHeight="26.0" prefWidth="361.0" promptText="Search" />
+                <ImageView fitHeight="26.0" fitWidth="24.0" layoutX="870.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../images/search.png" />
+                    </image>
+                </ImageView>
+                <JFXButton layoutX="56.0" layoutY="117.0" onAction="#handleAdd" prefHeight="37.0" prefWidth="116.0" style="-fx-background-color: #424642;" text="Add" textFill="WHITE">
+                    <font>
+                        <Font name="Trebuchet MS" size="20.0" />
+                    </font>
+                </JFXButton>
+                <JFXButton layoutX="868.0" layoutY="26.0" onAction="#handleRefresh" style="-fx-background-color: #98DFC9;" text="Refresh">
+               <effect>
+                  <DropShadow />
+               </effect></JFXButton>
+            </children>
+        </AnchorPane>
+    </content>
+</ScrollPane>

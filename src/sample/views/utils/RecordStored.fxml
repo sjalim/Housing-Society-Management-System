@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<DialogPane prefHeight="190.0" prefWidth="449.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <graphic>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="145.0" prefWidth="284.0">
+         <children>
+            <ImageView fitHeight="45.0" fitWidth="53.0" layoutX="190.0" layoutY="51.0" pickOnBounds="true" smooth="false">
+               <image>
+                  <Image url="@../../images/ok-mark.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </graphic>
+   <buttonTypes>
+      <ButtonType fx:constant="CLOSE" />
+   </buttonTypes>
+</DialogPane>

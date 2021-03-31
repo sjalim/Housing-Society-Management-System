@@ -25,3 +25,10 @@
 .table{
     -fx-background-color: #4F5D67;
 }
+.refresh-btn{
+
+    -fx-background-radius: 20px;
+    -fx-background-color: linear-gradient(white,ghostwhite);
+
+
+}
