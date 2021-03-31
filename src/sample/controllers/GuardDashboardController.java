@@ -104,8 +104,8 @@ public class GuardDashboardController implements Initializable {
             public void handle(ActionEvent actionEvent) {
 
                 try {
-                    AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/guard/guard_visitor.fxml"));
-                    contentViewPane.getChildren().setAll(anchorPane);
+                    ScrollPane scrollPane = FXMLLoader.load(getClass().getResource("/sample/views/guard/guard_visitor_list.fxml"));
+                    contentViewPane.getChildren().setAll(scrollPane);
                 } catch (IOException throwables) {
                     throwables.printStackTrace();
                 }

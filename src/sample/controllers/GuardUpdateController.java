@@ -619,6 +619,9 @@ public class GuardUpdateController implements Initializable {
 
     private void loadParking() {
 
+        System.out.println("check");
+
+
         String query = "select p.TrackId as " +
                 "TrackId, v.CarId as " +
                 "CarId, p" +
