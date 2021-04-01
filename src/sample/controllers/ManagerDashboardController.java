@@ -15,8 +15,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import javafx.scene.Parent;
@@ -131,6 +134,22 @@ public class ManagerDashboardController implements Initializable {
             translateTransition1.play();
         });
 
+//        ScrollPane scrollPane = null;
+//        try {
+//            scrollPane = FXMLLoader.load(getClass().getResource("/sample/views/manager/monitor_parking.fxml"));
+//            contentViewPane.getChildren().setAll(scrollPane);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+        try {
+            ScrollPane scrollPane  = FXMLLoader.load(this.getClass().getResource("/sample/views/manager/monitor_parking.fxml"));
+            contentViewPane.getChildren().clear();
+            contentViewPane.getChildren().setAll(scrollPane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         flatsOwner_button.setOnAction(actionEvent -> {
             try {
@@ -227,6 +246,37 @@ public class ManagerDashboardController implements Initializable {
                 } catch (IOException throwables) {
                     throwables.printStackTrace();
                 }
+            }
+        });
+
+
+        monitorParking_button.setOnAction(new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+
+                try {
+                ScrollPane scrollPane  = FXMLLoader.load(this.getClass().getResource("/sample/views/manager/monitor_parking.fxml"));
+                    contentViewPane.getChildren().clear();
+                    contentViewPane.getChildren().setAll(scrollPane);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        monitorStaffs_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+
+                try {
+                    ScrollPane scrollPane  = FXMLLoader.load(this.getClass().getResource("/sample/views/manager/monitor_staff.fxml"));
+                    contentViewPane.getChildren().clear();
+                    contentViewPane.getChildren().setAll(scrollPane);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
             }
         });
 

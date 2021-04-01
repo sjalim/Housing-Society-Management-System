@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.manager.monitor.MonitorParking">
+   <content>
+      <AnchorPane prefHeight="1200.0" prefWidth="1200.0" style="-fx-background-color: #eeeeff;">
+         <children>
+            <JFXButton fx:id="refreshButton" layoutX="1056.0" layoutY="49.0" onAction="#handleRefresh" onMouseClicked="#handleRefresh" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 4em; -fx-background-radius: 4em;" text="Refresh">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/refresh.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="Century Gothic" size="14.0" />
+               </font>
+            </JFXButton>
+            <BarChart fx:id="in_time_chart" layoutX="19.0" layoutY="768.0" prefHeight="400.0" prefWidth="581.0" title="In Time">
+              <xAxis>
+                <CategoryAxis fx:id="in_time_x_axis" side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis fx:id="in_time_y_axis" side="LEFT" />
+              </yAxis>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </BarChart>
+            <BarChart fx:id="out_time_chart" layoutX="600.0" layoutY="766.0" prefHeight="400.0" prefWidth="586.0" title="Out Time">
+              <xAxis>
+                <CategoryAxis fx:id="out_time_x_axis" side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis fx:id="out_time_y_axis" side="LEFT" />
+              </yAxis>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </BarChart>
+            <JFXComboBox fx:id="in_time_week_combo_box" layoutX="254.0" layoutY="734.0" onAction="#handleWeekInTime" prefHeight="26.0" prefWidth="150.0" promptText="Week" style="-fx-background-color: #f3f0e8;">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </JFXComboBox>
+            <JFXComboBox fx:id="in_time_month_combo_box" layoutX="90.0" layoutY="734.0" onAction="#handleMonthInTime" prefHeight="26.0" prefWidth="150.0" promptText="Month" style="-fx-background-color: #f3f0e8;">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </JFXComboBox>
+            <JFXComboBox fx:id="out_time_week_combo_box" layoutX="819.0" layoutY="734.0" onAction="#handleWeekOutTIme" prefHeight="26.0" prefWidth="150.0" promptText="Week" style="-fx-background-color: #f3f0e8;">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </JFXComboBox>
+            <JFXComboBox fx:id="out_time_month_combo_box" layoutX="655.0" layoutY="733.0" onAction="#handleMonthOutTime" prefHeight="26.0" prefWidth="150.0" promptText="Month" style="-fx-background-color: #f3f0e8;">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </JFXComboBox>
+            <TableView fx:id="table" layoutX="73.0" layoutY="230.0" prefHeight="416.0" prefWidth="1087.0">
+               <effect>
+                  <DropShadow height="47.21" radius="30.8525" spread="0.14" width="78.2" />
+               </effect>
+               <columns>
+                  <TableColumn fx:id="date_col" prefWidth="148.0" text="Date" />
+                  <TableColumn fx:id="car_num_col" prefWidth="159.0" text="Car Number" />
+                  <TableColumn fx:id="car_model_coi" prefWidth="151.0" text="Car Model" />
+                  <TableColumn fx:id="in_time_col" prefWidth="198.0" text="In Time" />
+                  <TableColumn fx:id="out_time_col" prefWidth="193.0" text="Out Time" />
+                  <TableColumn fx:id="allocation_flat_col" prefWidth="233.60009765625" text="Allocated Flat" />
+               </columns>
+            </TableView>
+            <JFXTextField fx:id="search_text_filed" labelFloat="true" layoutX="413.0" layoutY="42.0" prefHeight="45.0" prefWidth="406.0" promptText="Search" style="-fx-background-color: #eeeeff;">
+               <effect>
+                  <Glow />
+               </effect>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </JFXTextField>
+            <JFXTimePicker fx:id="in_time_picker" layoutX="437.0" layoutY="138.0" onAction="#handleInTIme" prefHeight="40.0" prefWidth="300.0" promptText="In Time" style="-fx-background-color: #f3f0e8;">
+               <effect>
+                  <DropShadow height="10.0" radius="4.5" width="10.0" />
+               </effect>
+            </JFXTimePicker>
+            <JFXTimePicker fx:id="out_time_picker" layoutX="756.0" layoutY="138.0" onAction="#handleOutTime" prefHeight="40.0" prefWidth="300.0" promptText="Out Time" style="-fx-background-color: #f3f0e8;">
+               <effect>
+                  <DropShadow height="10.0" radius="4.5" width="10.0" />
+               </effect>
+            </JFXTimePicker>
+            <JFXComboBox fx:id="in_time_day_combo_box" layoutX="417.0" layoutY="734.0" onAction="#handleDayInTime" prefHeight="26.0" prefWidth="150.0" promptText="Day" style="-fx-background-color: #f3f0e8;">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </JFXComboBox>
+            <JFXComboBox fx:id="out_time_day_combo_box" layoutX="983.0" layoutY="735.0" onAction="#handleDayOutTime" prefHeight="26.0" prefWidth="150.0" promptText="Day" style="-fx-background-color: #f3f0e8;">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </JFXComboBox>
+            <DatePicker fx:id="date_picker" layoutX="95.0" layoutY="142.0" onAction="#handleDate" prefHeight="38.0" prefWidth="275.0" promptText="Date">
+               <effect>
+                  <DropShadow height="10.0" radius="4.5" width="10.0" />
+               </effect>
+            </DatePicker>
+            <JFXTextField fx:id="in_time_year_text_field" layoutX="253.0" layoutY="687.0" onAction="#handleInTimeYear" promptText="Year(e.g:2021)" />
+            <JFXTextField fx:id="out_time_year_text_field" layoutX="819.0" layoutY="681.0" onAction="#handleOutTimeYear" promptText="Year(e.g:2021)" />
+         </children>
+      </AnchorPane>
+   </content>
+</ScrollPane>

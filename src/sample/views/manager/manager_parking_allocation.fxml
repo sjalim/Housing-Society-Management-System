@@ -40,7 +40,7 @@
             <Font size="25.0" />
          </font>
       </JFXButton>
-      <JFXComboBox fx:id="qsn_combo_box" layoutX="370.0" layoutY="132.0" onAction="#handleQsn" prefHeight="25.0" prefWidth="235.0" />
+      <JFXComboBox fx:id="qsn_combo_box" layoutX="370.0" layoutY="132.0" onAction="#handleQsn" prefHeight="25.0" prefWidth="235.0" promptText="Filter" />
       <JFXDatePicker fx:id="from_date_date_picker" layoutX="649.0" layoutY="131.0" onAction="#handleFromDate" promptText="From" />
       <JFXDatePicker fx:id="to_date_date_picker" layoutX="830.0" layoutY="131.0" onAction="#handleToDate" promptText="To" />
       <ComboBox fx:id="sub_qsn_combo_box" layoutX="694.0" layoutY="133.0" onAction="#handleSubQsn" prefHeight="25.0" prefWidth="221.0" visible="false" />
@@ -56,6 +56,6 @@
             <Font name="Century Gothic" size="14.0" />
          </font>
       </JFXButton>
-      <JFXComboBox fx:id="search_cat_combo_box" layoutX="135.0" layoutY="44.0" onAction="#handleSearchCategory" prefHeight="25.0" prefWidth="153.0" />
+      <JFXComboBox fx:id="search_cat_combo_box" layoutX="135.0" layoutY="44.0" onAction="#handleSearchCategory" prefHeight="25.0" prefWidth="153.0" promptText="Search Menu" />
    </children>
 </AnchorPane>
