@@ -264,6 +264,21 @@ public class ManagerDashboardController implements Initializable {
             }
         });
 
+        monitorStaffs_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+
+                try {
+                    ScrollPane scrollPane  = FXMLLoader.load(this.getClass().getResource("/sample/views/manager/monitor_staff.fxml"));
+                    contentViewPane.getChildren().clear();
+                    contentViewPane.getChildren().setAll(scrollPane);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
 
     }
 
