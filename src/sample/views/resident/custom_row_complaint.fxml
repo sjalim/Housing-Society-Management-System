@@ -37,7 +37,7 @@
                 <Font name="Century Gothic Bold" size="15.0" />
             </font>
         </Label>
-        <JFXTextArea fx:id="complaintDescriptionField" editable="false" layoutX="168.0" layoutY="60.0" prefHeight="50.0" prefWidth="566.0" text="ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd&#10;">
+        <JFXTextArea fx:id="complaintDescriptionField" editable="false" layoutX="168.0" layoutY="60.0" prefHeight="50.0" prefWidth="552.0" text="ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd&#10;">
             <font>
                 <Font size="13.0" />
             </font>
@@ -61,6 +61,11 @@
         </Label>
         <HBox alignment="TOP_RIGHT" layoutX="547.0" layoutY="9.0" prefHeight="34.0" prefWidth="355.0">
             <children>
+            <JFXButton fx:id="unvoteButton" prefHeight="26.0" prefWidth="74.0" style="-fx-border-color: black;" text="Unvote">
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin>
+            </JFXButton>
                 <Label fx:id="countVoteUp" text="0">
                     <font>
                         <Font name="Century Gothic Bold" size="15.0" />

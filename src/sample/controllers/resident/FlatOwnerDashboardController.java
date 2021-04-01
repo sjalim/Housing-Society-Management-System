@@ -36,7 +36,7 @@ public class FlatOwnerDashboardController implements Initializable {
     private JFXButton drawerButton;
 
     @FXML
-    private AnchorPane contentViewPane;
+    public AnchorPane contentViewPane;
 
     @FXML
     private AnchorPane opacityPane;

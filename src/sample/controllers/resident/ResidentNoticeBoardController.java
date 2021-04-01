@@ -40,6 +40,8 @@ public class ResidentNoticeBoardController implements Initializable{
     @FXML
     private JFXButton findButton;
 
+    @FXML private JFXButton searchButton;
+
     @FXML
     private JFXTextField filteredNotice;
 
@@ -107,35 +109,15 @@ public class ResidentNoticeBoardController implements Initializable{
                 new KeyFrame(Duration.seconds(2),
                         event -> {
                             noticeObservableList = FXCollections.observableArrayList();
-
-
                             try {
                                 loadFromDB();
                             } catch (SQLException | ClassNotFoundException throwables) {
                                 throwables.printStackTrace();
                             }
 
-                            FilteredList<Notice> filteredData = new FilteredList<>(noticeObservableList, b -> true);
-                            // 2. Set the filter Predicate whenever the filter changes.
-                            filteredNotice.textProperty().addListener((observable, oldValue, newValue) -> {
-                                filteredData.setPredicate(notice -> {
-                                    // If filter text is empty, display all persons.
-                                    if (newValue == null || newValue.isEmpty()) {
-                                        return true;
-                                    }
-                                    // Compare first name and last name of every person with filter text.
-                                    String lowerCaseFilter = newValue.toLowerCase();
-
-                                    if (notice.getNoticeTitle().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
-                                        return true;
-                                    }  else
-                                        return false; // Does not match.
-                                });
-                            });
-                            noticeListView.setItems(filteredData);
+                            noticeListView.setItems(noticeObservableList);
                             noticeListView.setCellFactory(ResidentNoticeRowController
                                     -> new ResidentNoticeRowController());
-
 
                         }));
         refreshTableTimeline.setCycleCount(Timeline.INDEFINITE);
@@ -148,10 +130,8 @@ public class ResidentNoticeBoardController implements Initializable{
                 String tDate = toDatePicker.getValue().toString();
                 try {
                     filterByDate(fDate,tDate);
-                } catch (SQLException throwables) {
+                } catch (SQLException | ClassNotFoundException throwables) {
                     throwables.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
                 }
                 noticeListView.setItems(null);
                 noticeListView.setItems(filteredByDateList);
@@ -160,8 +140,19 @@ public class ResidentNoticeBoardController implements Initializable{
             }
         });
 
-        filteredNotice.setOnMouseClicked(event -> {
+        searchButton.setOnAction(actionEvent -> {
             refreshTableTimeline.stop();
+            if(filteredNotice.getText() != null) {
+                try {
+                    filterBySearch(filteredNotice.getText());
+                } catch (SQLException | ClassNotFoundException throwables) {
+                    throwables.printStackTrace();
+                }
+                noticeListView.setItems(null);
+                noticeListView.setItems(noticeObservableList);
+            } else {
+                AlertDialog("Search field is blank!");
+            }
         });
 
         refreshButton.setOnAction(actionEvent -> {
@@ -181,6 +172,22 @@ public class ResidentNoticeBoardController implements Initializable{
                     rs.getString("NoticeTitle"),rs.getString("NoticeDescription"),
                     rs.getInt("ManagerId"),rs.getDate("DateAdded")));
         }
+    }
+
+    private void filterBySearch(String searchedTerm) throws SQLException, ClassNotFoundException {
+        noticeObservableList.clear();
+        databaseHandler = new DatabaseHandler();
+        Statement statement = databaseHandler.getDbConnection().createStatement();
+
+        query = "SELECT * FROM NoticeBoard WHERE NoticeTitle LIKE '%"+searchedTerm+"%' ORDER BY NoticeId desc";
+
+        ResultSet rs = statement.executeQuery(query);
+        while(rs.next()) {
+            noticeObservableList.add(new Notice(rs.getInt("NoticeId"),
+                    rs.getString("NoticeTitle"),rs.getString("NoticeDescription"),
+                    rs.getInt("ManagerId"),rs.getDate("DateAdded")));
+        }
+        databaseHandler.getDbConnection().close();
     }
 
     private void loadFromDB() throws SQLException, ClassNotFoundException {

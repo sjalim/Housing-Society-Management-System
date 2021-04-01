@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import sample.controllers.LoginPageController;
 import sample.controllers.resident.FlatOwnerDashboardController;
@@ -59,6 +60,11 @@ public class Main extends Application {
                 Parent root = (Parent) loader.load();
                 FlatOwnerDashboardController flatOwnerDashboardController = loader.getController();
                 flatOwnerDashboardController.dashboard_flatStatus.setText(allocationStatus);
+
+                AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/resident/complaint_box.fxml"));
+                flatOwnerDashboardController.contentViewPane.getChildren().clear();
+                flatOwnerDashboardController.contentViewPane.getChildren().setAll(anchorPane);
+
                 primaryStage.setTitle("Hello World");
                 primaryStage.setScene(new Scene(root, 1200.0D, 700.0D));
                 primaryStage.show();
