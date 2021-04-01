@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.GuardParkingDeleteController">
+   <children>
+      <Label layoutX="36.0" layoutY="36.0" text="Your deleting">
+         <font>
+            <Font name="Trebuchet MS" size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="number_of_records_label" layoutX="193.0" layoutY="38.0" text="Label">
+         <font>
+            <Font name="Trebuchet MS" size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="259.0" layoutY="38.0" text="record">
+         <font>
+            <Font name="Trebuchet MS" size="25.0" />
+         </font>
+      </Label>
+      <ListView fx:id="delete_item_list_view" layoutX="15.0" layoutY="68.0" prefHeight="247.0" prefWidth="577.0" />
+      <JFXButton layoutX="383.0" layoutY="349.0" onAction="#handleConfirm" text="Confirm" />
+      <JFXButton layoutX="485.0" layoutY="349.0" onAction="#handleCancel" text="Cancel" />
+   </children>
+</AnchorPane>

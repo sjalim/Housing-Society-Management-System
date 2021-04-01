@@ -104,8 +104,8 @@ public class GuardDashboardController implements Initializable {
             public void handle(ActionEvent actionEvent) {
 
                 try {
-                    AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/guard/guard_visitor.fxml"));
-                    contentViewPane.getChildren().setAll(anchorPane);
+                    ScrollPane scrollPane = FXMLLoader.load(getClass().getResource("/sample/views/guard/guard_visitor_list.fxml"));
+                    contentViewPane.getChildren().setAll(scrollPane);
                 } catch (IOException throwables) {
                     throwables.printStackTrace();
                 }
@@ -176,17 +176,32 @@ public class GuardDashboardController implements Initializable {
             }
         });
 
-        update_track_button.setOnAction(actionEvent -> {
-            try {
-                AnchorPane anchorPane =
-                        FXMLLoader.load(getClass().getResource("/sample/views/guard/update_record.fxml"));
-                contentViewPane.getChildren().setAll(anchorPane);
-            } catch (IOException throwables) {
-                throwables.printStackTrace();
+        update_track_button.setOnAction(new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    ScrollPane pane =
+                            FXMLLoader.load(this.getClass().getResource("/sample/views/guard/guard_update.fxml"));
+                    contentViewPane.getChildren().setAll(pane);
+                } catch (IOException throwables) {
+                    throwables.printStackTrace();
+                }
             }
         });
 
+        Staffs_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
 
-
+                try {
+                    ScrollPane pane =
+                            FXMLLoader.load(this.getClass().getResource("/sample/views/guard/guard_staff_track.fxml"));
+                    contentViewPane.getChildren().setAll(pane);
+                } catch (IOException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        });
     }
+
 }
