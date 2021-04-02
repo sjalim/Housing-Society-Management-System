@@ -1,6 +1,5 @@
 package sample.controllers;
 
-import com.jfoenix.bindings.base.IPropertyConverter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,9 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import sample.controllers.Visitor;
 import sample.database.DatabaseHandler;
 
 import java.io.IOException;
@@ -31,6 +28,10 @@ public class GuardVisitorListController implements Initializable {
     DatabaseHandler databaseHandler = new DatabaseHandler();
 
     ObservableList list = FXCollections.observableArrayList();
+
+    @FXML
+    private TextField search_text_field;
+
 
     @FXML
     private TableView<Visitor> table;
@@ -79,9 +80,13 @@ public class GuardVisitorListController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
     }
 
+
     void initTable() {
+
 
         flat_number_col.setCellValueFactory(new PropertyValueFactory<>("flatNumber"));
         guard_id_col.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -89,7 +94,10 @@ public class GuardVisitorListController implements Initializable {
         in_time_col.setCellValueFactory(new PropertyValueFactory<>("inTime"));
         out_time_col.setCellValueFactory(new PropertyValueFactory<>("outTime"));
         name_col.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+
     }
+
 
     void load() {
 
@@ -124,5 +132,39 @@ public class GuardVisitorListController implements Initializable {
         table.setItems(list);
 
 
+    }
+
+    @FXML
+    void handleSearch(ActionEvent event) {
+
+        list.clear();
+        String search = search_text_field.getText();
+
+        if(!search.isEmpty())
+        {
+            String query = "select * from Visitor where " +
+                    "Name like '%"+search+"%' " +
+                    "or " +
+                    "FlatNumber like '%"+search+"%' " +
+                    "or " +
+                    "InTime like '"+search+"' " +
+                    "or " +
+                    "OutTime like '"+search+"'" ;
+
+            try {
+                PreparedStatement preparedStatement = databaseHandler.getDbConnection().prepareStatement(query);
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+
+                while (resultSet.next()) {
+                    list.add(new Visitor(resultSet.getString("name"), resultSet.getString("FlatNumber"), resultSet.getString("InTime")
+                            , resultSet.getString("OutTime"), resultSet.getInt("VisitorId"), resultSet.getInt("GuardId"), resultSet.getInt("GateNo")));
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
