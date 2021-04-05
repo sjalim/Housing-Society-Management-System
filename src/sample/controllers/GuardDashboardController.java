@@ -14,8 +14,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import sample.controllers.resident.ChangePasswordController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,9 +42,6 @@ public class GuardDashboardController implements Initializable {
     private AnchorPane monitor_anchor_pane;
 
     @FXML
-    private JFXButton profile_button;
-
-    @FXML
     private JFXButton logout_button;
 
     @FXML
@@ -59,6 +58,9 @@ public class GuardDashboardController implements Initializable {
 
     @FXML
     private JFXButton update_track_button;
+
+    @FXML
+    private JFXButton changePassButton;
 
 
     @FXML
@@ -200,6 +202,22 @@ public class GuardDashboardController implements Initializable {
                 } catch (IOException throwables) {
                     throwables.printStackTrace();
                 }
+            }
+        });
+
+        changePassButton.setOnAction(actionEvent -> {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(this.getClass().getResource("/sample/views/guard/guard_change_password.fxml"));
+                loader.load();
+                Scene scene = new Scene(loader.getRoot());
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.setTitle("Change Password");
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }

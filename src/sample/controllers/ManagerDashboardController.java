@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javafx.scene.Parent;
@@ -27,6 +28,7 @@ import javafx.scene.layout.VBox;
 
 import javafx.util.Duration;
 import sample.controllers.manager.flat.ManagerFlatOwnerController;
+import sample.controllers.resident.ChangePasswordController;
 import sample.database.DatabaseHandler;
 
 public class ManagerDashboardController implements Initializable {
@@ -90,6 +92,9 @@ public class ManagerDashboardController implements Initializable {
 
     @FXML
     private JFXButton logout_manager_button;
+
+    @FXML
+    private JFXButton changePassButton;
 
 
     private DatabaseHandler databaseHandler;
@@ -277,6 +282,22 @@ public class ManagerDashboardController implements Initializable {
                 }
 
 
+            }
+        });
+
+        changePassButton.setOnAction(actionEvent -> {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(this.getClass().getResource("/sample/views/manager/manager_change_password.fxml"));
+                loader.load();
+                Scene scene = new Scene(loader.getRoot());
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.setTitle("Change Password");
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
 

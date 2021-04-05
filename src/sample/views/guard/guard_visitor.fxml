@@ -5,13 +5,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1200.0" style="-fx-background-color: #009688;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.GuardVisitorController">
+<AnchorPane prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #009688;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.GuardVisitorController">
    <children>
-      <TextField fx:id="name_text_field" layoutX="483.0" layoutY="133.0" prefHeight="26.0" prefWidth="333.0" promptText="Name" />
-      <TextField fx:id="gate_no_text_field" layoutX="483.0" layoutY="267.0" promptText="Gate No" />
-      <Button layoutX="745.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleSave" text="Save" />
-      <JFXTimePicker fx:id="in_time_timepicker" defaultColor="#001694" layoutX="490.0" layoutY="179.0" />
-      <JFXTimePicker fx:id="out_timepicker" defaultColor="#001694" layoutX="490.0" layoutY="222.0" />
-      <TextField fx:id="flat_no_text_field" layoutX="483.0" layoutY="314.0" promptText="Flat No" />
+      <TextField fx:id="name_text_field" layoutX="122.0" layoutY="132.0" prefHeight="26.0" prefWidth="333.0" promptText="Name" />
+      <TextField fx:id="gate_no_text_field" layoutX="122.0" layoutY="270.0" promptText="Gate No" />
+      <Button layoutX="122.0" layoutY="381.0" mnemonicParsing="false" onAction="#handleSave" text="Save" />
+      <JFXTimePicker fx:id="in_time_timepicker" defaultColor="BLACK" layoutX="122.0" layoutY="175.0" />
+      <JFXTimePicker fx:id="out_timepicker" defaultColor="BLACK" layoutX="122.0" layoutY="222.0" />
+      <TextField fx:id="flat_no_text_field" layoutX="122.0" layoutY="320.0" promptText="Flat No" />
    </children>
 </AnchorPane>

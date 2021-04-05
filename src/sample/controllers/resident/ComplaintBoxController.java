@@ -1,9 +1,6 @@
 package sample.controllers.resident;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
@@ -13,10 +10,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.util.StringConverter;
 import sample.UserId;
 import sample.controllers.manager.complaintbox.ManagerCustomComplaintRowController;
 import sample.controllers.manager.noticeboard.NoticeRowController;
@@ -29,6 +28,8 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class ComplaintBoxController implements Initializable {
@@ -43,48 +44,84 @@ public class ComplaintBoxController implements Initializable {
 
     @FXML private JFXButton refreshButton;
 
+    @FXML private JFXDatePicker fromDatePicker;
+
+    @FXML private JFXDatePicker toDatePicker;
+
+    @FXML private JFXButton findButton;
+
     @FXML private JFXListView<ComplainBox> complaintBoxListView;
+
+    @FXML private JFXButton searchButton;
 
     private String query;
     private DatabaseHandler databaseHandler;
     private ObservableList<ComplainBox> complainBoxObservableList;
     private ObservableList<ComplainBox> categoryList;
+    private ObservableList<ComplainBox> filteredByDateList;
     UserId mUserId = UserId.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        fromDatePicker.setConverter(new StringConverter<LocalDate>()
+        {
+            private DateTimeFormatter dateTimeFormatter=DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            @Override
+            public String toString(LocalDate localDate)
+            {
+                if(localDate==null)
+                    return "";
+                return dateTimeFormatter.format(localDate);
+            }
+
+            @Override
+            public LocalDate fromString(String dateString)
+            {
+                if(dateString==null || dateString.trim().isEmpty())
+                {
+                    return null;
+                }
+                return LocalDate.parse(dateString,dateTimeFormatter);
+            }
+        });
+        toDatePicker.setConverter(new StringConverter<LocalDate>()
+        {
+            private DateTimeFormatter dateTimeFormatter=DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            @Override
+            public String toString(LocalDate localDate)
+            {
+                if(localDate==null)
+                    return "";
+                return dateTimeFormatter.format(localDate);
+            }
+
+            @Override
+            public LocalDate fromString(String dateString)
+            {
+                if(dateString==null || dateString.trim().isEmpty())
+                {
+                    return null;
+                }
+                return LocalDate.parse(dateString,dateTimeFormatter);
+            }
+        });
+
         Timeline refreshTableTimeline = new Timeline(
                 new KeyFrame(Duration.seconds(2),
                         event -> {
                             complainBoxObservableList = FXCollections.observableArrayList();
                             categoryList = FXCollections.observableArrayList();
+                            filteredByDateList = FXCollections.observableArrayList();
                             try {
                                 loadFromDB();
                             } catch (SQLException | ClassNotFoundException throwables) {
                                 throwables.printStackTrace();
                             }
 
-                            FilteredList<ComplainBox> filteredData = new FilteredList<>(complainBoxObservableList, b -> true);
-
-                            // 2. Set the filter Predicate whenever the filter changes.
-                            filteredComplaints.textProperty().addListener((observable, oldValue, newValue) -> {
-                                filteredData.setPredicate(complainBox -> {
-                                    // If filter text is empty, display all persons.
-                                    if (newValue == null || newValue.isEmpty()) {
-                                        return true;
-                                    }
-                                    // Compare first name and last name of every person with filter text.
-                                    String lowerCaseFilter = newValue.toLowerCase();
-
-                                    if (complainBox.getFlatNumber().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
-                                        return true;
-                                    } else if (complainBox.getComplainTitle().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-                                        return true;
-                                    } else
-                                        return false; // Does not match.
-                                });
-                            });
-                            complaintBoxListView.setItems(filteredData);
+                            complaintBoxListView.setItems(complainBoxObservableList);
                             complaintBoxListView.setCellFactory(CustomRowComplaintController
                                     -> new CustomRowComplaintController());
 
@@ -92,6 +129,38 @@ public class ComplaintBoxController implements Initializable {
 
         refreshTableTimeline.setCycleCount(Timeline.INDEFINITE);
         refreshTableTimeline.play();
+
+        searchButton.setOnAction(actionEvent -> {
+            refreshTableTimeline.stop();
+            if(filteredComplaints.getText() != null) {
+                try {
+                    filterBySearch(filteredComplaints.getText());
+                } catch (SQLException | ClassNotFoundException throwables) {
+                    throwables.printStackTrace();
+                }
+                complaintBoxListView.setItems(null);
+                complaintBoxListView.setItems(complainBoxObservableList);
+            } else {
+                AlertDialog("Search field is blank!");
+            }
+        });
+
+        findButton.setOnAction(actionEvent -> {
+            if (fromDatePicker.getValue() != null && toDatePicker.getValue() != null) {
+                refreshTableTimeline.stop();
+                String fDate = fromDatePicker.getValue().toString();
+                String tDate = toDatePicker.getValue().toString();
+                try {
+                    filterByDate(fDate,tDate);
+                } catch (SQLException | ClassNotFoundException throwables) {
+                    throwables.printStackTrace();
+                }
+                complaintBoxListView.setItems(null);
+                complaintBoxListView.setItems(filteredByDateList);
+            } else {
+                AlertDialog("Select all the properties");
+            }
+        });
 
         refreshButton.setOnAction(actionEvent -> {
             refreshTableTimeline.play();
@@ -107,10 +176,8 @@ public class ComplaintBoxController implements Initializable {
         categoryComboBox.setOnMouseClicked((mouseEvent) -> {
             try {
                 initCategory();
-            } catch (SQLException throwables) {
+            } catch (SQLException | ClassNotFoundException throwables) {
                 throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
         });
 
@@ -146,6 +213,54 @@ public class ComplaintBoxController implements Initializable {
                 e.printStackTrace();
             }
         });
+    }
+
+    private void filterBySearch(String searchedTerm) throws SQLException, ClassNotFoundException {
+        complainBoxObservableList.clear();
+        databaseHandler = new DatabaseHandler();
+        Statement statement = databaseHandler.getDbConnection().createStatement();
+
+        query = "SELECT c.ComplainBoxId, c.FlatNumber, c.ComplainBoxStatus, c.ComplainBoxTitle, cc.CategoryName, c.ComplainBoxDescription, c.DateAdded," +
+                    "(SELECT COUNT(*) from ComplainBoxVote where VoteFlag = '1' and ComplainBoxId = cv.ComplainBoxId) as VoteUp," +
+                    "(SELECT COUNT(*) from ComplainBoxVote where VoteFlag = '0' and ComplainBoxId = cv.ComplainBoxId) as VoteDown " +
+                "FROM ComplainBoxBoard as c " +
+                "LEFT JOIN (SELECT DISTINCT ComplainBoxId FROM ComplainBoxVote) as cv " +
+                    "ON c.ComplainBoxId = cv.ComplainBoxId " +
+                "INNER JOIN ComplainCategory as cc " +
+                    "ON cc.CategoryId = c.CategoryId " +
+                "WHERE FlatNumber LIKE '%"+searchedTerm+"%' " +
+                    "OR ComplainBoxTitle LIKE '%"+searchedTerm+"%'";
+
+        ResultSet rs = statement.executeQuery(query);
+        while(rs.next()) {
+            complainBoxObservableList.add(new ComplainBox(rs.getInt("ComplainBoxId"),rs.getString("FlatNumber"),
+                    rs.getString("ComplainBoxStatus"),rs.getString("ComplainBoxTitle"),
+                    rs.getString("ComplainBoxDescription"), rs.getString("DateAdded"),
+                    rs.getInt("VoteUp"), rs.getInt("VoteDown"),rs.getString("CategoryName")));
+        }
+        databaseHandler.getDbConnection().close();
+    }
+
+    private void filterByDate(String fDate, String tDate) throws SQLException, ClassNotFoundException {
+        filteredByDateList.clear();
+        Statement st = databaseHandler.getDbConnection().createStatement();
+        query = "SELECT c.ComplainBoxId, c.FlatNumber, c.ComplainBoxStatus, c.ComplainBoxTitle, cc.CategoryName, c.ComplainBoxDescription, c.DateAdded," +
+                    "(SELECT COUNT(*) from ComplainBoxVote where VoteFlag = '1' and ComplainBoxId = cv.ComplainBoxId) as VoteUp," +
+                    "(SELECT COUNT(*) from ComplainBoxVote where VoteFlag = '0' and ComplainBoxId = cv.ComplainBoxId) as VoteDown " +
+                "FROM ComplainBoxBoard as c " +
+                "LEFT JOIN (SELECT DISTINCT ComplainBoxId FROM ComplainBoxVote) as cv " +
+                    "ON c.ComplainBoxId = cv.ComplainBoxId " +
+                "INNER JOIN ComplainCategory as cc " +
+                    "ON cc.CategoryId = c.CategoryId " +
+                "WHERE DateAdded BETWEEN '"+fDate+"'AND '"+tDate+"' ORDER BY ComplainBoxId desc";
+
+        ResultSet rs = st.executeQuery(query);
+        while(rs.next()) {
+            filteredByDateList.add(new ComplainBox(rs.getInt("ComplainBoxId"),rs.getString("FlatNumber"),
+                    rs.getString("ComplainBoxStatus"),rs.getString("ComplainBoxTitle"),
+                    rs.getString("ComplainBoxDescription"), rs.getString("DateAdded"),
+                    rs.getInt("VoteUp"), rs.getInt("VoteDown"),rs.getString("CategoryName")));
+        }
     }
 
     private void filterByCategory(ComplainBox selectedCategory) throws SQLException, ClassNotFoundException {
@@ -209,5 +324,13 @@ public class ComplaintBoxController implements Initializable {
                     rs.getInt("VoteUp"), rs.getInt("VoteDown"),rs.getString("CategoryName")));
         }
         databaseHandler.getDbConnection().close();
+    }
+
+    void AlertDialog(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error Message");
+        alert.setContentText(message);
+        alert.setHeaderText(null);
+        alert.showAndWait();
     }
 }

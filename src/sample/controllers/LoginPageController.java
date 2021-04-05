@@ -190,6 +190,10 @@ public class LoginPageController implements Initializable {
                                         FlatOwnerDashboardController flatOwnerDashboardController = loader.getController();
                                         flatOwnerDashboardController.dashboard_flatStatus.setText("OWNED");
 
+                                        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/resident/complaint_box.fxml"));
+                                        flatOwnerDashboardController.contentViewPane.getChildren().clear();
+                                        flatOwnerDashboardController.contentViewPane.getChildren().setAll(anchorPane);
+
                                         Scene ownedScene = new Scene(ownedParent, 1200, 700);
                                         userPreferences.put(USER_STATUS, RESIDENT_STATUS);
                                         userPreferences.put(USER_ID, userId);
@@ -201,6 +205,10 @@ public class LoginPageController implements Initializable {
                                         Parent tenantParent = (Parent) loader.load();
                                         FlatOwnerDashboardController flatOwnerDashboardController = loader.getController();
                                         flatOwnerDashboardController.dashboard_flatStatus.setText("RENTED");
+
+                                        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/resident/complaint_box.fxml"));
+                                        flatOwnerDashboardController.contentViewPane.getChildren().clear();
+                                        flatOwnerDashboardController.contentViewPane.getChildren().setAll(anchorPane);
 
                                         Scene tenantScene = new Scene(tenantParent, 1200, 700);
                                         userPreferences.put(USER_STATUS, RESIDENT_STATUS);
@@ -234,6 +242,8 @@ public class LoginPageController implements Initializable {
                                 ".GuardId " +
                                 "where Guard" +
                                 ".Mobile=" + userId + ";";
+
+                        System.out.println("check");
 
 
                         Statement statement =

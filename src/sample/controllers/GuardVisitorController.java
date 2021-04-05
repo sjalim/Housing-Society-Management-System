@@ -4,7 +4,9 @@ import com.jfoenix.controls.JFXTimePicker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import sample.database.DatabaseHandler;
 
 import java.net.URL;
@@ -49,6 +51,39 @@ public class GuardVisitorController implements Initializable {
         flatNo = flat_no_text_field.getText();
 
 
+
+        if (!name.isEmpty() && !inTIme.isEmpty() && outTIme.isEmpty() && !gateNo.isEmpty() && !flatNo.isEmpty()) {
+            String query = "insert into Visitor " +
+                    "values (?,?,?,?,?,?)";
+
+            PreparedStatement preparedStatement = databaseHandler.getDbConnection().prepareStatement(query);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, flatNo);
+            preparedStatement.setString(3, inTIme);
+            preparedStatement.setString(4, outTIme);
+            preparedStatement.setInt(5, guardNo);
+            preparedStatement.setInt(6, Integer.parseInt(gateNo));
+
+            preparedStatement.executeUpdate();
+
+        }
+
+        if (!name.isEmpty() && inTIme.isEmpty() && !outTIme.isEmpty() && !gateNo.isEmpty() && !flatNo.isEmpty()) {
+            String query = "insert into Visitor " +
+                    "values (?,?,?,?,?,?)";
+
+            PreparedStatement preparedStatement = databaseHandler.getDbConnection().prepareStatement(query);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, flatNo);
+            preparedStatement.setString(3, null);
+            preparedStatement.setString(4, outTIme);
+            preparedStatement.setInt(5, guardNo);
+            preparedStatement.setInt(6, Integer.parseInt(gateNo));
+
+            preparedStatement.executeUpdate();
+
+        }
+
         if (!name.isEmpty() && !inTIme.isEmpty() && !outTIme.isEmpty() && !gateNo.isEmpty() && !flatNo.isEmpty()) {
             String query = "insert into Visitor " +
                     "values (?,?,?,?,?,?)";
@@ -66,11 +101,16 @@ public class GuardVisitorController implements Initializable {
         }
 
 
+        Node node = (Node)(event.getSource());
+        Stage stage = (Stage) node.getScene().getWindow();
+        stage.close();
+
+
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-       String guardId = userPreferences.get(LoginPageController.USER_ID, "root");
+        String guardId = userPreferences.get(LoginPageController.USER_ID, "root");
 
         String query = "select GuardId from Guard " +
                 "where Mobile = '" + guardId + "';";

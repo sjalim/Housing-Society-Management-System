@@ -7,8 +7,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="javafx11" level="project" />
     <orderEntry type="library" exported="" name="jfoenix-9.0.10" level="project" />
-    <orderEntry type="library" exported="" name="mssql-jdbc-7.4.1.jre8-shaded" level="project" />
+    <orderEntry type="library" exported="" name="mssql-jdbc-7.4.1.jre12-shaded" level="project" />
+    <orderEntry type="library" exported="" name="javafx11" level="project" />
   </component>
 </module>

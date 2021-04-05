@@ -52,6 +52,8 @@ public class CustomRowComplaintController extends JFXListCell<ComplainBox> imple
 
     @FXML private Label categoryField;
 
+    @FXML private JFXButton unvoteButton;
+
     private FXMLLoader fxmlLoader;
 
     UserId mUserId = UserId.getInstance();
@@ -81,6 +83,12 @@ public class CustomRowComplaintController extends JFXListCell<ComplainBox> imple
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+
+            try {
+                setVisibilityOfUnvote(mComplainBox);
+            } catch (SQLException | ClassNotFoundException throwables) {
+                throwables.printStackTrace();
             }
 
             if(mComplainBox.getFlatNumber().equals(mUserId.mId)) {
@@ -119,6 +127,7 @@ public class CustomRowComplaintController extends JFXListCell<ComplainBox> imple
                     if(canVote) {
                         System.out.println("U can vote");
                         updateVote(1);
+                        unvoteButton.setVisible(true);
                     } else {
                         AlertDialog("You can't vote twice");
                     }
@@ -142,11 +151,20 @@ public class CustomRowComplaintController extends JFXListCell<ComplainBox> imple
                     if(canVote) {
                         System.out.println("U can vote");
                         updateVote(0);
+                        unvoteButton.setVisible(true);
                     } else {
                         AlertDialog("You can't vote twice");
                     }
                     databaseHandler.getDbConnection().close();
                 }catch (SQLException | ClassNotFoundException throwables) {
+                    throwables.printStackTrace();
+                }
+            });
+
+            unvoteButton.setOnAction(actionEvent -> {
+                try {
+                    unvoteComplaint(mComplainBox);
+                } catch (SQLException | ClassNotFoundException throwables) {
                     throwables.printStackTrace();
                 }
             });
@@ -163,6 +181,31 @@ public class CustomRowComplaintController extends JFXListCell<ComplainBox> imple
             setText(null);
             setGraphic(rootAnchorPane);
         }
+    }
+
+    private void setVisibilityOfUnvote(ComplainBox complainBox) throws SQLException, ClassNotFoundException {
+        databaseHandler = new DatabaseHandler();
+        Statement statement = databaseHandler.getDbConnection().createStatement();
+
+        query = "SELECT * FROM ComplainBoxVote WHERE ComplainBoxId='"+complainBox.getComplainId()+"' AND FlatNumber= '"+mUserId.mId+"'";
+
+        ResultSet rs = statement.executeQuery(query);
+        if(rs.next()) {
+            unvoteButton.setVisible(true);
+        } else {
+            unvoteButton.setVisible(false);
+        }
+        databaseHandler.getDbConnection().close();
+    }
+
+    private void unvoteComplaint(ComplainBox complainBox) throws SQLException, ClassNotFoundException {
+        databaseHandler = new DatabaseHandler();
+        String query = "DELETE FROM ComplainBoxVote WHERE ComplainBoxId = '"+complainBox.getComplainId()+"' " +
+                "AND FlatNumber= '"+mUserId.mId+"'";
+        PreparedStatement preparedStatement = databaseHandler.getDbConnection().prepareStatement(query);
+        preparedStatement.execute();
+        preparedStatement.close();
+        databaseHandler.getDbConnection().close();
     }
 
     private void deleteComplaint(ComplainBox complainBox) throws SQLException, ClassNotFoundException {

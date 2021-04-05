@@ -39,7 +39,7 @@
                     </font>
                 </Label>
                 <Line endX="123.60002136230469" endY="-13.799995422363281" layoutX="104.0" layoutY="57.0" startX="-98.00001525878906" startY="-13.799995422363281" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="4.0" />
-                <JFXButton fx:id="profile_button" layoutX="14.0" layoutY="274.0" text="Profile" AnchorPane.leftAnchor="14.0">
+                <JFXButton fx:id="changePassButton" layoutX="14.0" layoutY="274.0" text="Change Passowrd" AnchorPane.leftAnchor="14.0">
                     <font>
                         <Font name="Century Gothic Bold" size="20.0" />
                     </font>

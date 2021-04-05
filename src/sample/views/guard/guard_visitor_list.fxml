@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -25,21 +24,18 @@
                         <TableColumn fx:id="gate_no_col" prefWidth="136.800048828125" text="Gate No." />
                     </columns>
                 </TableView>
-                <TextField fx:id="search" layoutX="540.0" layoutY="117.0" prefHeight="26.0" prefWidth="361.0" promptText="Search" />
-                <ImageView fitHeight="26.0" fitWidth="24.0" layoutX="870.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../images/search.png" />
-                    </image>
-                </ImageView>
+                <TextField fx:id="search_text_field" layoutX="460.0" layoutY="117.0" prefHeight="26.0" prefWidth="361.0" promptText="Search" />
                 <JFXButton layoutX="56.0" layoutY="117.0" onAction="#handleAdd" prefHeight="37.0" prefWidth="116.0" style="-fx-background-color: #424642;" text="Add" textFill="WHITE">
                     <font>
                         <Font name="Trebuchet MS" size="20.0" />
                     </font>
                 </JFXButton>
-                <JFXButton layoutX="868.0" layoutY="26.0" onAction="#handleRefresh" style="-fx-background-color: #98DFC9;" text="Refresh">
-               <effect>
-                  <DropShadow />
-               </effect></JFXButton>
+                <JFXButton layoutX="859.0" layoutY="39.0" onAction="#handleRefresh" style="-fx-background-color: #98DFC9;" text="Refresh">
+                    <effect>
+                        <DropShadow />
+                    </effect></JFXButton>
+                <JFXBadge layoutX="924.0" layoutY="130.0" />
+                <JFXButton fx:id="search_button" layoutX="861.0" layoutY="117.0" onAction="#handleSearch" style="-fx-background-color: #98DFC9;" text="Search" />
             </children>
         </AnchorPane>
     </content>

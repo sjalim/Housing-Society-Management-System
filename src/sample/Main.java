@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import sample.controllers.LoginPageController;
 import sample.controllers.resident.FlatOwnerDashboardController;
@@ -42,14 +43,14 @@ public class Main extends Application {
             mUserId.mId  = findManagerId(mUserId.mId);
 
             Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("views/manager/manager_dashboard.fxml"));
-            primaryStage.setTitle("Hello World");
+            primaryStage.setTitle("Manager");
             primaryStage.setScene(new Scene(root, 1200.0D, 700.0D));
             primaryStage.show();
 
         } else if (userStatus.equals(LoginPageController.GUARD_STATUS)) {
             Parent root =
                     (Parent) FXMLLoader.load(this.getClass().getResource("views/guard/guard_dashboard.fxml"));
-            primaryStage.setTitle("Hello World");
+            primaryStage.setTitle("Guard");
             primaryStage.setScene(new Scene(root, 1200.0D, 500.0D));
             primaryStage.show();
         } else if (userStatus.equals(LoginPageController.RESIDENT_STATUS)) {
@@ -59,7 +60,12 @@ public class Main extends Application {
                 Parent root = (Parent) loader.load();
                 FlatOwnerDashboardController flatOwnerDashboardController = loader.getController();
                 flatOwnerDashboardController.dashboard_flatStatus.setText(allocationStatus);
-                primaryStage.setTitle("Hello World");
+
+                AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/resident/complaint_box.fxml"));
+                flatOwnerDashboardController.contentViewPane.getChildren().clear();
+                flatOwnerDashboardController.contentViewPane.getChildren().setAll(anchorPane);
+
+                primaryStage.setTitle("Flat User");
                 primaryStage.setScene(new Scene(root, 1200.0D, 700.0D));
                 primaryStage.show();
             } else if (allocationStatus.equals(LoginPageController.ALLOCATION_STATUS_RENTED)) {
@@ -68,7 +74,12 @@ public class Main extends Application {
                 Parent root = (Parent) loader.load();
                 FlatOwnerDashboardController flatOwnerDashboardController = loader.getController();
                 flatOwnerDashboardController.dashboard_flatStatus.setText(allocationStatus);
-                primaryStage.setTitle("Hello World");
+
+                AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/sample/views/resident/complaint_box.fxml"));
+                flatOwnerDashboardController.contentViewPane.getChildren().clear();
+                flatOwnerDashboardController.contentViewPane.getChildren().setAll(anchorPane);
+
+                primaryStage.setTitle("Flat User");
                 primaryStage.setScene(new Scene(root, 1200.0D, 700.0D));
                 primaryStage.show();
             } else {

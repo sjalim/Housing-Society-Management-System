@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
@@ -18,6 +19,37 @@
             <children>
                 <VBox layoutX="34.0" layoutY="47.0" prefHeight="607.0" prefWidth="255.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="47.0">
                     <children>
+                  <Label prefHeight="32.0" prefWidth="120.0" text="From Date:" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic Bold" size="16.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <JFXDatePicker fx:id="fromDatePicker" blendMode="COLOR_BURN">
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                  </JFXDatePicker>
+                  <Label prefHeight="32.0" prefWidth="120.0" text="To Date:" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic Bold" size="16.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <JFXDatePicker fx:id="toDatePicker" blendMode="COLOR_BURN">
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                  </JFXDatePicker>
+                  <JFXButton fx:id="findButton" alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" prefHeight="36.0" prefWidth="255.0" style="-fx-background-color: white;" text="Find">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </JFXButton>
                         <Label prefHeight="32.0" prefWidth="83.0" text="Category:" textFill="WHITE">
                             <font>
                                 <Font name="Century Gothic Bold" size="16.0" />
@@ -36,13 +68,13 @@
                                 <Font name="Century Gothic Bold" size="16.0" />
                             </font>
                             <VBox.margin>
-                                <Insets top="10.0" />
+                                <Insets top="5.0" />
                             </VBox.margin>
                             <padding>
                                 <Insets left="5.0" />
                             </padding>
                         </Label>
-                        <JFXTextField fx:id="filteredComplaints" blendMode="OVERLAY" prefHeight="47.0" prefWidth="255.0" promptText="Search by Flat No, Complaint Title ..." style="-fx-border-color: white;">
+                        <JFXTextField fx:id="filteredComplaints" blendMode="OVERLAY" prefHeight="38.0" prefWidth="255.0" promptText="Search by Flat No, Complaint Title ..." style="-fx-border-color: white;">
                             <font>
                                 <Font size="14.0" />
                             </font>
@@ -53,12 +85,13 @@
                                 <Insets left="5.0" />
                             </padding>
                         </JFXTextField>
-                  <JFXButton fx:id="submitComplainButton" prefHeight="43.0" prefWidth="255.0" style="-fx-background-color: white;" text="Submit Your Complain">
+                  <JFXButton fx:id="searchButton" alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" prefHeight="36.0" prefWidth="255.0" style="-fx-background-color: white;" text="Search" />
+                  <JFXButton fx:id="submitComplainButton" prefHeight="34.0" prefWidth="255.0" style="-fx-background-color: white;" text="Submit Your Complain">
                      <VBox.margin>
-                        <Insets top="20.0" />
+                        <Insets top="10.0" />
                      </VBox.margin>
                   </JFXButton>
-                        <JFXButton fx:id="refreshButton" prefHeight="42.0" prefWidth="255.0" style="-fx-background-color: white;" text="Refresh    ">
+                        <JFXButton fx:id="refreshButton" prefHeight="26.0" prefWidth="255.0" style="-fx-background-color: white;" text="Refresh    ">
                             <graphic>
                                 <ImageView fitHeight="27.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -70,7 +103,7 @@
                                 <Font name="Century Gothic Bold" size="15.0" />
                             </font>
                             <VBox.margin>
-                                <Insets top="50.0" />
+                                <Insets top="10.0" />
                             </VBox.margin>
                         </JFXButton>
                     </children>
