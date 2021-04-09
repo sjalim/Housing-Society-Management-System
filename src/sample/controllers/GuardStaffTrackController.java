@@ -97,7 +97,9 @@ public class GuardStaffTrackController implements Initializable {
 
         } else if (inTime == null && outTime == null && date != null) {
 
-            query = "select st.WorkDate as " +
+            query = "select st.TrackId, st" +
+                    ".WorkDate as" +
+                    " " +
                     "WorkDate, st" +
                     ".InTime as InTime," +
                     " st.OutTime " +
@@ -124,7 +126,7 @@ public class GuardStaffTrackController implements Initializable {
         } else if (inTime == null && outTime != null && date == null) {
 
 
-            query = "select st.WorkDate as " +
+            query = "select st.TrackId, st.WorkDate as " +
                     "WorkDate, st" +
                     ".InTime as InTime, st" +
                     ".OutTime " +
@@ -146,7 +148,7 @@ public class GuardStaffTrackController implements Initializable {
 
 
         } else if (inTime == null && outTime != null && date != null) {
-            query = "select st.WorkDate as " +
+            query = "select st.TrackId, st.WorkDate as " +
                     "WorkDate, st" +
                     ".InTime as InTime," +
                     " st.OutTime " +
@@ -173,7 +175,7 @@ public class GuardStaffTrackController implements Initializable {
 
 
         } else if (inTime != null && outTime == null && date == null) {
-            query = "select st.WorkDate as " +
+            query = "select st.TrackId, st.WorkDate as " +
                     "WorkDate, st" +
                     ".InTime as InTime, st" +
                     ".OutTime " +
@@ -197,7 +199,7 @@ public class GuardStaffTrackController implements Initializable {
         } else if (inTime != null && outTime == null && date != null) {
 
 
-            query = "select st.WorkDate as " +
+            query = "select st.TrackId, st.WorkDate as " +
                     "WorkDate, st" +
                     ".InTime as InTime, st" +
                     ".OutTime " +
@@ -221,7 +223,7 @@ public class GuardStaffTrackController implements Initializable {
         } else if (inTime != null && outTime != null && date == null) {
 
 
-            query = "select st.WorkDate as " +
+            query = "select st.TrackId, st.WorkDate as " +
                     "WorkDate, st" +
                     ".InTime as InTime, st" +
                     ".OutTime " +
@@ -247,7 +249,7 @@ public class GuardStaffTrackController implements Initializable {
         } else if (inTime != null && outTime != null && date != null) {
 
 
-            query = "select st.WorkDate as " +
+            query = "select st.TrackId, st.WorkDate as " +
                     "WorkDate, st" +
                     ".InTime as InTime, st.OutTime " +
                     "as OutTime" +
@@ -279,6 +281,8 @@ public class GuardStaffTrackController implements Initializable {
                 list.add(new StaffAttendance(resultSet.getDate("WorkDate"),
                         resultSet.getInt(
                                 "StaffId"),
+                        resultSet.getInt(
+                                "TrackId"),
                         resultSet.getString(
                                 "Name"),
                         resultSet.getString(
@@ -327,7 +331,8 @@ public class GuardStaffTrackController implements Initializable {
 
     private void loadStaff() {
 
-        String query = "select st.WorkDate as " +
+        String query = "select st.TrackId, st" +
+                ".WorkDate as " +
                 "WorkDate, st" +
                 ".InTime as InTime, st.OutTime " +
                 "as OutTime" +
@@ -362,20 +367,24 @@ public class GuardStaffTrackController implements Initializable {
                     list.add(new StaffAttendance(resultSet.getDate("WorkDate"),
                             resultSet.getInt(
                                     "StaffId"),
+                            resultSet.getInt(
+                                    "TrackId"),
                             resultSet.getString(
                                     "Name"),
                             resultSet.getString(
                                     "StaffType"),
                             resultSet.getString(
                                     "Mobile"),
-                            "Not Recorded",
+                            null,
                             resultSet.getTime(
-                                    "OutTime").toLocalTime().toString()));
+                                    "OutTime")));
 
                 } else if (in != null && out == null) {
                     list.add(new StaffAttendance(resultSet.getDate("WorkDate"),
                             resultSet.getInt(
                                     "StaffId"),
+                            resultSet.getInt(
+                                    "TrackId"),
                             resultSet.getString(
                                     "Name"),
                             resultSet.getString(
@@ -383,13 +392,15 @@ public class GuardStaffTrackController implements Initializable {
                             resultSet.getString(
                                     "Mobile"),
                             resultSet.getTime(
-                                    "InTime").toLocalTime().toString(),
-                            "Not Recorded"));
+                                    "InTime"),
+                            null));
 
                 } else if (in != null && out != null) {
                     list.add(new StaffAttendance(resultSet.getDate("WorkDate"),
                             resultSet.getInt(
                                     "StaffId"),
+                            resultSet.getInt(
+                                    "TrackId"),
                             resultSet.getString(
                                     "Name"),
                             resultSet.getString(
@@ -397,22 +408,24 @@ public class GuardStaffTrackController implements Initializable {
                             resultSet.getString(
                                     "Mobile"),
                             resultSet.getTime(
-                                    "InTime").toLocalTime().toString(),
+                                    "InTime"),
                             resultSet.getTime(
-                                    "OutTime").toLocalTime().toString()));
+                                    "OutTime")));
 
                 } else {
                     list.add(new StaffAttendance(resultSet.getDate("WorkDate"),
                             resultSet.getInt(
                                     "StaffId"),
+                            resultSet.getInt(
+                                    "TrackId"),
                             resultSet.getString(
                                     "Name"),
                             resultSet.getString(
                                     "StaffType"),
                             resultSet.getString(
                                     "Mobile"),
-                            "Not Recorded",
-                            "Not Recorded"));
+                            null,
+                            null));
                 }
             }
         } catch (SQLException throwables) {
@@ -438,7 +451,9 @@ public class GuardStaffTrackController implements Initializable {
                 if(!t1.isEmpty())
                 {
                     list.clear();
-                    String query = "select st.WorkDate as " +
+                    String query = "select st" +
+                            ".TrackId," +
+                            " st.WorkDate as " +
                             "WorkDate, st" +
                             ".InTime as InTime, st.OutTime " +
                             "as OutTime" +
@@ -470,6 +485,8 @@ public class GuardStaffTrackController implements Initializable {
                         list.add(new StaffAttendance(resultSet.getDate("WorkDate"),
                                 resultSet.getInt(
                                         "StaffId"),
+                                resultSet.getInt(
+                                        "TrackId"),
                                 resultSet.getString(
                                         "Name"),
                                 resultSet.getString(

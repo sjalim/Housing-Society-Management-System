@@ -7,8 +7,8 @@
 
 <AnchorPane prefHeight="102.0" prefWidth="332.0" style="-fx-background-color: #435560;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.manager.collectpayments.PaymentAddNewMethodController">
     <children>
-        <JFXTextField fx:id="newPaymentMethodField" blendMode="ADD" layoutX="14.0" layoutY="12.0" prefHeight="26.0" prefWidth="207.0" promptText="Payment Method" />
-        <JFXButton fx:id="addPaymentMethod" blendMode="SCREEN" layoutX="245.0" layoutY="13.0" prefHeight="26.0" prefWidth="72.0" style="-fx-border-color: white;" text="Add" />
-      <JFXComboBox fx:id="paymentMethodComboBox" blendMode="SCREEN" layoutX="14.0" layoutY="54.0" prefHeight="26.0" prefWidth="207.0" promptText="Payment Methods" />
+        <JFXTextField fx:id="newPaymentMethodField" blendMode="ADD" layoutX="14.0" layoutY="12.0" prefHeight="26.0" prefWidth="207.0" promptText="Payment Method" styleClass="prompt-text" stylesheets="@../../../styles/all.css" unFocusColor="WHITE" />
+        <JFXButton fx:id="addPaymentMethod" blendMode="SCREEN" layoutX="245.0" layoutY="13.0" prefHeight="26.0" prefWidth="72.0" style="-fx-border-color: white;" text="Add" textFill="WHITE" />
+      <JFXComboBox fx:id="paymentMethodComboBox" blendMode="SCREEN" layoutX="14.0" layoutY="54.0" prefHeight="26.0" prefWidth="207.0" promptText="Payment Methods" styleClass="prompt-text" stylesheets="@../../../styles/all.css" unFocusColor="WHITE" />
     </children>
 </AnchorPane>

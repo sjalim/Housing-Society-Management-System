@@ -26,17 +26,17 @@
             <Font name="Trebuchet MS" size="96.0" />
          </font>
       </Label>
-      <Label fx:id="forgotPasswordLabel" layoutX="520.0" layoutY="486.0" styleClass="forgot-password" stylesheets="@../../styles/LoginPage.css" text="Forgot Password">
+      <Label fx:id="forgotPasswordLabel" layoutX="520.0" layoutY="486.0" styleClass="forgot-password" stylesheets="@../../styles/LoginPage.css" text="Forgot Password" visible="false">
          <font>
             <Font size="27.0" />
          </font>
       </Label>
-      <Label layoutX="186.0" layoutY="643.0" style="-fx-background-color: transparent;" stylesheets="@../../styles/LoginPage.css" text="Don't have an account? " textFill="#77b9b9">
+      <Label layoutX="186.0" layoutY="643.0" style="-fx-background-color: transparent;" stylesheets="@../../styles/LoginPage.css" text="Don't have an account? " textFill="#77b9b9" visible="false">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Label fx:id="signUpButton" layoutX="452.0" layoutY="643.0" style="-fx-background-color: transparent;" stylesheets="@../../styles/LoginPage.css" text="Sign up" textFill="#002323">
+      <Label fx:id="signUpButton" layoutX="452.0" layoutY="643.0" style="-fx-background-color: transparent;" stylesheets="@../../styles/LoginPage.css" text="Sign up" textFill="#002323" visible="false">
          <font>
             <Font size="25.0" />
          </font>

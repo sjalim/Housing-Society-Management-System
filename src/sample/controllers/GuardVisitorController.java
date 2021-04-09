@@ -108,6 +108,8 @@ public class GuardVisitorController implements Initializable {
 
     }
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String guardId = userPreferences.get(LoginPageController.USER_ID, "root");

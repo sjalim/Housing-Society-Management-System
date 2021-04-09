@@ -2,11 +2,14 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import java.net.URL?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -20,15 +23,20 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="395.0" prefWidth="1084.0">
                            <children>
-                              <TableView fx:id="parking_table" layoutX="8.0" layoutY="11.0" prefHeight="400.0" prefWidth="1060.0" style="-fx-background-color: #4F5D67;" stylesheets="@../../styles/tableView.css">
+                              <TableView fx:id="parking_table" layoutX="8.0" layoutY="11.0" prefHeight="400.0" prefWidth="1060.0" style="-fx-background-color: #4F5D67;" styleClass="text-align-center">
                                 <columns>
-                                    <TableColumn fx:id="date_col_parking" prefWidth="141.0" text="Date" />
-                                    <TableColumn fx:id="car_num_col_parking" prefWidth="128.0" text="Car Number" />
-                                    <TableColumn fx:id="car_model_col_parking" prefWidth="151.0" text="Car Model" />
-                                    <TableColumn fx:id="in_time_col_parking" prefWidth="198.0" text="In Time" />
-                                    <TableColumn fx:id="out_time_col_parking" prefWidth="224.0" text="Out Time" />
-                                    <TableColumn fx:id="allocation_flat_col_parking" prefWidth="203.0" text="Allocated Flat" />
+                                    <TableColumn fx:id="track_id_col_parking" prefWidth="130.0" text="Track Id" />
+                                    <TableColumn fx:id="date_col_parking" prefWidth="130.0" text="Date" />
+                                    <TableColumn fx:id="car_num_col_parking" prefWidth="130.0" text="Car Number" />
+                                    <TableColumn fx:id="car_model_col_parking" prefWidth="200.0" text="Car Model" />
+                                    <TableColumn fx:id="in_time_col_parking" prefWidth="130.0" text="In Time" />
+                                    <TableColumn fx:id="out_time_col_parking" prefWidth="130.0" text="Out Time" />
+                                    <TableColumn fx:id="allocation_flat_col_parking" prefWidth="229.0" text="Allocated Flat" />
                                 </columns>
+                                 <stylesheets>
+                                    <URL value="@../../styles/tableView.css" />
+                                    <URL value="@../../styles/all.css" />
+                                 </stylesheets>
                               </TableView>
                            </children>
                         </AnchorPane>
@@ -40,7 +48,8 @@
                            <children>
                               <TableView fx:id="staff_table" layoutX="8.0" layoutY="11.0" prefHeight="400.0" prefWidth="1060.0" style="-fx-background-color: #4F5D67;" stylesheets="@../../styles/tableView.css">
                                 <columns>
-                                    <TableColumn fx:id="date_col_staff" prefWidth="137.0" text="Date" />
+                                    <TableColumn fx:id="track_id_col_staff" prefWidth="150.0" text="Track Id" />
+                                    <TableColumn fx:id="date_col_staff" prefWidth="150.0" text="Date" />
                                     <TableColumn fx:id="staff_id_col" prefWidth="170.0" text="Staff ID" />
                                     <TableColumn fx:id="staff_name_col" prefWidth="151.0" text="Staff Name" />
                                     <TableColumn fx:id="in_time_col_staff" prefWidth="131.0" text="In Time" />
@@ -60,6 +69,15 @@
                <font>
                   <Font size="20.0" />
                </font></JFXTextField>
+            <JFXButton layoutX="1037.0" layoutY="41.0" onAction="#handleRefresh" styleClass="refresh-btn" stylesheets="@../../styles/guardParking.css" text="Refresh">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/refresh.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
          </children>
       </AnchorPane>
    </content>

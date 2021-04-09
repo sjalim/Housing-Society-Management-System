@@ -8,27 +8,13 @@ import java.time.format.DateTimeFormatter;
 public class StaffAttendance {
 
     Date date;
-    int id;
+    int id,trackId;
     String name,type,mobile;
     String inTime,outTime;
     Time timeIn ,timeOut;
 
     public StaffAttendance(Date date, int id,
-                           String name,
-                           String type,
-                           String mobile,
-                           String inTime,
-                           String outTime) {
-        this.date = date;
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.mobile = mobile;
-        this.inTime = inTime;
-        this.outTime = outTime;
-    }
-
-    public StaffAttendance(Date date, int id,
+                           int trackId,
                            String name,
                            String type,
                            String mobile,
@@ -41,6 +27,7 @@ public class StaffAttendance {
         this.mobile = mobile;
         this.timeIn = timeIn;
         this.timeOut = timeOut;
+        this.trackId = trackId;
 
         if(timeIn== null)
         {
@@ -66,10 +53,29 @@ public class StaffAttendance {
 
     }
 
+    public Time getTimeIn() {
+        return timeIn;
+    }
 
+    public void setTimeIn(Time timeIn) {
+        this.timeIn = timeIn;
+    }
 
+    public Time getTimeOut() {
+        return timeOut;
+    }
 
+    public void setTimeOut(Time timeOut) {
+        this.timeOut = timeOut;
+    }
 
+    public int getTrackId() {
+        return trackId;
+    }
+
+    public void setTrackId(int trackId) {
+        this.trackId = trackId;
+    }
 
     public Date getDate() {
         return date;

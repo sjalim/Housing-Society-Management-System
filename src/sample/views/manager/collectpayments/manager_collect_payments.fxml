@@ -24,8 +24,8 @@
             </Label>
             <VBox alignment="TOP_CENTER" layoutX="6.0" layoutY="61.0" prefHeight="163.0" prefWidth="198.0" spacing="20.0" style="-fx-border-color: white;" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="10.0">
                <children>
-                  <JFXComboBox fx:id="searchComboBox" blendMode="ADD" prefHeight="34.0" prefWidth="195.0" promptText="Search by" style="-fx-border-color: white;" />
-                  <JFXTextField fx:id="filteredPaymentField" blendMode="ADD" prefHeight="44.0" prefWidth="194.0" promptText="Search by Type, Flat No ..." style="-fx-border-color: white;">
+                  <JFXComboBox fx:id="searchComboBox" blendMode="ADD" prefHeight="34.0" prefWidth="195.0" promptText="Search by" style="-fx-border-color: white;" styleClass="prompt-text" stylesheets="@../../../styles/all.css" />
+                  <JFXTextField fx:id="filteredPaymentField" blendMode="ADD" prefHeight="44.0" prefWidth="194.0" promptText="Search by Type, Flat No ..." style="-fx-border-color: white;" styleClass="prompt-text" stylesheets="@../../../styles/all.css">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -47,9 +47,9 @@
             </Label>
             <VBox alignment="TOP_CENTER" layoutX="7.0" layoutY="264.0" prefHeight="190.0" prefWidth="198.0" spacing="20.0" style="-fx-border-color: white;" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="9.0">
                <children>
-                  <JFXComboBox fx:id="typeComboBox" blendMode="ADD" prefHeight="29.0" prefWidth="188.0" promptText="Select Type" />
-                  <JFXComboBox fx:id="yearComboBox" blendMode="ADD" prefHeight="29.0" prefWidth="186.0" promptText="Select Year" />
-                  <JFXComboBox fx:id="monthComboBox" blendMode="ADD" prefHeight="29.0" prefWidth="187.0" promptText="Select Month" />
+                  <JFXComboBox fx:id="typeComboBox" blendMode="ADD" prefHeight="29.0" prefWidth="188.0" promptText="Select Type" styleClass="prompt-text" stylesheets="@../../../styles/all.css" />
+                  <JFXComboBox fx:id="yearComboBox" blendMode="ADD" prefHeight="29.0" prefWidth="186.0" promptText="Select Year" styleClass="prompt-text" stylesheets="@../../../styles/all.css" />
+                  <JFXComboBox fx:id="monthComboBox" blendMode="ADD" prefHeight="29.0" prefWidth="187.0" promptText="Select Month" styleClass="prompt-text" stylesheets="@../../../styles/all.css" />
                   <JFXButton fx:id="findHistoryButton" prefHeight="31.0" prefWidth="73.0" style="-fx-border-color: white;" text="Find" textFill="WHITE">
                      <font>
                         <Font name="Century Gothic" size="13.0" />

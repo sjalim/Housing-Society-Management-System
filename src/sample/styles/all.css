@@ -1,0 +1,16 @@
+
+
+.prompt-text{
+    -fx-prompt-text-fill: white;
+}
+
+.text-align-center{
+    -fx-text-alignment: center;
+}
+
+.logo{
+    -fx-background-image: url('/sample/images/logo.png');
+}
+.blinking_text{
+    animation: blinker 1s linear infinite;
+}

@@ -101,6 +101,14 @@ public class GuardDashboardController implements Initializable {
             translateTransition1.play();
         });
 
+        try {
+            ScrollPane anchorPane =
+                    FXMLLoader.load(getClass().getResource("/sample/views/guard/guard_parking.fxml"));
+            contentViewPane.getChildren().setAll(anchorPane);
+        } catch (IOException throwables) {
+            throwables.printStackTrace();
+        }
+
         guardVisitors_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -111,21 +119,6 @@ public class GuardDashboardController implements Initializable {
                 } catch (IOException throwables) {
                     throwables.printStackTrace();
                 }
-
-
-//                Node node = (Node)(actionEvent.getSource());
-//                Stage primaryStage = (Stage)node.getScene().getWindow();
-//                Parent root = null;
-//                try {
-//                    root =
-//                            (Parent) FXMLLoader.load(this.getClass().getResource("/sample/views/guard/guard_visitor.fxml"));
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                primaryStage.setTitle("Hello World");
-//                primaryStage.setScene(new Scene(root, 1200.0D, 700.0D));
-//                primaryStage.show();
             }
         });
 

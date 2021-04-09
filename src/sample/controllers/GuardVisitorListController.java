@@ -83,6 +83,21 @@ public class GuardVisitorListController implements Initializable {
 
     }
 
+    @FXML
+    void handleUpdate(ActionEvent event) {
+
+        Parent parent = null;
+        try {
+            parent = FXMLLoader.load(getClass().getResource("/sample/views/guard/guard_visitor.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(parent));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     void initTable() {
 

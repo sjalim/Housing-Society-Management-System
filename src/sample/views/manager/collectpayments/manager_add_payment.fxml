@@ -18,7 +18,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="288.0" spacing="20.0">
                <children>
-                  <JFXComboBox fx:id="newPaymentTypeCombo" blendMode="ADD" prefHeight="42.0" prefWidth="208.0" promptText="Select Type">
+                  <JFXComboBox fx:id="newPaymentTypeCombo" blendMode="ADD" prefHeight="42.0" prefWidth="208.0" promptText="Select Type" styleClass="prompt-text" stylesheets="@../../../styles/all.css" unFocusColor="WHITE">
                      <padding>
                         <Insets left="5.0" />
                      </padding>
@@ -38,7 +38,7 @@
                   <Font name="Century Gothic" size="14.0" />
                </font>
             </JFXButton>
-            <JFXTextField fx:id="amountField" blendMode="ADD" prefHeight="40.0" prefWidth="276.0" promptText="Select Amount" style="-fx-border-color: white;">
+            <JFXTextField fx:id="amountField" blendMode="ADD" prefHeight="40.0" prefWidth="276.0" promptText="Select Amount" style="-fx-border-color: white;" styleClass="prompt-text" stylesheets="@../../../styles/all.css" unFocusColor="WHITE">
                <font>
                   <Font size="14.0" />
                </font>

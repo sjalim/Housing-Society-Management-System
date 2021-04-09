@@ -16,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import sample.controllers.StaffAttendance;
 import sample.database.DatabaseHandler;
 
+import java.io.Console;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
@@ -27,33 +28,37 @@ public class MonitorStaff implements Initializable {
 
     Date date = null;
     Time inTime = null, outTime = null;
-
-
     DatabaseHandler databaseHandler =
             new DatabaseHandler();
-
-
     ObservableList list =
             FXCollections.observableArrayList();
-
-    RequiredFieldValidator validator = new RequiredFieldValidator();
-
+    RequiredFieldValidator validator =
+            new RequiredFieldValidator();
     String category, subCategory;
-
     ArrayList<String> month, week, day;
-    int categoryIndex, subCategoryIndex;
-
-
-    public static final String MONTHLY = "Monthly";
-    //    public static final String WEEKLY = "Weekly";
+    int categoryIndex, subCategoryIndex,
+            selectedMonth = -1;
+    public static final String MONTHLY =
+            "Monthly";
     public static final String DAILY = "Daily";
 
     ObservableList categoryList;
     ObservableList subCat1List;
-    //    ObservableList subCat2List;
     ObservableList subCat3List;
 
-
+    XYChart.Series<String, Number> Electritian
+            = new XYChart.Series<>();
+    XYChart.Series<String, Number> Cleaner =
+            new XYChart.Series<>();
+    XYChart.Series<String, Number> Lift_Man =
+            new XYChart.Series<>();
+    XYChart.Series<String, Number> Plumber =
+            new XYChart.Series<>();
+    XYChart.Series<String, Number> Swiper =
+            new XYChart.Series<>();
+    ObservableList<XYChart.Series<String,
+            Number>> data =
+            FXCollections.observableArrayList();
 
     @FXML
     private TableView<StaffAttendance> table;
@@ -62,22 +67,28 @@ public class MonitorStaff implements Initializable {
     private TableColumn<Date, StaffAttendance> date_col;
 
     @FXML
-    private TableColumn<String, StaffAttendance> staff_id_col;
+    private TableColumn<String,
+            StaffAttendance> staff_id_col;
 
     @FXML
-    private TableColumn<String, StaffAttendance> staff_name_col;
+    private TableColumn<String,
+            StaffAttendance> staff_name_col;
 
     @FXML
-    private TableColumn<String, StaffAttendance> staff_mobile_col;
+    private TableColumn<String,
+            StaffAttendance> staff_mobile_col;
 
     @FXML
-    private TableColumn<String, StaffAttendance> in_time_col;
+    private TableColumn<String,
+            StaffAttendance> in_time_col;
 
     @FXML
-    private TableColumn<String, StaffAttendance> out_time_col;
+    private TableColumn<String,
+            StaffAttendance> out_time_col;
 
     @FXML
-    private TableColumn<String, StaffAttendance> staff_type_col;
+    private TableColumn<String,
+            StaffAttendance> staff_type_col;
 
     @FXML
     private JFXTextField search_text_field;
@@ -108,6 +119,15 @@ public class MonitorStaff implements Initializable {
 
     @FXML
     private NumberAxis y_axis;
+
+    @FXML
+    private JFXComboBox<String> month_combo_box;
+
+    @FXML
+    void handleMonthComboBox(ActionEvent event) {
+        selectedMonth =
+                month_combo_box.getSelectionModel().getSelectedIndex() + 1;
+    }
 
     @FXML
     void handleFilter(ActionEvent event) {
@@ -269,16 +289,21 @@ public class MonitorStaff implements Initializable {
         } else if (inTime != null && outTime != null && date != null) {
 
 
-            query = "select st.WorkDate as " +
+            query = "select st.TrackId, st" +
+                    ".WorkDate as " +
                     "WorkDate, st" +
-                    ".InTime as InTime, st.OutTime " +
+                    ".InTime as InTime, st" +
+                    ".OutTime " +
                     "as OutTime" +
                     ", st" +
-                    ".StaffId as StaffId, s.Name " +
-                    "as Name, s.Mobile as Mobile,s" +
+                    ".StaffId as StaffId, s" +
+                    ".Name " +
+                    "as Name, s.Mobile as " +
+                    "Mobile,s" +
                     ".StaffType as StaffType" +
                     " " +
-                    "from StaffAttTrack as st left " +
+                    "from StaffAttTrack as st " +
+                    "left " +
                     "join Staff as s " +
                     "on st.StaffId = s.StaffId " +
                     " where st.InTime >= '" + inTime +
@@ -301,6 +326,8 @@ public class MonitorStaff implements Initializable {
                 list.add(new StaffAttendance(resultSet.getDate("WorkDate"),
                         resultSet.getInt(
                                 "StaffId"),
+                        resultSet.getInt(
+                                "TrackId"),
                         resultSet.getString(
                                 "Name"),
                         resultSet.getString(
@@ -353,43 +380,84 @@ public class MonitorStaff implements Initializable {
     void handleShow(ActionEvent event) {
 
 
-        if (category != null && subCategory != null) {
+        if (subCategory != null) {
 
 
+            if (subCategory.equals(MONTHLY)) {
 
-                String query = "select count(id) as traffic,type  from " +
-                        "(select st.WorkDate as workDate, st.InTime as inTime,st.OutTime as outTime,s.StaffId as id,s.StaffType as type " +
-                        "from StaffAttTrack as st "
-                        + "left join Staff as s on st.StaffId = s.StaffId " +
-                        "where year(WorkDate) = '" + Calendar.getInstance().get(Calendar.YEAR) + "' and month(WorkDate) = '" + subCategoryIndex + "'" +
-                        ") as stable group by stable.type";
+                data.clear();
+                Electritian.getData().clear();
+                Plumber.getData().clear();
+                Swiper.getData().clear();
+                Lift_Man.getData().clear();
+                Cleaner.getData().clear();
+                data.clear();
+
+                Electritian.setName(
+                        "Electritian");
+                Cleaner.setName("Cleaner");
+                Lift_Man.setName("Lift Man");
+                Plumber.setName("Plumber");
+                Swiper.setName("Swiper");
+                System.out.println("check");
+                String query = "select count" +
+                        "(id) as traffic,stype," +
+                        "month(WorkDate) as " +
+                        "mnth " +
+                        "from " +
+                        " (select st" +
+                        ".WorkDate as WorkDate," +
+                        " " +
+                        "st.InTime as inTime,st" +
+                        ".OutTime as outTime,s" +
+                        ".StaffId as id,s" +
+                        ".StaffType" +
+                        " as stype " +
+                        " from " +
+                        "StaffAttTrack as st " +
+                        " left join Staff as s " +
+                        "on " +
+                        "st.StaffId" +
+                        " = s.StaffId " +
+                        " where year(st" +
+                        ".WorkDate) =" +
+                        " '2021' " +
+                        " ) as stable group by " +
+                        "stype,month" +
+                        "(WorkDate) ";
 
 
                 PreparedStatement preparedStatement = null;
                 try {
-                    preparedStatement = databaseHandler.getDbConnection().prepareStatement(query);
-                    ResultSet resultSet = preparedStatement.executeQuery();
+                    preparedStatement =
+                            databaseHandler.getDbConnection().prepareStatement(query);
+                    ResultSet resultSet =
+                            preparedStatement.executeQuery();
 
-
-                    XYChart.Series setDataMonth = new XYChart.Series<>();
                     while (resultSet.next()) {
+                        if (resultSet.getString(2).equals("Electritian")) {
+                            Electritian.getData().add(new XYChart.Data(month.get(resultSet.getInt(3) - 1), resultSet.getInt(1)));
+                        } else if (resultSet.getString(2).equals("Cleaner")) {
+                            Cleaner.getData().add(new XYChart.Data(month.get(resultSet.getInt(3) - 1), resultSet.getInt(1)));
 
+                        } else if (resultSet.getString(2).equals("Lift Man")) {
+                            Lift_Man.getData().add(new XYChart.Data(month.get(resultSet.getInt(3) - 1), resultSet.getInt(1)));
 
-//                        System.out.println(resultSet.getString(2)+" " + resultSet.getInt(1));
+                        } else if (resultSet.getString(2).equals("Plumber")) {
+                            Plumber.getData().add(new XYChart.Data(month.get(resultSet.getInt(3) - 1), resultSet.getInt(1)));
 
-                        if(resultSet.getInt(1)>0)
-                        {
+                        } else if (resultSet.getString(2).equals("Swiper")) {
+                            Swiper.getData().add(new XYChart.Data(month.get(resultSet.getInt(3) - 1), resultSet.getInt(1)));
 
-                        setDataMonth.getData().add(new XYChart.Data(resultSet.getString(2), resultSet.getInt(1)));
+                        } else {
+
                         }
                     }
 
-                    bar_chart.getData().clear();
-                    bar_chart.layout();
-                    bar_chart.getData().addAll(setDataMonth);
-
-
-
+                    data.addAll(Electritian,
+                            Cleaner
+                            , Lift_Man, Plumber
+                            , Swiper);
 
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
@@ -397,74 +465,114 @@ public class MonitorStaff implements Initializable {
                     e.printStackTrace();
                 }
 
-//            } else if (category.equals(DAILY)) {
-//
-//
-//
-//
-//
-//                System.out.println("month"+ Calendar.getInstance().get(Calendar.MONTH) );
-//                String query = "select count(id) as traffic,type as mnth from " +
-//                        "(select st.WorkDate as workDate, st.InTime as inTime," +
-//                        "st.OutTime as outTime,s.StaffId as id,s.StaffType as type " +
-//                        "from StaffAttTrack as st "
-//                        + "left join Staff as s on st.StaffId = s.StaffId " +
-//                        "where year(WorkDate) = '" + Calendar.getInstance().get(Calendar.YEAR) +
-//                        "' and month(WorkDate) = '" +
-//                        Calendar.getInstance().get(Calendar.MONTH)  +
-//                        "'  and day(WorkDate) =  '"+subCategoryIndex+"') as stable group by stable.type";
-//
-//
-//                PreparedStatement preparedStatement = null;
-//                try {
-//                    preparedStatement = databaseHandler.getDbConnection().prepareStatement(query);
-//                    ResultSet resultSet = preparedStatement.executeQuery();
-//                    XYChart.Series setDataDay = new XYChart.Series<>();
-//
-//
-//                    while (resultSet.next()) {
-//
-//
-//
-//                        System.out.println(resultSet.getString(2)+" " + resultSet.getInt(1));
-//
-//
-//                        if(resultSet.getInt(1)>0)
-//                        {
-//                        setDataDay.getData().add(new XYChart.Data(resultSet.getString(2), resultSet.getInt(1)));
-//
-//                        }
-//
-//                        bar_chart.getData().clear();
-//                        bar_chart.layout();
-//                        bar_chart.getData().addAll(setDataDay);
-//
-//                    }
-//
-//                } catch (SQLException throwables) {
-//                    throwables.printStackTrace();
-//                } catch (ClassNotFoundException e) {
-//                    e.printStackTrace();
-//                }
+            } else if (subCategory.equals(DAILY)) {
+
+
+                Electritian.getData().clear();
+                Plumber.getData().clear();
+                Swiper.getData().clear();
+                Lift_Man.getData().clear();
+                Cleaner.getData().clear();
+                data.clear();
+
+
+                if (selectedMonth != -1) {
+                    x_axis.setLabel(month.get(selectedMonth-1));
+
+
+                    String query = "select " +
+                            "count(id) as " +
+                            "traffic, type from" +
+                            "(select st" +
+                            ".WorkDate as " +
+                            "WorkDate, st" +
+                            ".InTime as inTime," +
+                            "st.OutTime as " +
+                            "outTime,s.StaffId " +
+                            "as id,s.StaffType " +
+                            "as type " +
+                            " from " +
+                            "StaffAttTrack as " +
+                            "st " +
+                            " left join " +
+                            "Staff as s on st" +
+                            ".StaffId = s" +
+                            ".StaffId " +
+                            " where year" +
+                            "(st.WorkDate) = " +
+                            "'2021' and month" +
+                            "(st.WorkDate)= '" + selectedMonth +
+                            "'" +
+                            " " +
+                            " ) as stable group" +
+                            " " +
+                            "by type ;";
+
+                    PreparedStatement preparedStatement = null;
+                    try {
+                        preparedStatement =
+                                databaseHandler.getDbConnection().prepareStatement(query);
+                        ResultSet resultSet =
+                                preparedStatement.executeQuery();
+                        data.clear();
+                        while (resultSet.next()) {
+
+                            System.out.println(resultSet.getInt(1) + " " + resultSet.getString(2));
+
+                            if (resultSet.getString(2).equals("Electritian")) {
+                                Electritian.getData().add(new XYChart.Data("Electritian", resultSet.getInt(1)));
+                            } else if (resultSet.getString(2).equals("Cleaner")) {
+                                Cleaner.getData().add(new XYChart.Data("Cleaner", resultSet.getInt(1)));
+
+                            } else if (resultSet.getString(2).equals("Lift Man")) {
+                                Lift_Man.getData().add(new XYChart.Data("Lift Man", resultSet.getInt(1)));
+
+                            } else if (resultSet.getString(2).equals("Plumber")) {
+                                Plumber.getData().add(new XYChart.Data("Plumber", resultSet.getInt(1)));
+
+                            } else if (resultSet.getString(2).equals("Swiper")) {
+                                Swiper.getData().add(new XYChart.Data("Swiper", resultSet.getInt(1)));
+                            } else {
+
+                            }
+                        }
+
+                        data.addAll(Electritian,
+                                Cleaner
+                                , Lift_Man,
+                                Plumber
+                                , Swiper);
+
+                        System.out.println(
+                                "data " +
+                                        "size: "
+                                        + data.size());
+
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+
+                }
+            } else {
+
             }
+            bar_chart.getData().clear();
+            bar_chart.layout();
+            bar_chart.getData().addAll(data);
+        } else {
 
-
-
-//
-//        } else if (category == null) {
-//
-//        } else if (subCategory == null) {
-//
-//        } else {
-//            System.out.println("error at show button");
-//        }
+        }
 
 
     }
 
     private void loadStaff() {
 
-        String query = "select st.WorkDate as " +
+        String query = "select st.TrackId, st" +
+                ".WorkDate as " +
                 "WorkDate, st" +
                 ".InTime as InTime, st.OutTime " +
                 "as OutTime" +
@@ -499,20 +607,24 @@ public class MonitorStaff implements Initializable {
                     list.add(new StaffAttendance(resultSet.getDate("WorkDate"),
                             resultSet.getInt(
                                     "StaffId"),
+                            resultSet.getInt(
+                                    "TrackId"),
                             resultSet.getString(
                                     "Name"),
                             resultSet.getString(
                                     "StaffType"),
                             resultSet.getString(
                                     "Mobile"),
-                            "Not Recorded",
+                            null,
                             resultSet.getTime(
-                                    "OutTime").toLocalTime().toString()));
+                                    "OutTime")));
 
                 } else if (in != null && out == null) {
                     list.add(new StaffAttendance(resultSet.getDate("WorkDate"),
                             resultSet.getInt(
                                     "StaffId"),
+                            resultSet.getInt(
+                                    "TrackId"),
                             resultSet.getString(
                                     "Name"),
                             resultSet.getString(
@@ -520,13 +632,15 @@ public class MonitorStaff implements Initializable {
                             resultSet.getString(
                                     "Mobile"),
                             resultSet.getTime(
-                                    "InTime").toLocalTime().toString(),
-                            "Not Recorded"));
+                                    "InTime"),
+                            null));
 
                 } else if (in != null && out != null) {
                     list.add(new StaffAttendance(resultSet.getDate("WorkDate"),
                             resultSet.getInt(
                                     "StaffId"),
+                            resultSet.getInt(
+                                    "TrackId"),
                             resultSet.getString(
                                     "Name"),
                             resultSet.getString(
@@ -534,22 +648,24 @@ public class MonitorStaff implements Initializable {
                             resultSet.getString(
                                     "Mobile"),
                             resultSet.getTime(
-                                    "InTime").toLocalTime().toString(),
+                                    "InTime"),
                             resultSet.getTime(
-                                    "OutTime").toLocalTime().toString()));
+                                    "OutTime")));
 
                 } else {
                     list.add(new StaffAttendance(resultSet.getDate("WorkDate"),
                             resultSet.getInt(
                                     "StaffId"),
+                            resultSet.getInt(
+                                    "TrackId"),
                             resultSet.getString(
                                     "Name"),
                             resultSet.getString(
                                     "StaffType"),
                             resultSet.getString(
                                     "Mobile"),
-                            "Not Recorded",
-                            "Not Recorded"));
+                            null,
+                            null));
                 }
             }
         } catch (SQLException throwables) {
@@ -572,19 +688,25 @@ public class MonitorStaff implements Initializable {
     }
 
 
-
-
-
     @FXML
     void handleSubCategory(ActionEvent event) {
-        subCategory = sub_category_combo_box.getSelectionModel().getSelectedItem();
-        subCategoryIndex = sub_category_combo_box.getSelectionModel().getSelectedIndex() + 1;
+        subCategory =
+                sub_category_combo_box.getSelectionModel().getSelectedItem();
+        subCategoryIndex =
+                sub_category_combo_box.getSelectionModel().getSelectedIndex() + 1;
+
+        if (subCategoryIndex == 1) {
+            month_combo_box.setVisible(false);
+        } else {
+            month_combo_box.setVisible(true);
+        }
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url,
+                           ResourceBundle resourceBundle) {
 
-
+        month_combo_box.setVisible(false);
         x_axis.setAnimated(false);
         initStaffTable();
         loadStaff();
@@ -600,18 +722,27 @@ public class MonitorStaff implements Initializable {
             if (!t1.isEmpty()) {
                 list.clear();
 
-                String query = "select st.WorkDate as " +
+                String query = "select st" +
+                        ".TrackId," +
+                        " st" +
+                        ".WorkDate as " +
                         "WorkDate, st" +
-                        ".InTime as InTime, st.OutTime " +
+                        ".InTime as InTime, st" +
+                        ".OutTime " +
                         "as OutTime" +
                         ", st" +
-                        ".StaffId as StaffId, s.Name " +
-                        "as Name, s.Mobile as Mobile,s" +
-                        ".StaffType as StaffType" +
+                        ".StaffId as StaffId, s" +
+                        ".Name " +
+                        "as Name, s.Mobile as " +
+                        "Mobile,s" +
+                        ".StaffType as " +
+                        "StaffType" +
                         " " +
-                        "from StaffAttTrack as st left " +
+                        "from StaffAttTrack as " +
+                        "st left " +
                         "join Staff as s " +
-                        "on st.StaffId = s.StaffId " +
+                        "on st.StaffId = s" +
+                        ".StaffId " +
                         " where st.StaffId " +
                         "like '%" + t1 + "%' " +
                         "or s.Mobile like " +
@@ -632,6 +763,8 @@ public class MonitorStaff implements Initializable {
                         list.add(new StaffAttendance(resultSet.getDate("WorkDate"),
                                 resultSet.getInt(
                                         "StaffId"),
+                                resultSet.getInt(
+                                        "TrackId"),
                                 resultSet.getString(
                                         "Name"),
                                 resultSet.getString(
@@ -661,12 +794,22 @@ public class MonitorStaff implements Initializable {
     void intiData() {
 
 
+        Electritian.setName(
+                "Electritian");
+        Cleaner.setName("Cleaner");
+        Lift_Man.setName("Lift Man");
+        Plumber.setName("Plumber");
+        Swiper.setName("Swiper");
+
+
+        bar_chart.setAnimated(false);
         month = new ArrayList<>();
         day = new ArrayList<>();
 
         week = new ArrayList<>();
 
-        categoryList = FXCollections.observableArrayList(MONTHLY, DAILY);
+        categoryList =
+                FXCollections.observableArrayList(MONTHLY, DAILY);
 
         month.add("JANUARY");
         month.add("FEBRUARY");
@@ -687,29 +830,15 @@ public class MonitorStaff implements Initializable {
         week.add("4th");
         week.add("5th");
 
-        for (int i = 1; i <= 31; i++) {
 
-            if (i % 10 == 1) {
+        month_combo_box.setItems(FXCollections.observableArrayList(month));
 
-                day.add(String.valueOf(i) + "st");
-            } else if (i % 10 == 2) {
-                day.add(String.valueOf(i) + "nd");
+        subCat1List =
+                FXCollections.observableArrayList(month);
 
-            } else if (i % 10 == 3) {
-                day.add(String.valueOf(i) + "rd");
-
-            } else {
-                day.add(String.valueOf(i) + "th");
-
-            }
-        }
-
-
-        subCat1List = FXCollections.observableArrayList(month);
-//        subCat2List = FXCollections.observableArrayList(week);
-        subCat3List = FXCollections.observableArrayList(day);
-
-        sub_category_combo_box.setDisable(true);
+        subCat3List =
+                FXCollections.observableArrayList(day);
+        sub_category_combo_box.setItems(FXCollections.observableArrayList(MONTHLY, DAILY));
     }
 
 }

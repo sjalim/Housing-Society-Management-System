@@ -4,10 +4,9 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="51.0" prefWidth="330.0" style="-fx-background-color: #435560;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.manager.collectpayments.PaymentAddNewTypeController">
    <children>
-      <JFXTextField fx:id="newPaymentTypeField" blendMode="ADD" layoutX="14.0" layoutY="12.0" prefHeight="26.0" prefWidth="207.0" promptText="Payment Type" />
+      <JFXTextField fx:id="newPaymentTypeField" blendMode="ADD" layoutX="14.0" layoutY="12.0" prefHeight="26.0" prefWidth="207.0" promptText="Payment Type" styleClass="prompt-text" stylesheets="@../../../styles/all.css" />
       <JFXButton fx:id="addPaymentType" blendMode="SCREEN" layoutX="245.0" layoutY="13.0" prefHeight="26.0" prefWidth="72.0" style="-fx-border-color: white;" text="Add" />
    </children>
 </AnchorPane>

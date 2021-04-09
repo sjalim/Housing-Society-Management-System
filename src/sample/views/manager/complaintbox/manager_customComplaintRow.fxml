@@ -74,10 +74,13 @@
                   <Insets top="2.0" />
                </HBox.margin>
             </Line>
-            <JFXButton fx:id="voteUpButton" disable="true" prefHeight="27.0" prefWidth="78.0" style="-fx-border-color: black;" text="Vote Up">
+            <JFXButton fx:id="voteUpButton" disable="true" prefHeight="27.0" prefWidth="78.0" style="-fx-border-color: black; -fx-background-color: white; -fx-text-fill: black;" text="Vote Up" wrapText="true">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>
+               <font>
+                  <Font name="Trebuchet MS" size="12.0" />
+               </font>
             </JFXButton>
             <Label fx:id="countVoteDown" text="0">
                <font>
@@ -92,10 +95,13 @@
                   <Insets top="2.0" />
                </HBox.margin>
             </Line>
-            <JFXButton fx:id="voteDownButton" disable="true" prefHeight="27.0" prefWidth="78.0" style="-fx-border-color: black;" text="Vote Down">
+            <JFXButton fx:id="voteDownButton" disable="true" prefHeight="27.0" prefWidth="78.0" style="-fx-border-color: black; -fx-background-color: white; -fx-text-fill: black;" text="Vote Down" wrapText="true">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>
+               <font>
+                  <Font name="Trebuchet MS" size="12.0" />
+               </font>
             </JFXButton>
          </children>
       </HBox>

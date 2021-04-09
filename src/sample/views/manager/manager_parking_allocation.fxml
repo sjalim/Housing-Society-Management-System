@@ -20,7 +20,7 @@
             <Image url="@../../images/search.png" />
          </image>
       </ImageView>
-      <TableView fx:id="table" layoutX="135.0" layoutY="166.0" prefHeight="520.0" prefWidth="939.0">
+      <TableView fx:id="table" layoutX="71.0" layoutY="166.0" prefHeight="520.0" prefWidth="1066.0" stylesheets="@../../styles/tableView.css">
         <columns>
           <TableColumn fx:id="parking_slot_number_table_col" prefWidth="188.0" text="Parking Slot Number" />
           <TableColumn fx:id="flat_number_table_col" minWidth="0.0" prefWidth="174.0" text="Flat Number" />
@@ -30,21 +30,21 @@
             <TableColumn fx:id="allocated_date_table_col" maxWidth="200.0" minWidth="0.0" prefWidth="1077.0" text="Allocated Date" />
         </columns>
       </TableView>
-      <JFXButton layoutX="22.0" layoutY="111.0" onAction="#handleUpdate" prefHeight="55.0" prefWidth="153.0" text="Update">
+      <JFXButton layoutX="91.0" layoutY="130.0" onAction="#handleUpdate" prefHeight="32.0" prefWidth="89.0" style="-fx-background-color: white; -fx-border-color: black;" text="Update">
          <font>
-            <Font name="Trebuchet MS" size="25.0" />
+            <Font name="Trebuchet MS" size="14.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="188.0" layoutY="111.0" onAction="#handleMakeVacant" prefHeight="55.0" prefWidth="182.0" text="Make Vacant">
+      <JFXButton layoutX="212.0" layoutY="130.0" onAction="#handleMakeVacant" prefHeight="32.0" prefWidth="113.0" style="-fx-background-color: white; -fx-border-color: black;" text="Make Vacant">
          <font>
-            <Font size="25.0" />
+            <Font name="Times New Roman" size="14.0" />
          </font>
       </JFXButton>
-      <JFXComboBox fx:id="qsn_combo_box" layoutX="370.0" layoutY="132.0" onAction="#handleQsn" prefHeight="25.0" prefWidth="235.0" promptText="Filter" />
-      <JFXDatePicker fx:id="from_date_date_picker" layoutX="649.0" layoutY="131.0" onAction="#handleFromDate" promptText="From" />
-      <JFXDatePicker fx:id="to_date_date_picker" layoutX="830.0" layoutY="131.0" onAction="#handleToDate" promptText="To" />
+      <JFXComboBox fx:id="qsn_combo_box" layoutX="370.0" layoutY="132.0" onAction="#handleQsn" prefHeight="25.0" prefWidth="235.0" promptText="Filter" style="-fx-background-color: white; -fx-border-color: black;" />
+      <JFXDatePicker fx:id="from_date_date_picker" layoutX="659.0" layoutY="132.0" onAction="#handleFromDate" promptText="From" />
+      <JFXDatePicker fx:id="to_date_date_picker" layoutX="878.0" layoutY="132.0" onAction="#handleToDate" promptText="To" />
       <ComboBox fx:id="sub_qsn_combo_box" layoutX="694.0" layoutY="133.0" onAction="#handleSubQsn" prefHeight="25.0" prefWidth="221.0" visible="false" />
-      <JFXButton fx:id="refreshButton" layoutX="915.0" layoutY="40.0" onAction="#handleRefresh" onMouseClicked="#handleRefresh" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 4em; -fx-background-radius: 4em;" text="Refresh">
+      <JFXButton fx:id="refreshButton" layoutX="915.0" layoutY="40.0" onAction="#handleRefresh" onMouseClicked="#handleRefresh" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 4em; -fx-background-radius: 4em;" styleClass="refresh-btn" stylesheets="@../../styles/guardParking.css" text="Refresh">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -56,6 +56,6 @@
             <Font name="Century Gothic" size="14.0" />
          </font>
       </JFXButton>
-      <JFXComboBox fx:id="search_cat_combo_box" layoutX="135.0" layoutY="44.0" onAction="#handleSearchCategory" prefHeight="25.0" prefWidth="153.0" promptText="Search Menu" />
+      <JFXComboBox fx:id="search_cat_combo_box" layoutX="91.0" layoutY="44.0" onAction="#handleSearchCategory" prefHeight="27.0" prefWidth="171.0" promptText="Search Menu" style="-fx-background-color: white; -fx-border-color: black;" />
    </children>
 </AnchorPane>

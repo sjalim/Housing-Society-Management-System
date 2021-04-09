@@ -151,7 +151,6 @@ public class MonitorParking implements Initializable {
             yearInB = true;
             in_time_month_combo_box.setDisable(false);
 
-
             String query =
                     "select count(TrackId) as traffic, mnth from " +
                             "(" +
@@ -246,8 +245,6 @@ public class MonitorParking implements Initializable {
     void handleDate(ActionEvent event) {
         date = Date.valueOf(date_picker.getValue());
         filter();
-
-
     }
 
     @FXML
@@ -268,6 +265,7 @@ public class MonitorParking implements Initializable {
     void handleMonthInTime(ActionEvent event) {
 
         int m = in_time_month_combo_box.getSelectionModel().getSelectedIndex();
+        in_time_day_combo_box.setDisable(false);
         System.out.println(m);
         if (yearInB) {
 
@@ -280,8 +278,6 @@ public class MonitorParking implements Initializable {
                     " null" +
                     " and month(p.Date) = '" + monthIn + "')" +
                     " as tim group by inDate ";
-
-
             PreparedStatement preparedStatement = null;
             try {
 
@@ -302,9 +298,8 @@ public class MonitorParking implements Initializable {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-
             in_time_chart.getData().clear();
-            in_time_chart.layout();
+//            in_time_chart.layout();
             in_time_month_combo_box.setDisable(false);
             in_time_x_axis.setLabel("Week");
             in_time_chart.getData().addAll(setMonth);
@@ -449,7 +444,7 @@ public class MonitorParking implements Initializable {
             System.out.println("error");
         }
         in_time_chart.getData().clear();
-        in_time_chart.layout();
+//        in_time_chart.layout();
         in_time_month_combo_box.setDisable(false);
         in_time_x_axis.setLabel("Week");
         in_time_chart.getData().addAll(setWeek);
@@ -504,7 +499,7 @@ public class MonitorParking implements Initializable {
 
         }
         in_time_chart.getData().clear();
-        in_time_chart.layout();
+//        in_time_chart.layout();
         in_time_month_combo_box.setDisable(false);
         in_time_x_axis.setLabel("Week");
         in_time_chart.getData().addAll(setDay);
@@ -522,6 +517,7 @@ public class MonitorParking implements Initializable {
 
             monthOutB = true;
             out_time_week_combo_box.setDisable(false);
+            out_time_day_combo_box.setDisable(false);
             String query = "select count(id) as traffic, inDate" +
                     " from(select p.TrackId as id, p.Date as inDate from ParkingSlotTrack as p where year(Date) = '" + yearOut + "' and p.OutTime is not" +
                     " null" +
@@ -546,7 +542,7 @@ public class MonitorParking implements Initializable {
             }
 
             out_time_chart.getData().clear();
-            out_time_chart.layout();
+//            out_time_chart.layout();
             out_time_month_combo_box.setDisable(false);
             out_time_x_axis.setLabel("Week");
             out_time_chart.getData().addAll(setMonth);
@@ -685,7 +681,7 @@ public class MonitorParking implements Initializable {
             System.out.println("error");
         }
         out_time_chart.getData().clear();
-        out_time_chart.layout();
+//        out_time_chart.layout();
         out_time_month_combo_box.setDisable(false);
         out_time_x_axis.setLabel("Week");
         out_time_chart.getData().addAll(setWeek);    }
@@ -728,7 +724,7 @@ public class MonitorParking implements Initializable {
             }
         }
         out_time_chart.getData().clear();
-        out_time_chart.layout();
+//        out_time_chart.layout();
         out_time_month_combo_box.setDisable(false);
         out_time_x_axis.setLabel("Week");
         out_time_chart.getData().addAll(setDay);
@@ -756,7 +752,7 @@ public class MonitorParking implements Initializable {
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 if (t1.isEmpty()) {
                     in_time_chart.getData().clear();
-                    in_time_chart.layout();
+//                    in_time_chart.layout();
                 }
 
                 if (t1.length() <= 4) {
@@ -843,6 +839,8 @@ public class MonitorParking implements Initializable {
 
     void dataInit() {
 
+        in_time_chart.setAnimated(false);
+        out_time_chart.setAnimated(false);
 
         week.add("1st");
         week.add("2nd");

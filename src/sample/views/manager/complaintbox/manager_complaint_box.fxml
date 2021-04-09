@@ -49,6 +49,9 @@
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
+                     <font>
+                        <Font name="Trebuchet MS" size="20.0" />
+                     </font>
                   </JFXButton>
                   <Label prefHeight="32.0" prefWidth="83.0" text="Category:" textFill="WHITE">
                      <font>
@@ -58,12 +61,12 @@
                         <Insets left="5.0" />
                      </VBox.margin>
                   </Label>
-                  <JFXComboBox fx:id="categoryComboBox" blendMode="ADD" prefHeight="41.0" prefWidth="255.0" promptText="Select Category" style="-fx-border-color: white;">
+                  <JFXComboBox fx:id="categoryComboBox" blendMode="ADD" prefHeight="41.0" prefWidth="255.0" promptText="Select Category" style="-fx-border-color: white;" styleClass="prompt-text" stylesheets="@../../../styles/all.css">
                      <padding>
                         <Insets left="5.0" />
                      </padding>
                   </JFXComboBox>
-                  <JFXButton fx:id="addNewCatButton" blendMode="ADD" prefHeight="42.0" prefWidth="255.0" style="-fx-border-color: white;" text="Add A New Category" />
+                  <JFXButton fx:id="addNewCatButton" blendMode="ADD" prefHeight="42.0" prefWidth="255.0" style="-fx-border-color: white;" styleClass="prompt-text" stylesheets="@../../../styles/all.css" text="Add A New Category" textFill="WHITE" />
                   <Label prefHeight="32.0" prefWidth="83.0" text="Search:" textFill="WHITE">
                      <font>
                         <Font name="Century Gothic Bold" size="16.0" />
@@ -75,7 +78,7 @@
                         <Insets left="5.0" />
                      </padding>
                   </Label>
-                  <JFXTextField fx:id="filteredComplaints" blendMode="OVERLAY" prefHeight="47.0" prefWidth="255.0" promptText="Search by Flat No, Complaint Title ..." style="-fx-border-color: white;">
+                  <JFXTextField fx:id="filteredComplaints" blendMode="OVERLAY" prefHeight="47.0" prefWidth="255.0" promptText="Search by Flat No, Complaint Title ..." style="-fx-border-color: white;" styleClass="prompt-text" stylesheets="@../../../styles/all.css" unFocusColor="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -86,7 +89,10 @@
                         <Insets left="5.0" />
                      </padding>
                   </JFXTextField>
-                  <JFXButton fx:id="searchButton" alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" prefHeight="36.0" prefWidth="255.0" style="-fx-background-color: white;" text="Search" />
+                  <JFXButton fx:id="searchButton" alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" prefHeight="36.0" prefWidth="255.0" style="-fx-background-color: white;" text="Search">
+                     <font>
+                        <Font name="Trebuchet MS" size="20.0" />
+                     </font></JFXButton>
                   <JFXButton fx:id="refreshButton" prefHeight="58.0" prefWidth="255.0" text="Update    ">
                      <graphic>
                         <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
@@ -96,7 +102,7 @@
                         </ImageView>
                      </graphic>
                      <font>
-                        <Font name="Century Gothic Bold" size="15.0" />
+                        <Font name="Century Gothic Bold" size="18.0" />
                      </font>
                      <VBox.margin>
                         <Insets top="5.0" />

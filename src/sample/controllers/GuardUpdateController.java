@@ -47,6 +47,10 @@ public class GuardUpdateController implements Initializable {
 
     @FXML
     private Tab parking_tab;
+
+    @FXML
+    private TableColumn<Integer, ParkingVehicle> track_id_col_parking;
+
     @FXML
     private TableColumn<Date, ParkingVehicle> date_col_parking;
 
@@ -76,6 +80,9 @@ public class GuardUpdateController implements Initializable {
     private TableView<StaffAttendance> staff_table;
 
     @FXML
+    private TableColumn<Integer, StaffAttendance> track_id_col_staff;
+
+    @FXML
     private TableColumn<Date, StaffAttendance> date_col_staff;
 
     @FXML
@@ -85,6 +92,9 @@ public class GuardUpdateController implements Initializable {
     @FXML
     private TableColumn<String,
             StaffAttendance> staff_name_col;
+
+
+
 
     @FXML
     private TableColumn<String,
@@ -109,6 +119,19 @@ public class GuardUpdateController implements Initializable {
     @FXML
     private TabPane tab_pane;
 
+
+    @FXML
+    void handleRefresh(ActionEvent event) {
+
+        parkingTableList.clear();
+        loadParking();
+        parking_table.setItems(parkingTableList);
+
+        staffTableList.clear();
+        loadStaff();
+        staff_table.setItems(staffTableList);
+
+    }
 
     @FXML
     void handleUpdate(ActionEvent event) {
@@ -298,7 +321,9 @@ public class GuardUpdateController implements Initializable {
 
     private void loadSearchResStaff(String key) {
 
-        String query = "select st.WorkDate as " +
+        String query = "select st.TrackId, st" +
+                ".WorkDate" +
+                " as " +
                 "WorkDate, st" +
                 ".InTime as InTime, st.OutTime " +
                 "as OutTime" +
@@ -352,20 +377,24 @@ public class GuardUpdateController implements Initializable {
                     staffTableList.add(new StaffAttendance(resultSet.getDate("WorkDate"),
                             resultSet.getInt(
                                     "StaffId"),
+                            resultSet.getInt(
+                                    "TrackId"),
                             resultSet.getString(
                                     "Name"),
                             resultSet.getString(
                                     "StaffType"),
                             resultSet.getString(
                                     "Mobile"),
-                            "Not Recorded",
+                            null,
                             resultSet.getTime(
-                                    "OutTime").toLocalTime().toString()));
+                                    "OutTime")));
 
                 } else if (in != null && out == null) {
                     staffTableList.add(new StaffAttendance(resultSet.getDate("WorkDate"),
                             resultSet.getInt(
                                     "StaffId"),
+                            resultSet.getInt(
+                                    "TrackId"),
                             resultSet.getString(
                                     "Name"),
                             resultSet.getString(
@@ -373,13 +402,15 @@ public class GuardUpdateController implements Initializable {
                             resultSet.getString(
                                     "Mobile"),
                             resultSet.getTime(
-                                    "InTime").toLocalTime().toString(),
-                            "Not Recorded"));
+                                    "InTime"),
+                            null));
 
                 } else if (in != null && out != null) {
                     staffTableList.add(new StaffAttendance(resultSet.getDate("WorkDate"),
                             resultSet.getInt(
                                     "StaffId"),
+                            resultSet.getInt(
+                                    "TrackId"),
                             resultSet.getString(
                                     "Name"),
                             resultSet.getString(
@@ -387,22 +418,24 @@ public class GuardUpdateController implements Initializable {
                             resultSet.getString(
                                     "Mobile"),
                             resultSet.getTime(
-                                    "InTime").toLocalTime().toString(),
+                                    "InTime"),
                             resultSet.getTime(
-                                    "OutTime").toLocalTime().toString()));
+                                    "OutTime")));
 
                 } else {
                     staffTableList.add(new StaffAttendance(resultSet.getDate("WorkDate"),
                             resultSet.getInt(
                                     "StaffId"),
+                            resultSet.getInt(
+                                    "TrackId"),
                             resultSet.getString(
                                     "Name"),
                             resultSet.getString(
                                     "StaffType"),
                             resultSet.getString(
                                     "Mobile"),
-                            "Not Recorded",
-                            "Not Recorded"));
+                            null,
+                            null));
 
                 }
 
@@ -517,7 +550,8 @@ public class GuardUpdateController implements Initializable {
 
     private void loadStaff() {
 
-        String query = "select st.WorkDate as " +
+        String query = "select st.TrackId, st" +
+                ".WorkDate as " +
                 "WorkDate, st" +
                 ".InTime as InTime, st.OutTime " +
                 "as OutTime" +
@@ -552,20 +586,24 @@ public class GuardUpdateController implements Initializable {
                     staffTableList.add(new StaffAttendance(resultSet.getDate("WorkDate"),
                             resultSet.getInt(
                                     "StaffId"),
+                            resultSet.getInt(
+                                    "TrackId"),
                             resultSet.getString(
                                     "Name"),
                             resultSet.getString(
                                     "StaffType"),
                             resultSet.getString(
                                     "Mobile"),
-                            "Not Recorded",
+                            null,
                             resultSet.getTime(
-                                    "OutTime").toLocalTime().toString()));
+                                    "OutTime")));
 
                 } else if (in != null && out == null) {
                     staffTableList.add(new StaffAttendance(resultSet.getDate("WorkDate"),
                             resultSet.getInt(
                                     "StaffId"),
+                            resultSet.getInt(
+                                    "TrackId"),
                             resultSet.getString(
                                     "Name"),
                             resultSet.getString(
@@ -573,13 +611,15 @@ public class GuardUpdateController implements Initializable {
                             resultSet.getString(
                                     "Mobile"),
                             resultSet.getTime(
-                                    "InTime").toLocalTime().toString(),
-                            "Not Recorded"));
+                                    "InTime"),
+                            null));
 
                 } else if (in != null && out != null) {
                     staffTableList.add(new StaffAttendance(resultSet.getDate("WorkDate"),
                             resultSet.getInt(
                                     "StaffId"),
+                            resultSet.getInt(
+                                    "TrackId"),
                             resultSet.getString(
                                     "Name"),
                             resultSet.getString(
@@ -587,22 +627,24 @@ public class GuardUpdateController implements Initializable {
                             resultSet.getString(
                                     "Mobile"),
                             resultSet.getTime(
-                                    "InTime").toLocalTime().toString(),
+                                    "InTime"),
                             resultSet.getTime(
-                                    "OutTime").toLocalTime().toString()));
+                                    "OutTime")));
 
                 } else {
                     staffTableList.add(new StaffAttendance(resultSet.getDate("WorkDate"),
                             resultSet.getInt(
                                     "StaffId"),
+                            resultSet.getInt(
+                                    "TrackId"),
                             resultSet.getString(
                                     "Name"),
                             resultSet.getString(
                                     "StaffType"),
                             resultSet.getString(
                                     "Mobile"),
-                            "Not Recorded",
-                            "Not Recorded"));
+                            null,
+                            null));
 
                 }
 
@@ -701,6 +743,7 @@ public class GuardUpdateController implements Initializable {
     }
 
     private void initParkingTable() {
+        track_id_col_parking.setCellValueFactory(new PropertyValueFactory<>("trackId"));
         car_num_col_parking.setCellValueFactory(new PropertyValueFactory<>("carNumber"));
         date_col_parking.setCellValueFactory(new PropertyValueFactory<>("date"));
         allocation_flat_col_parking.setCellValueFactory(new PropertyValueFactory<>("flatNumber"));
@@ -712,7 +755,7 @@ public class GuardUpdateController implements Initializable {
 
     //
     private void initStaffTable() {
-
+        track_id_col_staff.setCellValueFactory(new PropertyValueFactory<>("trackId"));
         staff_id_col.setCellValueFactory(new PropertyValueFactory<>("id"));
         staff_name_col.setCellValueFactory(new PropertyValueFactory<>("name"));
         staff_mobile_col.setCellValueFactory(new PropertyValueFactory<>("mobile"));
